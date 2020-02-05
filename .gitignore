@@ -1,0 +1,11 @@
+node_modules/
+.cache/
+dist/
+dev/
+.idea/
+.vscode/
+build/base.html
+build/svg/
+.DS_Store
+src/build/droplets.json
+config.js
