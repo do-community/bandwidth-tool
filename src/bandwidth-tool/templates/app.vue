@@ -40,10 +40,10 @@ limitations under the License.
                                 <b>{{ bandwidthConsumption.toLocaleString() }} TB</b>
                             </p>
                             <div v-if="bandwidthOverage">
-                                <hr />
+                                <br />
                                 <p>
-                                    Your estimated bandwidth consumption exceeds the allowance on your account.
-                                    This will result in an overage charge!
+                                    Your estimated bandwidth consumption exceeds the estimated allowance in your pool.
+                                    <br />This will result in an overage charge!
                                 </p>
                                 <p>
                                     <span>Estimated overage:</span>
@@ -56,6 +56,15 @@ limitations under the License.
                                     </small>
                                 </p>
                             </div>
+                            <div v-else>
+                                <p>
+                                    <small class="has-text-muted">
+                                        Your estimated bandwidth consumption is less than the estimated allowance pool
+                                        on your account in a month, so you should not be charged anything extra for
+                                        bandwidth usage.
+                                    </small>
+                                </p>
+                            </div>
                         </div>
                         <div class="info">
                             <p>
@@ -64,8 +73,8 @@ limitations under the License.
                             </p>
                             <p>
                                 Find out more about how accounts are charged for bandwidth usage in our
-                                <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">bandwidth
-                                    billing docs</a>.
+                                <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">
+                                    bandwidth billing docs</a>.
                             </p>
                         </div>
                     </div>
@@ -77,15 +86,20 @@ limitations under the License.
 
         <div class="main container">
             <h3>Active Droplets</h3>
-            <div v-if="hasActiveDroplets" class="panel-list panel-list-vertical">
-                <ActiveDroplet
-                    v-for="(droplet, id) in activeDroplets"
-                    :key="id"
-                    ref="activeDroplets"
-                    :droplet="droplet"
-                    @remove="removed(id)"
-                    @update="update"
-                ></ActiveDroplet>
+            <div v-if="hasActiveDroplets">
+                <p class="has-text-muted">
+                    The estimated cost of your Droplets is ${{ dropletCost.toLocaleString() }} / mo.
+                </p>
+                <div class="panel-list panel-list-vertical">
+                    <ActiveDroplet
+                        v-for="(droplet, id) in activeDroplets"
+                        :key="id"
+                        ref="activeDroplets"
+                        :droplet="droplet"
+                        @remove="removed(id)"
+                        @update="update"
+                    ></ActiveDroplet>
+                </div>
             </div>
             <div v-else>
                 <p class="has-text-muted">
@@ -146,6 +160,7 @@ limitations under the License.
                 bandwidthAllowance: 0,
                 bandwidthAllowanceWidth: '0',
                 bandwidthOverage: 0,
+                dropletCost: 0,
             };
         },
         methods: {
@@ -215,6 +230,7 @@ limitations under the License.
                 }
             },
             update() {
+                this.$data.dropletCost = this.getDropletCost();
                 this.$data.bandwidthAllowance = this.getBandwidthAllowance();
                 this.$data.bandwidthConsumption = this.getBandwidthConsumption();
                 this.$data.bandwidthOverage = Math.max(
@@ -246,6 +262,10 @@ limitations under the License.
             getBandwidthConsumption() {
                 if (!this.$refs.activeDroplets) return 0;
                 return this.$refs.activeDroplets.reduce((total, val) => { return total + val.$data.consumption; }, 0);
+            },
+            getDropletCost() {
+                if (!this.$refs.activeDroplets) return 0;
+                return this.$refs.activeDroplets.reduce((total, val) => { return total + val.dropletCost(); }, 0);
             },
         },
         mounted() {

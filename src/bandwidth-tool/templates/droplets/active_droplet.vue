@@ -75,6 +75,10 @@ limitations under the License.
             bandwidthAllowance() {
                 return this.$props.droplet.transfer * (this.$data.hours / 672);
             },
+            dropletCost() {
+                if (this.$data.hours >= 672) return this.$props.droplet.price_monthly;
+                return this.$props.droplet.price_hourly * this.$data.hours;
+            },
         },
     };
 </script>

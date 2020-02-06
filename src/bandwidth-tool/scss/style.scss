@@ -38,6 +38,9 @@ $header: #0071fe;
       margin-top: 1rem;
 
       .data {
+        flex-basis: 55%;
+        padding-right: 1.5rem;
+
         p {
           margin: 0;
 
@@ -61,13 +64,17 @@ $header: #0071fe;
       }
 
       .info {
-        margin-left: auto;
-        padding-left: .5rem;
+        flex-basis: 45%;
+        padding-left: 1.5rem;
 
         p {
           color: $muted;
           font-size: $font-size * .8;
           text-align: right;
+        }
+
+        a {
+          white-space: nowrap;
         }
       }
     }
