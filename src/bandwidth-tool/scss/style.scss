@@ -18,7 +18,68 @@ $header: #0071fe;
 $text-secondary: #bbb;
 @import "~do-bulma/src/style";
 
+@mixin flex-row {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
 .do-bulma {
+  .bandwidth {
+    background: $background;
+    border: $thin-border;
+    border-radius: $border-radius;
+    padding: .5rem;
+    margin: 2rem 0 0;
+
+    .bars {
+      background: $border;
+      border-radius: $border-radius;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+
+      .allowance,
+      .consumption {
+        height: $height / 2;
+        transition: width .2s ease-in-out;
+      }
+
+      .allowance {
+        background: $primary;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+      }
+
+      .consumption {
+        background: $dark-blue;
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+      }
+    }
+
+    .stats {
+      margin-top: 1rem;
+
+      .allowance,
+      .consumption {
+        margin: 0;
+      }
+
+      .allowance {
+        b {
+          color: $primary;
+        }
+      }
+
+      .consumption {
+        b {
+          color: $dark-blue;
+        }
+      }
+    }
+  }
+
   .panel {
     background: $background;
     border: $thin-border;
@@ -85,10 +146,9 @@ $text-secondary: #bbb;
       flex-direction: column;
 
       .panel {
-        align-items: center;
-        display: flex;
+        @include flex-row;
+
         flex-basis: auto;
-        flex-direction: row;
         height: auto;
         margin: .25rem 0;
 
@@ -99,18 +159,19 @@ $text-secondary: #bbb;
         }
 
         > .right {
+          @include flex-row;
+
           margin-left: auto;
         }
 
         .info {
           display: flex;
           flex-direction: column;
+          margin: 0 1rem 0 0;
 
           .primary-info,
           .secondary-info {
-            align-items: center;
-            display: flex;
-            flex-direction: row;
+            @include flex-row;
 
             p {
               margin: 0;
@@ -130,6 +191,51 @@ $text-secondary: #bbb;
             }
           }
         }
+
+        .input-container {
+          width: auto;
+          margin: 0 .5rem;
+          display: flex;
+          flex-direction: column;
+
+          .control {
+            position: relative;
+
+            input {
+              height: $height * .6;
+              width: $height * 2.5;
+              padding: 0 ($margin / 2);
+            }
+
+            .suffix {
+              position: absolute;
+              top: ($height * .6 - $font-size) / 2;
+              right: $margin * 1.5;
+              color: $text-secondary;
+              line-height: 1;
+              pointer-events: none;
+            }
+          }
+
+          .label {
+            @include sailec-regular;
+
+            color: $muted;
+            font-size: $font-size * .7;
+            line-height: 1;
+          }
+        }
+
+        .button {
+          &.is-danger {
+            @include sailec-regular;
+
+            border-radius: $border-radius;
+            height: $height * .75;
+            line-height: $height * .75;
+            margin: 0 0 0 1rem;
+          }
+        }
       }
     }
 
@@ -137,6 +243,12 @@ $text-secondary: #bbb;
       flex-basis: 12.5%;
       height: 100%;
       margin: .5rem;
+    }
+  }
+
+  .tabs {
+    &.picker {
+      margin: 0;
     }
   }
 }

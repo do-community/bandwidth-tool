@@ -50,28 +50,6 @@ limitations under the License.
 
 <script>
     module.exports = {
-        name: 'ActiveDroplet',
-        props: {
-            droplet: Object,
-        },
-        data() {
-            return {
-                hours: 672,
-                consumption: 0,
-            };
-        },
-        methods: {
-            remove() {
-                this.$emit('remove');
-            },
-            update() {
-                this.$data.hours = Number(this.$refs.hours.value);
-                this.$data.consumption = Number(this.$refs.consumption.value);
-                this.$emit('update');
-            },
-            bandwidthAllowance() {
-                return this.$props.droplet.transfer * (this.$data.hours / 672)
-            }
-        },
+        name: 'SkeletonDroplet',
     }
 </script>

@@ -16,7 +16,7 @@ limitations under the License.
 
 <template>
     <div>
-        <div class="tabs">
+        <div class="tabs picker">
             <ul>
                 <li v-for="key in keys" :class="type === key ? 'is-active' : ''">
                     <a @click="setType(key)">{{ key }}</a>
