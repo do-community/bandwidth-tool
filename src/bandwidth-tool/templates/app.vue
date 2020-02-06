@@ -105,6 +105,8 @@ limitations under the License.
 </template>
 
 <script>
+    const queryString = require('query-string');
+
     const { dropletType, dropletSubType } = require('../utils/dropletType');
     const dropletData = require('../../build/droplets');
     const droplets = {};
@@ -122,6 +124,8 @@ limitations under the License.
     const ActiveDroplet = require('./droplets/active_droplet');
     const SkeletonDroplet = require('./droplets/skeleton_droplet');
     const Picker = require('./picker');
+
+    const compareArrays = require('../utils/compareArrays');
 
     module.exports = {
         name: 'App',
@@ -145,6 +149,71 @@ limitations under the License.
             };
         },
         methods: {
+            get() {
+                const parsed = queryString.parse(window.location.search);
+                try {
+                    if (!parsed.active) return [];
+                    if (!parsed.active.length) return [];
+                    const data = JSON.parse(parsed.active);
+                    if (!data) return [];
+                    if (!Array.isArray(data)) return [];
+                    return data;
+                } catch (_) {
+                    return [];
+                }
+            },
+            load() {
+                // Get the old data
+                const data = this.get();
+                for (const item of data) {
+                    // Insert as a new active droplet
+                    const droplet = dropletData.filter(d => d.slug === item.slug);
+                    if (!droplet) continue;
+                    const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
+                    const id = keys.length ? Math.max(...keys) + 1 : 0;
+                    this.$set(this.$data.activeDroplets, id, droplet[0]);
+                    this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
+
+                    // Once rendered, set the data in the ref
+                    this.$nextTick(() => {
+                        const ref = this.$refs.activeDroplets.filter(d => d.$vnode.key === id.toString());
+                        if (!ref) return;
+                        ref[0].$data.hours = item.hours;
+                        ref[0].$data.consumption = item.consumption;
+                    });
+                }
+
+                // Update a tick after the initial data is set in the refs
+                this.$nextTick(() => {
+                    this.$nextTick(this.update);
+                });
+            },
+            save() {
+                // Get the new data to save
+                if (!this.$refs.activeDroplets) return;
+                const data = this.$refs.activeDroplets.map(ref => { return {
+                    slug: ref.$props.droplet.slug,
+                    hours: ref.$data.hours,
+                    consumption: ref.$data.consumption,
+                }; });
+
+                // Get the old data, check if changed droplets
+                const last = this.get();
+                const sameDroplets = compareArrays(data.map(x => x.slug), last.map(x => x.slug));
+
+                // Create new query param
+                const parsed = queryString.parse(window.location.search);
+                parsed.active = JSON.stringify(data);
+
+                // Save
+                if (sameDroplets) {
+                    // Changed hours/consumption - don't spam new history entries
+                    window.history.replaceState({}, '', `?${queryString.stringify(parsed)}`);
+                } else {
+                    // Changed droplets - store a new history point
+                    window.history.pushState({}, '', `?${queryString.stringify(parsed)}`);
+                }
+            },
             update() {
                 this.$data.bandwidthAllowance = this.getBandwidthAllowance();
                 this.$data.bandwidthConsumption = this.getBandwidthConsumption();
@@ -155,6 +224,7 @@ limitations under the License.
                 const barMaxWidth = Math.max(this.$data.bandwidthConsumption, this.$data.bandwidthAllowance);
                 this.$data.bandwidthAllowanceWidth = this.$data.bandwidthAllowance === 0 ? '5px' : `${this.$data.bandwidthAllowance / barMaxWidth * 100}%`;
                 this.$data.bandwidthConsumptionWidth = this.$data.bandwidthConsumption === 0 ? '5px' : `${this.$data.bandwidthConsumption / barMaxWidth * 100}%`;
+                this.save();
             },
             removed(id) {
                 this.$delete(this.$data.activeDroplets, id);
@@ -179,7 +249,7 @@ limitations under the License.
             },
         },
         mounted() {
-            this.update();
+            this.load();
         },
     };
 </script>
