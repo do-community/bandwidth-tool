@@ -22,9 +22,10 @@ limitations under the License.
                 <p><em>{{ droplet.transfer }} TB<sub> transfer</sub></em></p>
             </div>
             <div class="secondary-info">
-                <p>{{ droplet.memory / 1024 }} GB <sub> / {{ droplet.vcpus }} CPU{{ droplet.vcpus === 1 ? '' : 's' }}</sub></p>
-                <p>{{ droplet.disk }} GB <sub> SSD disk</sub></p>
-                <p v-if="droplet.subType"><sub>{{ droplet.subType }}</sub></p>
+                <p>{{ droplet.memory / 1024 }} GB</p>
+                <p>{{ droplet.vcpus }} CPU{{ droplet.vcpus === 1 ? '' : 's' }}</p>
+                <p>{{ droplet.disk }} GB SSD disk</p>
+                <p v-if="droplet.subType">{{ droplet.subType }}</p>
                 <p><code>{{ droplet.slug }}</code></p>
             </div>
         </div>

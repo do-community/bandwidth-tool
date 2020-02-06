@@ -21,34 +21,63 @@ limitations under the License.
                 A small tool to help explain DigitalOcean Droplet/Account bandwidth allowances.
             </template>
             <template v-slot:header>
+                <div class="panel bandwidth">
+                    <h2>Account Bandwidth Pool</h2>
+
+                    <div class="bars">
+                        <div class="bar is-primary" :style="{ width: bandwidthAllowanceWidth }"></div>
+                        <div class="bar is-dark" :style="{ width: bandwidthConsumptionWidth }"></div>
+                    </div>
+
+                    <div class="stats">
+                        <div class="data">
+                            <p class="allowance">
+                                <span>Estimated allowance:</span>
+                                <b>{{ bandwidthAllowance.toLocaleString() }} TB</b>
+                            </p>
+                            <p class="consumption">
+                                <span>Estimated consumption:</span>
+                                <b>{{ bandwidthConsumption.toLocaleString() }} TB</b>
+                            </p>
+                            <div v-if="bandwidthOverage">
+                                <hr/>
+                                <p>
+                                    Your estimated bandwidth consumption exceeds the allowance on your account.
+                                    This will result in an overage charge!
+                                </p>
+                                <p>
+                                    <span>Estimated overage:</span>
+                                    <b>
+                                        ${{ (bandwidthOverage * 0.01).toLocaleString() }}
+                                    </b>
+                                    <small class="has-text-muted">
+                                        ({{ bandwidthOverage.toLocaleString() }} GB
+                                        @ $0.01 / GB)
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <p>
+                                Bandwidth allowance from Droplets is accrued at the account level and shared between
+                                all Droplets on your DigitalOcean account.
+                            </p>
+                            <p>
+                                Find out more about how accounts are charged for bandwidth usage in our
+                                <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">bandwidth
+                                    billing docs</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </template>
             <template v-slot:buttons>
             </template>
         </Header>
 
         <div class="main container">
-            <div class="bandwidth">
-                <h2>Account Bandwidth Pool</h2>
-
-                <div class="bars">
-                    <div class="allowance" :style="{ width: bandwidthAllowanceWidth }"></div>
-                    <div class="consumption" :style="{ width: bandwidthConsumptionWidth }"></div>
-                </div>
-
-                <div class="stats">
-                    <p class="allowance">
-                        <span>Estimated Allowance:</span>
-                        <b>{{ bandwidthAllowance.toLocaleString() }} TB</b>
-                    </p>
-                    <p class="consumption">
-                        <span>Estimated Consumption:</span>
-                        <b>{{ bandwidthConsumption.toLocaleString() }} TB</b>
-                    </p>
-                </div>
-            </div>
-
             <h3>Active Droplets</h3>
-            <div class="panel-list panel-list-vertical">
+            <div class="panel-list panel-list-vertical" v-if="hasActiveDroplets">
                 <ActiveDroplet
                     v-for="(droplet, id) in activeDroplets"
                     :droplet="droplet"
@@ -57,6 +86,12 @@ limitations under the License.
                     @remove="removed(id)"
                     @update="update"
                 ></ActiveDroplet>
+            </div>
+            <div v-else>
+                <p class="has-text-muted">Select a Droplet below to get started estimating the bandwidth allowance on your account!</p>
+                <div class="panel-list panel-list-vertical">
+                    <SkeletonDroplet></SkeletonDroplet>
+                </div>
             </div>
 
             <h3>Droplet Picker</h3>
@@ -83,6 +118,7 @@ limitations under the License.
     const Header = require('do-vue/src/templates/header').default;
     const Footer = require('do-vue/src/templates/footer').default;
     const ActiveDroplet = require('./active_droplet');
+    const SkeletonDroplet = require('./skeleton_droplet');
     const Picker = require('./picker');
 
     module.exports = {
@@ -91,28 +127,36 @@ limitations under the License.
             Header,
             Footer,
             ActiveDroplet,
+            SkeletonDroplet,
             Picker,
         },
         data() {
             return {
                 droplets,
                 activeDroplets: {},
+                hasActiveDroplets: false,
                 bandwidthConsumption: 0,
                 bandwidthConsumptionWidth: '0',
                 bandwidthAllowance: 0,
                 bandwidthAllowanceWidth: '0',
+                bandwidthOverage: 0,
             };
         },
         methods: {
             update() {
                 this.$data.bandwidthAllowance = this.getBandwidthAllowance();
                 this.$data.bandwidthConsumption = this.getBandwidthConsumption();
+                this.$data.bandwidthOverage = Math.max(
+                    (this.$data.bandwidthConsumption - this.$data.bandwidthAllowance) * 1000,
+                    0
+                );
                 const barMaxWidth = Math.max(this.$data.bandwidthConsumption, this.$data.bandwidthAllowance);
                 this.$data.bandwidthAllowanceWidth = this.$data.bandwidthAllowance === 0 ? '5px' : `${this.$data.bandwidthAllowance / barMaxWidth * 100}%`;
                 this.$data.bandwidthConsumptionWidth = this.$data.bandwidthConsumption === 0 ? '5px' : `${this.$data.bandwidthConsumption / barMaxWidth * 100}%`;
             },
             removed(id) {
                 this.$delete(this.$data.activeDroplets, id);
+                this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
                 this.$nextTick(this.update);
             },
             picked(slug) {
@@ -120,6 +164,7 @@ limitations under the License.
                 const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                 const id = keys.length ? Math.max(...keys) + 1 : 0;
                 this.$set(this.$data.activeDroplets, id, droplet);
+                this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
                 this.$nextTick(this.update);
             },
             getBandwidthAllowance() {

@@ -25,61 +25,39 @@ $text-secondary: #bbb;
 }
 
 .do-bulma {
-  .bandwidth {
-    background: $background;
-    border: $thin-border;
+  // Generic bars component
+  .bars {
+    background: $border;
     border-radius: $border-radius;
-    padding: .5rem;
-    margin: 2rem 0 0;
+    display: flex;
+    flex-direction: column;
+    height: auto;
 
-    .bars {
-      background: $border;
-      border-radius: $border-radius;
-      display: flex;
-      flex-direction: column;
-      height: auto;
+    .bar {
+      height: $height * .6;
+      transition: width .2s ease-in-out;
 
-      .allowance,
-      .consumption {
-        height: $height / 2;
-        transition: width .2s ease-in-out;
+      &.is-primary {
+        background: $primary;
       }
 
-      .allowance {
-        background: $primary;
+      &.is-dark {
+        background: $dark-blue;
+      }
+
+      &:first-child {
         border-top-left-radius: $border-radius;
         border-top-right-radius: $border-radius;
       }
 
-      .consumption {
-        background: $dark-blue;
+      &:last-child {
         border-bottom-left-radius: $border-radius;
         border-bottom-right-radius: $border-radius;
       }
     }
-
-    .stats {
-      margin-top: 1rem;
-
-      .allowance,
-      .consumption {
-        margin: 0;
-      }
-
-      .allowance {
-        b {
-          color: $primary;
-        }
-      }
-
-      .consumption {
-        b {
-          color: $dark-blue;
-        }
-      }
-    }
   }
 
+  // Generic panel component
   .panel {
     background: $background;
     border: $thin-border;
@@ -137,6 +115,7 @@ $text-secondary: #bbb;
     }
   }
 
+  // Generic panel-list component
   .panel-list {
     display: flex;
     flex-direction: row;
@@ -163,11 +142,85 @@ $text-secondary: #bbb;
 
           margin-left: auto;
         }
+      }
+    }
 
+    .panel {
+      flex-basis: 12.5%;
+      height: 100%;
+      margin: .5rem;
+    }
+  }
+
+  // Generic muted
+  .has-text-muted {
+    color: $muted;
+  }
+
+  // Custom header changes
+  .header {
+    .container {
+      > div {
+        flex-grow: 1;
+        margin: 0;
+      }
+    }
+  }
+
+  // Custom bandwidth block
+  .bandwidth {
+    text-align: left;
+    margin: 0;
+
+    .stats {
+      @include flex-row;
+
+      margin-top: 1rem;
+
+      .data {
+        p {
+          margin: 0;
+
+          span,
+          b {
+            font-size: $font-size * 1.1;
+          }
+        }
+
+        .allowance {
+          b {
+            color: $primary;
+          }
+        }
+
+        .consumption {
+          b {
+            color: $dark-blue;
+          }
+        }
+      }
+
+      .info {
+        margin-left: auto;
+        padding-left: .5rem;
+
+        p {
+          color: $muted;
+          text-align: right;
+          font-size: $font-size * .8;
+        }
+      }
+    }
+  }
+
+  // Custom panel-list changes
+  .panel-list {
+    &.panel-list-vertical {
+      .panel {
         .info {
           display: flex;
           flex-direction: column;
-          margin: 0 1rem 0 0;
+          margin: .2rem 1rem 0 .2rem;
 
           .primary-info,
           .secondary-info {
@@ -177,7 +230,7 @@ $text-secondary: #bbb;
               margin: 0;
 
               + p {
-                margin-left: .25rem;
+                margin-left: .4rem;
               }
             }
           }
@@ -188,15 +241,23 @@ $text-secondary: #bbb;
             p {
               color: $text-secondary;
               font-size: $font-size * .8;
+
+              + p {
+                margin-left: .15rem;
+
+                &::before {
+                  content: "/ ";
+                }
+              }
             }
           }
         }
 
         .input-container {
-          width: auto;
-          margin: 0 .5rem;
           display: flex;
           flex-direction: column;
+          width: auto;
+          margin: 0 .5rem;
 
           .control {
             position: relative;
@@ -228,7 +289,7 @@ $text-secondary: #bbb;
 
         .button {
           &.is-danger {
-            @include sailec-regular;
+            @include sailec-medium;
 
             border-radius: $border-radius;
             height: $height * .75;
@@ -238,14 +299,9 @@ $text-secondary: #bbb;
         }
       }
     }
-
-    .panel {
-      flex-basis: 12.5%;
-      height: 100%;
-      margin: .5rem;
-    }
   }
 
+  // Custom tabs changes
   .tabs {
     &.picker {
       margin: 0;

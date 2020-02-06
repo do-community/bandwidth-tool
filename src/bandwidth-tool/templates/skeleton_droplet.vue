@@ -18,38 +18,31 @@ limitations under the License.
     <div class="panel">
         <div class="info">
             <div class="primary-info">
-                <p><em><sup>$</sup>{{ droplet.price_monthly }}<sub> / mo</sub></em></p>
-                <p><em>{{ droplet.transfer }} TB<sub> transfer</sub></em></p>
+                <span v-for="_ in 2" class="data-skeleton skeleton-running"
+                      :style="{ ...getSkeletonStyle(25, 100), margin: '0 .2rem .1rem 0' }">
+                </span>
             </div>
             <div class="secondary-info">
-                <p>{{ droplet.memory / 1024 }} GB <sub> / {{ droplet.vcpus }} CPU{{ droplet.vcpus === 1 ? '' : 's' }}</sub></p>
-                <p>{{ droplet.disk }} GB <sub> SSD disk</sub></p>
-                <p v-if="droplet.subType"><sub>{{ droplet.subType }}</sub></p>
-                <p><code>{{ droplet.slug }}</code></p>
+                <span v-for="_ in 3" class="data-skeleton skeleton-running"
+                      :style="{ ...getSkeletonStyle(25, 150), margin: '.1rem .2rem 0 0' }">
+                </span>
             </div>
         </div>
         <div class="right">
-            <div class="input-container">
-                <div class="control">
-                    <input type="number" min="0" max="672" step="1" ref="hours" :value="hours" @input="update" />
-                    <span class="suffix">hours</span>
-                </div>
-                <span class="label">Hours the Droplet has been on your account</span>
-            </div>
-            <div class="input-container">
-                <div class="control">
-                    <input type="number" min="0" step="0.5" ref="consumption" :value="consumption" @input="update" />
-                    <span class="suffix">TB</span>
-                </div>
-                <span class="label">Estimated bandwidth consumption in TB</span>
-            </div>
-            <a class="button is-danger is-small" @click="remove">Remove</a>
+                <span v-for="_ in 3" class="data-skeleton skeleton-running"
+                      :style="{ ...getSkeletonStyle(50, 100), height: '1.75em', borderRadius: '.875em', margin: '.2rem' }">
+                </span>
         </div>
     </div>
 </template>
 
 <script>
+    const { getSkeletonStyle } = require('do-bulma/test/utils/skeletonStyle');
+
     module.exports = {
         name: 'SkeletonDroplet',
-    }
+        methods: {
+            getSkeletonStyle,
+        },
+    };
 </script>
