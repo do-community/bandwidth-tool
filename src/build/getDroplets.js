@@ -1,11 +1,10 @@
-const { token } = require('../../config');
 const fetch = require('node-fetch');
 const fs = require('fs').promises;
 const path = require('path');
 
 const get = async url => {
     const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${process.env.DIGITALOCEAN_TOKEN}` }
     });
     return await res.json();
 };
