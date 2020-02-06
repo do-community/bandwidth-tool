@@ -34,15 +34,27 @@ limitations under the License.
         <div class="right">
             <div class="input-container">
                 <div class="control">
-                    <input ref="hours" type="number" min="0" max="672" step="1" :value="hours" @input="update" />
-                    <span class="suffix">hours</span>
+                    <div class="control">
+                        <input ref="hours" type="number" min="0" max="672" step="1" :value="hours" @input="update" />
+                        <span class="suffix">hours</span>
+                    </div>
+                    <i v-tippy
+                       title="Droplet pricing is capped at 672 hours a month, or 28 days."
+                       class="far fa-question-circle help"
+                    ></i>
                 </div>
                 <span class="label">Hours the Droplet has been on your account</span>
             </div>
             <div class="input-container">
                 <div class="control">
-                    <input ref="consumption" type="number" min="0" step="0.5" :value="consumption" @input="update" />
-                    <span class="suffix">TB</span>
+                    <div class="control">
+                        <input ref="consumption" type="number" min="0" step="0.5" :value="consumption" @input="update" />
+                        <span class="suffix">TB</span>
+                    </div>
+                    <i v-tippy
+                       title="Use this to visualize the consumption of your account bandwidth pool by each Droplet."
+                       class="far fa-question-circle help"
+                    ></i>
                 </div>
                 <span class="label">Estimated bandwidth consumption in TB</span>
             </div>
@@ -52,6 +64,10 @@ limitations under the License.
 </template>
 
 <script>
+    const Vue = require('vue').default;
+    const VueTippy = require('vue-tippy').default;
+    Vue.use(VueTippy);
+
     module.exports = {
         name: 'ActiveDroplet',
         props: {

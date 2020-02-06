@@ -128,6 +128,7 @@ $header: #0071fe;
           width: auto;
 
           .control {
+            display: inline-block;
             position: relative;
 
             input {
@@ -143,6 +144,10 @@ $header: #0071fe;
               position: absolute;
               right: $margin * 1.5;
               top: ($height * .6 - $font-size) / 2;
+            }
+
+            i {
+              position: initial;
             }
           }
 
