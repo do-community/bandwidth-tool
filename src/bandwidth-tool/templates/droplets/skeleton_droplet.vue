@@ -19,19 +19,22 @@ limitations under the License.
         <div class="info">
             <div class="primary-info">
                 <span v-for="_ in 2" class="data-skeleton skeleton-running"
-                      :style="{ ...getSkeletonStyle(25, 100), margin: '0 .2rem .1rem 0' }">
+                      :style="{ ...getSkeletonStyle(25, 100), margin: '0 .2rem .1rem 0' }"
+                >
                 </span>
             </div>
             <div class="secondary-info">
                 <span v-for="_ in 3" class="data-skeleton skeleton-running"
-                      :style="{ ...getSkeletonStyle(25, 150), margin: '.1rem .2rem 0 0' }">
+                      :style="{ ...getSkeletonStyle(25, 150), margin: '.1rem .2rem 0 0' }"
+                >
                 </span>
             </div>
         </div>
         <div class="right">
-                <span v-for="_ in 3" class="data-skeleton skeleton-running"
-                      :style="{ ...getSkeletonStyle(50, 100), height: '1.75em', borderRadius: '.875em', margin: '.2rem' }">
-                </span>
+            <span v-for="_ in 3" class="data-skeleton skeleton-running"
+                  :style="{ ...getSkeletonStyle(50, 100), height: '1.75em', borderRadius: '.875em', margin: '.2rem' }"
+            >
+            </span>
         </div>
     </div>
 </template>

@@ -18,10 +18,12 @@ limitations under the License.
     <div class="panel selectable is-droplet">
         <p><em><sup>$</sup>{{ droplet.price_monthly }}<sub> / mo</sub></em></p>
         <p><em>{{ droplet.transfer }} TB<sub> transfer</sub></em></p>
-        <hr/>
+        <hr />
         <p>{{ droplet.memory / 1024 }} GB <sub> / {{ droplet.vcpus }} CPU{{ droplet.vcpus === 1 ? '' : 's' }}</sub></p>
         <p>{{ droplet.disk }} GB <sub> SSD disk</sub></p>
-        <p v-if="droplet.subType"><sub>{{ droplet.subType }}</sub></p>
+        <p v-if="droplet.subType">
+            <sub>{{ droplet.subType }}</sub>
+        </p>
         <p><code>{{ droplet.slug }}</code></p>
     </div>
 </template>
@@ -32,5 +34,5 @@ limitations under the License.
         props: {
             droplet: Object,
         },
-    }
+    };
 </script>

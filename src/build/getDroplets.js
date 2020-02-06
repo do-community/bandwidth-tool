@@ -4,7 +4,7 @@ const path = require('path');
 
 const get = async url => {
     const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${process.env.DIGITALOCEAN_TOKEN}` }
+        headers: { Authorization: `Bearer ${process.env.DIGITALOCEAN_TOKEN}` },
     });
     return await res.json();
 };

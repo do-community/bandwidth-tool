@@ -40,7 +40,7 @@ limitations under the License.
                                 <b>{{ bandwidthConsumption.toLocaleString() }} TB</b>
                             </p>
                             <div v-if="bandwidthOverage">
-                                <hr/>
+                                <hr />
                                 <p>
                                     Your estimated bandwidth consumption exceeds the allowance on your account.
                                     This will result in an overage charge!
@@ -77,18 +77,20 @@ limitations under the License.
 
         <div class="main container">
             <h3>Active Droplets</h3>
-            <div class="panel-list panel-list-vertical" v-if="hasActiveDroplets">
+            <div v-if="hasActiveDroplets" class="panel-list panel-list-vertical">
                 <ActiveDroplet
                     v-for="(droplet, id) in activeDroplets"
-                    :droplet="droplet"
                     :key="id"
                     ref="activeDroplets"
+                    :droplet="droplet"
                     @remove="removed(id)"
                     @update="update"
                 ></ActiveDroplet>
             </div>
             <div v-else>
-                <p class="has-text-muted">Select a Droplet below to get started estimating the bandwidth allowance on your account!</p>
+                <p class="has-text-muted">
+                    Select a Droplet below to get started estimating the bandwidth allowance on your account!
+                </p>
                 <div class="panel-list panel-list-vertical">
                     <SkeletonDroplet></SkeletonDroplet>
                 </div>
@@ -148,7 +150,7 @@ limitations under the License.
                 this.$data.bandwidthConsumption = this.getBandwidthConsumption();
                 this.$data.bandwidthOverage = Math.max(
                     (this.$data.bandwidthConsumption - this.$data.bandwidthAllowance) * 1000,
-                    0
+                    0,
                 );
                 const barMaxWidth = Math.max(this.$data.bandwidthConsumption, this.$data.bandwidthAllowance);
                 this.$data.bandwidthAllowanceWidth = this.$data.bandwidthAllowance === 0 ? '5px' : `${this.$data.bandwidthAllowance / barMaxWidth * 100}%`;
@@ -169,15 +171,15 @@ limitations under the License.
             },
             getBandwidthAllowance() {
                 if (!this.$refs.activeDroplets) return 0;
-                return this.$refs.activeDroplets.reduce((total, val) => { return total + val.bandwidthAllowance() }, 0);
+                return this.$refs.activeDroplets.reduce((total, val) => { return total + val.bandwidthAllowance(); }, 0);
             },
             getBandwidthConsumption() {
                 if (!this.$refs.activeDroplets) return 0;
-                return this.$refs.activeDroplets.reduce((total, val) => { return total + val.$data.consumption }, 0);
+                return this.$refs.activeDroplets.reduce((total, val) => { return total + val.$data.consumption; }, 0);
             },
         },
         mounted() {
             this.update();
         },
-    }
+    };
 </script>

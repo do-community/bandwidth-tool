@@ -19,6 +19,7 @@ module.exports = {
     'vue/require-v-for-key': 0,
     'vue/require-default-prop': 0,
     'vue/no-v-html': 0,
+    'vue/valid-v-for': 0,
     'vue/max-attributes-per-line': 0,
     'vue/html-indent': ['error', 4],
     'vue/script-indent': ['error', 4, {

@@ -25,21 +25,23 @@ limitations under the License.
                 <p>{{ droplet.memory / 1024 }} GB</p>
                 <p>{{ droplet.vcpus }} CPU{{ droplet.vcpus === 1 ? '' : 's' }}</p>
                 <p>{{ droplet.disk }} GB SSD disk</p>
-                <p v-if="droplet.subType">{{ droplet.subType }}</p>
+                <p v-if="droplet.subType">
+                    {{ droplet.subType }}
+                </p>
                 <p><code>{{ droplet.slug }}</code></p>
             </div>
         </div>
         <div class="right">
             <div class="input-container">
                 <div class="control">
-                    <input type="number" min="0" max="672" step="1" ref="hours" :value="hours" @input="update" />
+                    <input ref="hours" type="number" min="0" max="672" step="1" :value="hours" @input="update" />
                     <span class="suffix">hours</span>
                 </div>
                 <span class="label">Hours the Droplet has been on your account</span>
             </div>
             <div class="input-container">
                 <div class="control">
-                    <input type="number" min="0" step="0.5" ref="consumption" :value="consumption" @input="update" />
+                    <input ref="consumption" type="number" min="0" step="0.5" :value="consumption" @input="update" />
                     <span class="suffix">TB</span>
                 </div>
                 <span class="label">Estimated bandwidth consumption in TB</span>
@@ -71,8 +73,8 @@ limitations under the License.
                 this.$emit('update');
             },
             bandwidthAllowance() {
-                return this.$props.droplet.transfer * (this.$data.hours / 672)
-            }
+                return this.$props.droplet.transfer * (this.$data.hours / 672);
+            },
         },
-    }
+    };
 </script>

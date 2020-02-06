@@ -53,7 +53,7 @@ limitations under the License.
             return {
                 type: 'Standard',
                 keys: dropletTypes,
-                display: getDroplets(this.$props.droplets, 'Standard')
+                display: getDroplets(this.$props.droplets, 'Standard'),
             };
         },
         methods: {
@@ -64,6 +64,6 @@ limitations under the License.
             picked(slug) {
                 this.$emit('picked', slug);
             },
-        }
-    }
+        },
+    };
 </script>
