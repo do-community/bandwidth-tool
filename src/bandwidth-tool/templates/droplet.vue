@@ -15,12 +15,13 @@ limitations under the License.
 -->
 
 <template>
-    <div class="panel">
-        <p><sup>$</sup>{{ droplet.price_monthly }}<sub> / mo</sub></p>
-        <p>{{ droplet.transfer }} TB<sub> transfer</sub></p>
+    <div class="panel selectable">
+        <p><em><sup>$</sup>{{ droplet.price_monthly }}<sub> / mo</sub></em></p>
+        <p><em>{{ droplet.transfer }} TB<sub> transfer</sub></em></p>
         <hr/>
         <p>{{ droplet.memory / 1024 }} GB <sub> / {{ droplet.vcpus }} CPU{{ droplet.vcpus === 1 ? '' : 's' }}</sub></p>
         <p>{{ droplet.disk }} GB <sub> SSD disk</sub></p>
+        <p v-if="droplet.subType"><sub>{{ droplet.subType }}</sub></p>
         <p><code>{{ droplet.slug }}</code></p>
     </div>
 </template>

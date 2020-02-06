@@ -1,22 +1,46 @@
-module.exports = slug => {
+const dropletType = slug => {
     const type = slug.split('-')[0];
     switch (type) {
         case 's':
             return 'Standard';
 
         case 'g':
-            return 'General Purpose (1x SSD)';
         case 'gd':
-            return 'General Purpose (2x SSD)';
+            return 'General Purpose';
 
         case 'c':
             return 'CPU-Optimized';
 
         case 'm':
-            return 'Memory-Optimized (1x SSD)';
         case 'm3':
-            return 'Memory-Optimized (3x SSD)';
         case 'm6':
-            return 'Memory-Optimized (6x SSD)';
+            return 'Memory-Optimized';
+
+        default:
+            return 'Legacy';
     }
 };
+
+const dropletTypes = ['Standard', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized', 'Legacy'];
+
+const dropletSubType = slug => {
+    const type = slug.split('-')[0];
+    switch (type) {
+        case 'g':
+            return '1x SSD';
+        case 'gd':
+            return '2x SSD';
+
+        case 'm':
+            return '1x SSD';
+        case 'm3':
+            return '3x SSD';
+        case 'm6':
+            return '6x SSD';
+
+        default:
+            return undefined;
+    }
+};
+
+module.exports = { dropletType, dropletTypes, dropletSubType };

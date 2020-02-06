@@ -19,18 +19,23 @@ limitations under the License.
         <div class="tabs">
             <ul>
                 <li v-for="key in keys" :class="type === key ? 'is-active' : ''">
-                    <a @click="type = key">{{ key }}</a>
+                    <a @click="setType(key)">{{ key }}</a>
                 </li>
             </ul>
         </div>
         <div class="panel-list">
-            <Droplet v-for="droplet in droplets[type].sort((a, b) => a.price - b.price)" :droplet="droplet"></Droplet>
+            <Droplet v-for="droplet in display" :droplet="droplet" @click.native="picked(droplet.slug)"></Droplet>
         </div>
     </div>
 </template>
 
 <script>
     const Droplet = require('./droplet.vue');
+    const { dropletTypes } = require('../utils/dropletType');
+
+    const getDroplets = (droplets, type) => {
+        return droplets[type].sort((a, b) => a.price - b.price);
+    };
 
     module.exports = {
         name: 'Picker',
@@ -42,9 +47,19 @@ limitations under the License.
         },
         data() {
             return {
-                type: 'Standard' in this.$props.droplets ? 'Standard' : Object.keys(this.$props.droplets)[0],
-                keys: Object.keys(this.$props.droplets).sort(), // TODO: custom sort (Standard, gen, cpu, mem)
+                type: 'Standard',
+                keys: dropletTypes,
+                display: getDroplets(this.$props.droplets, 'Standard')
             };
         },
+        methods: {
+            setType(key) {
+                this.$data.type = key;
+                this.$data.display = getDroplets(this.$props.droplets, key);
+            },
+            picked(slug) {
+                this.$emit('picked', slug);
+            },
+        }
     }
 </script>

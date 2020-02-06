@@ -27,7 +27,15 @@ limitations under the License.
         </Header>
 
         <div class="main container">
-            <Picker :droplets="droplets"></Picker>
+            <div class="panel-list panel-list-vertical">
+                <ActiveDroplet
+                    v-for="(droplet, id) in activeDroplets"
+                    :droplet="droplet"
+                    :key="id"
+                    @remove="removed(id)"
+                ></ActiveDroplet>
+            </div>
+            <Picker :droplets="droplets" @picked="picked"></Picker>
         </div>
 
         <Footer text=""></Footer>
@@ -35,7 +43,7 @@ limitations under the License.
 </template>
 
 <script>
-    const dropletType = require('../utils/dropletType');
+    const { dropletType, dropletSubType } = require('../utils/dropletType');
     const dropletData = require('../../build/droplets.json');
     const droplets = {};
     for (const droplet of dropletData) {
@@ -43,23 +51,35 @@ limitations under the License.
         if (!type) continue;
         if (!(type in droplets)) droplets[type] = [];
         droplet.type = type;
+        droplet.subType = dropletSubType(droplet.slug);
         droplets[type].push(droplet);
     }
 
+    const ActiveDroplet = require('./active_droplet.vue');
     const Picker = require('./picker.vue');
 
     module.exports = {
         name: 'App',
         components: {
+            ActiveDroplet,
             Picker,
         },
         data() {
             return {
                 droplets,
-            }
+                activeDroplets: {},
+            };
         },
         methods: {
-            dropletType,
+            removed(id) {
+                this.$delete(this.$data.activeDroplets, id);
+            },
+            picked(slug) {
+                const droplet = dropletData.filter(d => d.slug === slug)[0];
+                const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
+                const id = keys.length ? Math.max(...keys) + 1 : 0;
+                this.$set(this.$data.activeDroplets, id, droplet);
+            },
         },
     }
 </script>

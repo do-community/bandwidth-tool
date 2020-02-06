@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 $header: #0071fe;
+$text-secondary: #bbb;
 @import "~do-bulma/src/style";
 
 .do-bulma {
@@ -24,20 +25,30 @@ $header: #0071fe;
     border-radius: $border-radius;
     box-shadow: none;
     color: $text;
-    margin: .5rem;
+    margin: 1rem .5rem;
     padding: .5rem;
     text-align: center;
     width: 100%;
 
-    p {
-      margin: .5rem 0;
+    &.selectable {
+      cursor: pointer;
 
-      &:nth-child(1),
-      &:nth-child(2) {
+      &:hover {
+        background: $panel;
+      }
+    }
+
+    p {
+      font-size: $font-size * .9;
+      margin: .25rem 0;
+
+      em {
         @include sailec-bold;
 
         font-size: $font-size * 1.4;
+        font-style: normal;
         line-height: 18px;
+        margin: .5rem 0;
 
         sup {
           vertical-align: text-top;
@@ -48,18 +59,19 @@ $header: #0071fe;
       sub {
         @include sailec-regular;
 
-        font-size: $font-size * .9;
+        font-size: $font-size * .8;
       }
 
       sub {
-        color: #bbb;
+        color: $text-secondary;
         vertical-align: baseline;
       }
 
       code {
         background: $panel;
         margin: 0;
-        padding: .1rem .4rem;
+        padding: .2rem .4rem;
+        line-height: 1;
       }
     }
   }
@@ -69,9 +81,62 @@ $header: #0071fe;
     flex-direction: row;
     flex-wrap: wrap;
 
+    &.panel-list-vertical {
+      flex-direction: column;
+
+      .panel {
+        align-items: center;
+        display: flex;
+        flex-basis: auto;
+        flex-direction: row;
+        height: auto;
+        margin: .25rem 0;
+
+        > * {
+          + * {
+            margin-left: .5rem;
+          }
+        }
+
+        > .right {
+          margin-left: auto;
+        }
+
+        .info {
+          display: flex;
+          flex-direction: column;
+
+          .primary-info,
+          .secondary-info {
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+
+            p {
+              margin: 0;
+
+              + p {
+                margin-left: .25rem;
+              }
+            }
+          }
+
+          .secondary-info {
+            margin-top: .25rem;
+
+            p {
+              color: $text-secondary;
+              font-size: $font-size * .8;
+            }
+          }
+        }
+      }
+    }
+
     .panel {
       flex-basis: 12.5%;
       height: 100%;
+      margin: .5rem;
     }
   }
 }
