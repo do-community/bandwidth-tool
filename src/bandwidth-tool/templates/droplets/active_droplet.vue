@@ -31,7 +31,7 @@ limitations under the License.
                 <p><code>{{ droplet.slug }}</code></p>
             </div>
         </div>
-        <div class="right">
+        <div class="config">
             <div class="input-container">
                 <div class="control">
                     <input ref="hours" type="number" min="0" max="672" step="1" :value="hours" @input="update" />
@@ -46,7 +46,11 @@ limitations under the License.
                 </div>
                 <span class="label">Estimated bandwidth consumption in TB</span>
             </div>
-            <a class="button is-danger is-small" @click="remove">Remove</a>
+        </div>
+        <div class="line-item">
+            <span><sup>$</sup><strong>{{ Math.round(droplet.price_hourly * this.$data.hours * 100.0)/100.0  }}</strong></span>
+            <span class="label">Monthly Droplet Cost</span>
+            <a class="button is-mini" @click="remove" title="Remove Droplet">✖</a>
         </div>
     </div>
 </template>

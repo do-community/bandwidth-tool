@@ -16,57 +16,102 @@ limitations under the License.
 
 <template>
     <div class="all do-bulma">
-        <Header title="Bandwidth Tool">
+        <Header title="Droplet Planner">
             <template v-slot:description>
-                A small tool to help explain DigitalOcean Droplet/Account bandwidth allowances.
+                Estimate your monthly costs and gain an understanding of how bandwidth usage and pooling will impact your bill.
             </template>
             <template v-slot:header>
-                <div class="panel bandwidth">
-                    <h2>Account Bandwidth Pool</h2>
+                <div class="estimate">
+                    <div class="droplet">
+                        <h2>Droplets</h2>
+                        <div v-if="hasActiveDroplets" class="panel-list panel-list-vertical">
+                            <ActiveDroplet
+                                v-for="(droplet, id) in activeDroplets"
+                                :key="id"
+                                ref="activeDroplets"
+                                :droplet="droplet"
+                                @remove="removed(id)"
+                                @update="update"
+                            ></ActiveDroplet>
 
-                    <div class="bars">
-                        <div class="bar is-primary" :style="{ width: bandwidthAllowanceWidth }"></div>
-                        <div class="bar is-dark" :style="{ width: bandwidthConsumptionWidth }"></div>
+                            <div class="total-right">
+                                <h3>Droplet Subtotal</h3>
+                                <div class="line-item">
+                                    <strong>$123</strong>
+                                    <span class="label">monthly</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p class="has-text-muted">
+                                Select a Droplet below to get started estimating the bandwidth allowance on your account!
+                            </p>
+                            <div class="panel-list panel-list-vertical">
+                                <SkeletonDroplet></SkeletonDroplet>
+                            </div>
+                        </div>
                     </div>
+                    <div class="bandwidth">
+                        <h2>Bandwidth</h2>
 
-                    <div class="stats">
-                        <div class="data">
-                            <p class="allowance">
-                                <span>Estimated allowance:</span>
-                                <b>{{ bandwidthAllowance.toLocaleString() }} TB</b>
-                            </p>
-                            <p class="consumption">
-                                <span>Estimated consumption:</span>
-                                <b>{{ bandwidthConsumption.toLocaleString() }} TB</b>
-                            </p>
-                            <div v-if="bandwidthOverage">
-                                <hr />
+                        <div class="bars">
+                            <div class="bar is-primary" :style="{ width: bandwidthAllowanceWidth }"></div>
+                            <div class="bar is-dark" :style="{ width: bandwidthConsumptionWidth }"></div>
+                        </div>
+
+                        <div class="stats">
+                            <div class="data">
+                                <p class="allowance">
+                                    <span>Estimated allowance:</span>
+                                    <b>{{ bandwidthAllowance.toLocaleString() }} TB</b>
+                                </p>
+                                <p class="consumption">
+                                    <span>Estimated consumption:</span>
+                                    <b>{{ bandwidthConsumption.toLocaleString() }} TB</b>
+                                </p>
+                                <div v-if="bandwidthOverage">
+                                    <hr />
+                                    <p>
+                                        Your estimated bandwidth consumption exceeds the allowance on your account.
+                                        This will result in an overage charge!
+                                    </p>
+                                    <p>
+                                        <span>Estimated overage:</span>
+                                        <b>
+                                            ${{ (bandwidthOverage * 0.01).toLocaleString() }}
+                                        </b>
+                                        <small class="has-text-muted">
+                                            ({{ bandwidthOverage.toLocaleString() }} GB
+                                            @ $0.01 / GB)
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="info">
                                 <p>
-                                    Your estimated bandwidth consumption exceeds the allowance on your account.
-                                    This will result in an overage charge!
+                                    Bandwidth allowance from Droplets is accrued at the account level and shared between
+                                    all Droplets on your DigitalOcean account.
                                 </p>
                                 <p>
-                                    <span>Estimated overage:</span>
-                                    <b>
-                                        ${{ (bandwidthOverage * 0.01).toLocaleString() }}
-                                    </b>
-                                    <small class="has-text-muted">
-                                        ({{ bandwidthOverage.toLocaleString() }} GB
-                                        @ $0.01 / GB)
-                                    </small>
+                                    Find out more about how accounts are charged for bandwidth usage in our
+                                    <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">bandwidth
+                                        billing docs</a>.
                                 </p>
                             </div>
                         </div>
-                        <div class="info">
-                            <p>
-                                Bandwidth allowance from Droplets is accrued at the account level and shared between
-                                all Droplets on your DigitalOcean account.
-                            </p>
-                            <p>
-                                Find out more about how accounts are charged for bandwidth usage in our
-                                <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">bandwidth
-                                    billing docs</a>.
-                            </p>
+                        <div class="total-right line-item">
+                            <h3>Bandwidth Subtotal</h3>
+                            <div class="line-item">
+                                <strong>$0</strong>
+                                <span class="label">monthly</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total-right line-item">
+                        <h3>Total</h3>
+                        <div class="line-item">
+                            <strong>$123</strong>
+                            <span class="label">monthly</span>
                         </div>
                     </div>
                 </div>
@@ -76,26 +121,6 @@ limitations under the License.
         </Header>
 
         <div class="main container">
-            <h3>Active Droplets</h3>
-            <div v-if="hasActiveDroplets" class="panel-list panel-list-vertical">
-                <ActiveDroplet
-                    v-for="(droplet, id) in activeDroplets"
-                    :key="id"
-                    ref="activeDroplets"
-                    :droplet="droplet"
-                    @remove="removed(id)"
-                    @update="update"
-                ></ActiveDroplet>
-            </div>
-            <div v-else>
-                <p class="has-text-muted">
-                    Select a Droplet below to get started estimating the bandwidth allowance on your account!
-                </p>
-                <div class="panel-list panel-list-vertical">
-                    <SkeletonDroplet></SkeletonDroplet>
-                </div>
-            </div>
-
             <h3>Droplet Picker</h3>
             <Picker :droplets="droplets" @picked="picked"></Picker>
         </div>

@@ -27,9 +27,31 @@ $header: #0071fe;
     }
   }
 
-  .bandwidth {
-    margin: 0;
+  .estimate {
     text-align: left;
+
+    & > * {
+      margin: 15px;
+    }
+
+    h2 {
+      @include sailec-bold;
+    }
+  }
+
+  .bandwidth {
+
+    .bars {
+      height: 28.8px;
+      position: relative;
+      width: calc(100% - 240px);
+
+      .bar {
+        position: absolute;
+
+
+      }
+    }
 
     .stats {
       align-items: center;
@@ -114,6 +136,12 @@ $header: #0071fe;
           }
         }
 
+        .config {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+        }
+
         .input-container {
           display: flex;
           flex-direction: column;
@@ -138,27 +166,55 @@ $header: #0071fe;
               top: ($height * .6 - $font-size) / 2;
             }
           }
-
-          .label {
-            @include sailec-regular;
-
-            color: $muted;
-            font-size: $font-size * .7;
-            line-height: 1;
-          }
         }
 
-        .button {
-          &.is-danger {
-            @include sailec-medium;
+        .line-item {
+          display: flex;
+          flex-direction: column;
+          margin-left: auto;
+          padding-right: 50px;
+          position: relative;
+          width: 170px;
 
+          .button {
             border-radius: $border-radius;
-            height: $height * .75;
-            line-height: $height * .75;
-            margin: 0 0 0 1rem;
+            height: $height * .5;
+            line-height: $height * .5;
+            margin: 0;
+            position: absolute;
+            right: 0;
+            width: $height * .5;
           }
         }
       }
+    }
+  }
+
+  .label {
+    @include sailec-regular;
+
+    color: $muted;
+    font-size: $font-size * .7;
+    line-height: 1;
+  }
+
+  .total-right {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    
+    .line-item {
+      margin-left: 50px;
+      width: 150px;
+    }
+  }
+
+  .line-item {
+    strong {
+      @include sailec-bold;
+
+      font-size: $font-size * 1.5;
     }
   }
 
