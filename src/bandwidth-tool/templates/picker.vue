@@ -24,13 +24,17 @@ limitations under the License.
             </ul>
         </div>
         <div class="panel-list">
-            <Droplet v-for="droplet in display" :droplet="droplet" @click.native="picked(droplet.slug)"></Droplet>
+            <PickerDroplet
+                v-for="droplet in display"
+                :droplet="droplet"
+                @click.native="picked(droplet.slug)"
+            ></PickerDroplet>
         </div>
     </div>
 </template>
 
 <script>
-    const Droplet = require('./droplet.vue');
+    const PickerDroplet = require('./droplets/picker_droplet');
     const { dropletTypes } = require('../utils/dropletType');
 
     const getDroplets = (droplets, type) => {
@@ -40,7 +44,7 @@ limitations under the License.
     module.exports = {
         name: 'Picker',
         components: {
-            Droplet,
+            PickerDroplet,
         },
         props: {
             droplets: Object,

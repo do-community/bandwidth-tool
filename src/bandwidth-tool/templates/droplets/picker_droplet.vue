@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <template>
-    <div class="panel selectable">
+    <div class="panel selectable is-droplet">
         <p><em><sup>$</sup>{{ droplet.price_monthly }}<sub> / mo</sub></em></p>
         <p><em>{{ droplet.transfer }} TB<sub> transfer</sub></em></p>
         <hr/>
@@ -28,7 +28,7 @@ limitations under the License.
 
 <script>
     module.exports = {
-        name: 'Droplet',
+        name: 'PickerDroplet',
         props: {
             droplet: Object,
         },

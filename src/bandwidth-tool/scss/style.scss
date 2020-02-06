@@ -15,149 +15,9 @@ limitations under the License.
 */
 
 $header: #0071fe;
-$text-secondary: #bbb;
 @import "~do-bulma/src/style";
 
-@mixin flex-row {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-}
-
 .do-bulma {
-  // Generic bars component
-  .bars {
-    background: $border;
-    border-radius: $border-radius;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-
-    .bar {
-      height: $height * .6;
-      transition: width .2s ease-in-out;
-
-      &.is-primary {
-        background: $primary;
-      }
-
-      &.is-dark {
-        background: $dark-blue;
-      }
-
-      &:first-child {
-        border-top-left-radius: $border-radius;
-        border-top-right-radius: $border-radius;
-      }
-
-      &:last-child {
-        border-bottom-left-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
-      }
-    }
-  }
-
-  // Generic panel component
-  .panel {
-    background: $background;
-    border: $thin-border;
-    border-radius: $border-radius;
-    box-shadow: none;
-    color: $text;
-    margin: 1rem .5rem;
-    padding: .5rem;
-    text-align: center;
-    width: 100%;
-
-    &.selectable {
-      cursor: pointer;
-
-      &:hover {
-        background: $panel;
-      }
-    }
-
-    p {
-      font-size: $font-size * .9;
-      margin: .25rem 0;
-
-      em {
-        @include sailec-bold;
-
-        font-size: $font-size * 1.4;
-        font-style: normal;
-        line-height: 18px;
-        margin: .5rem 0;
-
-        sup {
-          vertical-align: text-top;
-        }
-      }
-
-      sup,
-      sub {
-        @include sailec-regular;
-
-        font-size: $font-size * .8;
-      }
-
-      sub {
-        color: $text-secondary;
-        vertical-align: baseline;
-      }
-
-      code {
-        background: $panel;
-        margin: 0;
-        padding: .2rem .4rem;
-        line-height: 1;
-      }
-    }
-  }
-
-  // Generic panel-list component
-  .panel-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    &.panel-list-vertical {
-      flex-direction: column;
-
-      .panel {
-        @include flex-row;
-
-        flex-basis: auto;
-        height: auto;
-        margin: .25rem 0;
-
-        > * {
-          + * {
-            margin-left: .5rem;
-          }
-        }
-
-        > .right {
-          @include flex-row;
-
-          margin-left: auto;
-        }
-      }
-    }
-
-    .panel {
-      flex-basis: 12.5%;
-      height: 100%;
-      margin: .5rem;
-    }
-  }
-
-  // Generic muted
-  .has-text-muted {
-    color: $muted;
-  }
-
-  // Custom header changes
   .header {
     .container {
       > div {
@@ -167,14 +27,14 @@ $text-secondary: #bbb;
     }
   }
 
-  // Custom bandwidth block
   .bandwidth {
-    text-align: left;
     margin: 0;
+    text-align: left;
 
     .stats {
-      @include flex-row;
-
+      align-items: center;
+      display: flex;
+      flex-direction: row;
       margin-top: 1rem;
 
       .data {
@@ -206,14 +66,13 @@ $text-secondary: #bbb;
 
         p {
           color: $muted;
-          text-align: right;
           font-size: $font-size * .8;
+          text-align: right;
         }
       }
     }
   }
 
-  // Custom panel-list changes
   .panel-list {
     &.panel-list-vertical {
       .panel {
@@ -224,7 +83,9 @@ $text-secondary: #bbb;
 
           .primary-info,
           .secondary-info {
-            @include flex-row;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
 
             p {
               margin: 0;
@@ -256,25 +117,25 @@ $text-secondary: #bbb;
         .input-container {
           display: flex;
           flex-direction: column;
-          width: auto;
           margin: 0 .5rem;
+          width: auto;
 
           .control {
             position: relative;
 
             input {
               height: $height * .6;
-              width: $height * 2.5;
               padding: 0 ($margin / 2);
+              width: $height * 2.5;
             }
 
             .suffix {
-              position: absolute;
-              top: ($height * .6 - $font-size) / 2;
-              right: $margin * 1.5;
               color: $text-secondary;
               line-height: 1;
               pointer-events: none;
+              position: absolute;
+              right: $margin * 1.5;
+              top: ($height * .6 - $font-size) / 2;
             }
           }
 
@@ -301,7 +162,6 @@ $text-secondary: #bbb;
     }
   }
 
-  // Custom tabs changes
   .tabs {
     &.picker {
       margin: 0;

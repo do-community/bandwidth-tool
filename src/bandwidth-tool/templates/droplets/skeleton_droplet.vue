@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <template>
-    <div class="panel">
+    <div class="panel is-droplet">
         <div class="info">
             <div class="primary-info">
                 <span v-for="_ in 2" class="data-skeleton skeleton-running"
@@ -37,7 +37,7 @@ limitations under the License.
 </template>
 
 <script>
-    const { getSkeletonStyle } = require('do-bulma/test/utils/skeletonStyle');
+    const { getSkeletonStyle } = require('do-bulma/src/utils/skeletonStyle');
 
     module.exports = {
         name: 'SkeletonDroplet',

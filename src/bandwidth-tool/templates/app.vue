@@ -117,8 +117,8 @@ limitations under the License.
 
     const Header = require('do-vue/src/templates/header').default;
     const Footer = require('do-vue/src/templates/footer').default;
-    const ActiveDroplet = require('./active_droplet');
-    const SkeletonDroplet = require('./skeleton_droplet');
+    const ActiveDroplet = require('./droplets/active_droplet');
+    const SkeletonDroplet = require('./droplets/skeleton_droplet');
     const Picker = require('./picker');
 
     module.exports = {

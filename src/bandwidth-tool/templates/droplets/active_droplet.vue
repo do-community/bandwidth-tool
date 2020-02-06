@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <template>
-    <div class="panel">
+    <div class="panel is-droplet">
         <div class="info">
             <div class="primary-info">
                 <p><em><sup>$</sup>{{ droplet.price_monthly }}<sub> / mo</sub></em></p>
