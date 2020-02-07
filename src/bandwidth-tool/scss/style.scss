@@ -18,66 +18,6 @@ $header: #0071fe;
 @import "~do-bulma/src/style";
 
 .do-bulma {
-
-  // Generic stacked bars
-  .bars {
-    .bar-stack {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      overflow: hidden;
-
-      &:first-child {
-        border-top-left-radius: $border-radius;
-        border-top-right-radius: $border-radius;
-
-        .bar {
-          &:first-child {
-            border-top-left-radius: $border-radius;
-          }
-
-          &:last-child {
-            border-top-right-radius: $border-radius;
-          }
-        }
-      }
-
-      &:last-child {
-        border-bottom-left-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
-
-        .bar {
-          &:first-child {
-            border-bottom-left-radius: $border-radius;
-          }
-
-          &:last-child {
-            border-bottom-right-radius: $border-radius;
-          }
-        }
-      }
-
-      .bar {
-        border-radius: 0;
-
-        &.has-shadow {
-          &:not(:first-child) {
-            box-shadow: rgba(0, 0, 0, .4) -4px 0 8px;
-          }
-        }
-      }
-    }
-  }
-
-  // Generic tiny button
-  .button {
-    &.is-tiny {
-      height: $height * .45;
-      line-height: $height * .45;
-      padding: 0 ($margin / 2);
-    }
-  }
-
   .header {
     .container {
       > div {
@@ -238,17 +178,6 @@ $header: #0071fe;
             &:not(:last-child) {
               margin-bottom: .25rem;
             }
-          }
-        }
-
-        .button {
-          &.is-danger {
-            @include sailec-medium;
-
-            border-radius: $border-radius;
-            height: $height * .75;
-            line-height: $height * .75;
-            margin: 0 0 0 1rem;
           }
         }
       }

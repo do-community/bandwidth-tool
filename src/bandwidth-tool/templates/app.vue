@@ -263,9 +263,15 @@ limitations under the License.
                 const barMaxWidth = Math.max(this.$data.bandwidthConsumption, this.$data.bandwidthAllowance);
                 const newBandwidthAllowanceData = [];
                 const newBandwidthConsumptionData = [];
-                for (const droplet of this.$refs.activeDroplets) {
-                    newBandwidthAllowanceData.push([droplet.$vnode.key, `${droplet.bandwidthAllowance() / barMaxWidth * 100}%`]);
-                    newBandwidthConsumptionData.push([droplet.$vnode.key, `${droplet.$data.consumption / barMaxWidth * 100}%`]);
+                for (const droplet of (this.$refs.activeDroplets || [])) {
+                    newBandwidthAllowanceData.push([
+                        droplet.$vnode.key,
+                        `${droplet.bandwidthAllowance() / barMaxWidth * 100}%`,
+                    ]);
+                    newBandwidthConsumptionData.push([
+                        droplet.$vnode.key,
+                        `${droplet.$data.consumption / barMaxWidth * 100}%`,
+                    ]);
                 }
 
                 // Filler bars
