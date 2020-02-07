@@ -28,14 +28,26 @@ limitations under the License.
                         <div class="bar-stack">
                             <div v-for="(width, id) in bandwidthAllowanceData"
                                  :key="id"
-                                 class="bar is-primary"
+                                 :class="`bar is-primary ${focusedDropletClass(id)}`"
+                                 @mouseenter="focusedDropletEnter(id)"
+                                 @mouseleave="focusedDropletLeave(id)"
                                  :style="{ width }"></div>
+                            <div v-if="!Object.keys(bandwidthAllowanceData).length"
+                                 class="bar is-primary"
+                                 style="width: 5px;"
+                            ></div>
                         </div>
                         <div class="bar-stack">
                             <div v-for="(width, id) in bandwidthConsumptionData"
                                  :key="id"
-                                 class="bar is-dark"
+                                 :class="`bar is-dark ${focusedDropletClass(id)}`"
+                                 @mouseenter="focusedDropletEnter(id)"
+                                 @mouseleave="focusedDropletLeave(id)"
                                  :style="{ width }"></div>
+                            <div v-if="!Object.keys(bandwidthConsumptionData).length"
+                                 class="bar is-dark"
+                                 style="width: 5px;"
+                            ></div>
                         </div>
                     </div>
 
@@ -106,6 +118,9 @@ limitations under the License.
                         :key="id"
                         ref="activeDroplets"
                         :droplet="droplet"
+                        :class="focusedDropletClass(id)"
+                        @mouseenter.native="focusedDropletEnter(id)"
+                        @mouseleave.native="focusedDropletLeave(id)"
                         @remove="removed(id)"
                         @update="update"
                     ></ActiveDroplet>
@@ -171,6 +186,7 @@ limitations under the License.
                 bandwidthConsumptionData: {},
                 bandwidthOverage: 0,
                 dropletCost: 0,
+                focusedDroplet: null,
             };
         },
         methods: {
@@ -285,6 +301,17 @@ limitations under the License.
             getDropletCost() {
                 if (!this.$refs.activeDroplets) return 0;
                 return this.$refs.activeDroplets.reduce((total, val) => { return total + val.dropletCost(); }, 0);
+            },
+            focusedDropletLeave(id) {
+                if (this.$data.focusedDroplet === id) this.$data.focusedDroplet = null;
+            },
+            focusedDropletEnter(id) {
+                this.$data.focusedDroplet = id;
+            },
+            focusedDropletClass(id) {
+                if (this.$data.focusedDroplet === null) return '';
+                if (id === this.$data.focusedDroplet) return 'focused-droplet';
+                return 'unfocused-droplet';
             },
         },
         mounted() {

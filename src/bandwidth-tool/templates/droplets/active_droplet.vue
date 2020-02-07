@@ -60,7 +60,13 @@ limitations under the License.
                 </div>
                 <span class="label">(monthly)</span>
             </div>
-            <a class="button is-tiny" @click="remove" v-tippy title="Remove this Droplet"><i class="fas fa-times"></i></a>
+            <div class="tertiary-info">
+                <p><em><sup>$</sup>{{ dropletCost().toLocaleString() }}</em></p>
+                <p><sub>Monthly Droplet Cost</sub></p>
+            </div>
+            <a class="button is-tiny" @click="remove" v-tippy title="Remove this Droplet">
+                <i class="fas fa-times"></i>
+            </a>
         </div>
     </div>
 </template>

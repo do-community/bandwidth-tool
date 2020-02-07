@@ -18,15 +18,8 @@ $header: #0071fe;
 @import "~do-bulma/src/style";
 
 .do-bulma {
-  .header {
-    .container {
-      > div {
-        flex-grow: 1;
-        margin: 0;
-      }
-    }
-  }
 
+  // Generic stacked bars
   .bars {
     .bar-stack {
       display: flex;
@@ -67,18 +60,30 @@ $header: #0071fe;
       .bar {
         border-radius: 0;
 
-        &:not(:first-child) {
-          box-shadow: rgba(0, 0, 0, .4) -4px 0 8px;
+        &.has-shadow {
+          &:not(:first-child) {
+            box-shadow: rgba(0, 0, 0, .4) -4px 0 8px;
+          }
         }
       }
     }
   }
 
+  // Generic tiny button
   .button {
     &.is-tiny {
       height: $height * .45;
       line-height: $height * .45;
       padding: 0 ($margin / 2);
+    }
+  }
+
+  .header {
+    .container {
+      > div {
+        flex-grow: 1;
+        margin: 0;
+      }
     }
   }
 
@@ -176,6 +181,18 @@ $header: #0071fe;
           }
         }
 
+        .tertiary-info {
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin: 0 2.5rem;
+
+          p {
+            margin: 0;
+          }
+        }
+
         .input-container {
           display: flex;
           flex-direction: column;
@@ -241,6 +258,27 @@ $header: #0071fe;
   .tabs {
     &.picker {
       margin: 0;
+    }
+  }
+
+  .panel {
+    transition: opacity .2s ease-in-out, background .2s ease-in-out;
+
+    &.unfocused-droplet {
+      background: darken($background, 5%);
+      opacity: .8;
+    }
+  }
+
+  .bars {
+    .bar-stack {
+      .bar {
+        transition: width .2s ease-in-out, opacity .2s ease-in-out;
+
+        &.unfocused-droplet {
+          opacity: .4;
+        }
+      }
     }
   }
 }
