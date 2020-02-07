@@ -33,19 +33,21 @@ limitations under the License.
         </div>
         <div class="right">
             <div class="input-container">
+                <span class="label">Droplet will exist for</span>
                 <div class="control">
                     <div class="control">
-                        <input ref="hours" type="number" min="0" max="672" step="1" :value="hours" @input="update" />
+                        <input ref="hours" type="number" min="0" max="744" step="1" :value="hours" @input="update" />
                         <span class="suffix">hours</span>
                     </div>
                     <i v-tippy
-                       title="Droplet pricing is capped at 672 hours a month, or 28 days."
+                       title="Droplet pricing and billing is capped at 672 hours a month, or 28 days."
                        class="far fa-question-circle help"
                     ></i>
                 </div>
-                <span class="label">Hours the Droplet has been on your account</span>
+                <span class="label">(monthly)</span>
             </div>
             <div class="input-container">
+                <span class="label">Outbound data consumption</span>
                 <div class="control">
                     <div class="control">
                         <input ref="consumption" type="number" min="0" step="0.5" :value="consumption" @input="update" />
@@ -56,7 +58,7 @@ limitations under the License.
                        class="far fa-question-circle help"
                     ></i>
                 </div>
-                <span class="label">Estimated bandwidth consumption in TB</span>
+                <span class="label">(monthly)</span>
             </div>
             <a class="button is-danger is-small" @click="remove">Remove</a>
         </div>
@@ -75,7 +77,7 @@ limitations under the License.
         },
         data() {
             return {
-                hours: 672,
+                hours: 744,
                 consumption: 0,
             };
         },
@@ -88,12 +90,15 @@ limitations under the License.
                 this.$data.consumption = Number(this.$refs.consumption.value);
                 this.$emit('update');
             },
+            cappedHours() {
+                return Math.min(672, Math.max(0, this.$data.hours));
+            },
             bandwidthAllowance() {
-                return this.$props.droplet.transfer * (this.$data.hours / 672);
+                return this.$props.droplet.transfer * (this.cappedHours() / 672);
             },
             dropletCost() {
-                if (this.$data.hours >= 672) return this.$props.droplet.price_monthly;
-                return this.$props.droplet.price_hourly * this.$data.hours;
+                if (this.cappedHours() >= 672) return this.$props.droplet.price_monthly;
+                return this.$props.droplet.price_hourly * this.cappedHours();
             },
         },
     };

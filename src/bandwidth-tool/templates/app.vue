@@ -85,7 +85,7 @@ limitations under the License.
         </Header>
 
         <div class="main container">
-            <h3>Active Droplets</h3>
+            <h2>Droplets</h2>
             <div v-if="hasActiveDroplets">
                 <p class="has-text-muted">
                     The estimated cost of your Droplets is ${{ dropletCost.toLocaleString() }} / mo.

@@ -133,6 +133,7 @@ $header: #0071fe;
 
             input {
               height: $height * .6;
+              margin: 0;
               padding: 0 ($margin / 2);
               width: $height * 2.5;
             }
@@ -157,6 +158,14 @@ $header: #0071fe;
             color: $muted;
             font-size: $font-size * .7;
             line-height: 1;
+
+            &:not(:first-child) {
+              margin-top: .25rem;
+            }
+
+            &:not(:last-child) {
+              margin-bottom: .25rem;
+            }
           }
         }
 
