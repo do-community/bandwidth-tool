@@ -60,7 +60,7 @@ limitations under the License.
                 </div>
                 <span class="label">(monthly)</span>
             </div>
-            <a class="button is-danger is-small" @click="remove">Remove</a>
+            <a class="button is-tiny" @click="remove" v-tippy title="Remove this Droplet"><i class="fas fa-times"></i></a>
         </div>
     </div>
 </template>

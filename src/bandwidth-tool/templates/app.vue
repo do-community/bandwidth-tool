@@ -25,8 +25,18 @@ limitations under the License.
                     <h2>Account Bandwidth Pool</h2>
 
                     <div class="bars">
-                        <div class="bar is-primary" :style="{ width: bandwidthAllowanceWidth }"></div>
-                        <div class="bar is-dark" :style="{ width: bandwidthConsumptionWidth }"></div>
+                        <div class="bar-stack">
+                            <div v-for="(width, id) in bandwidthAllowanceData"
+                                 :key="id"
+                                 class="bar is-primary"
+                                 :style="{ width }"></div>
+                        </div>
+                        <div class="bar-stack">
+                            <div v-for="(width, id) in bandwidthConsumptionData"
+                                 :key="id"
+                                 class="bar is-dark"
+                                 :style="{ width }"></div>
+                        </div>
                     </div>
 
                     <div class="stats">
@@ -155,10 +165,10 @@ limitations under the License.
                 droplets,
                 activeDroplets: {},
                 hasActiveDroplets: false,
-                bandwidthConsumption: 0,
-                bandwidthConsumptionWidth: '0',
                 bandwidthAllowance: 0,
-                bandwidthAllowanceWidth: '0',
+                bandwidthAllowanceData: {},
+                bandwidthConsumption: 0,
+                bandwidthConsumptionData: {},
                 bandwidthOverage: 0,
                 dropletCost: 0,
             };
@@ -237,9 +247,18 @@ limitations under the License.
                     (this.$data.bandwidthConsumption - this.$data.bandwidthAllowance) * 1000,
                     0,
                 );
+
+                // Calculate the per Droplet stacks
                 const barMaxWidth = Math.max(this.$data.bandwidthConsumption, this.$data.bandwidthAllowance);
-                this.$data.bandwidthAllowanceWidth = this.$data.bandwidthAllowance === 0 ? '5px' : `${this.$data.bandwidthAllowance / barMaxWidth * 100}%`;
-                this.$data.bandwidthConsumptionWidth = this.$data.bandwidthConsumption === 0 ? '5px' : `${this.$data.bandwidthConsumption / barMaxWidth * 100}%`;
+                this.$data.bandwidthAllowanceData = {};
+                this.$data.bandwidthConsumptionData = {};
+                for (const droplet of this.$refs.activeDroplets) {
+                    this.$set(this.$data.bandwidthAllowanceData,
+                        droplet.$vnode.key, `${droplet.bandwidthAllowance() / barMaxWidth * 100}%`);
+                    this.$set(this.$data.bandwidthConsumptionData,
+                        droplet.$vnode.key, `${droplet.$data.consumption / barMaxWidth * 100}%`);
+                }
+
                 this.save();
             },
             removed(id) {
