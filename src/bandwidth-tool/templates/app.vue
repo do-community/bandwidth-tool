@@ -26,29 +26,21 @@ limitations under the License.
 
                     <div class="bars">
                         <div class="bar-stack">
-                            <div v-for="(width, id) in bandwidthAllowanceData"
-                                 :key="id"
-                                 :class="`bar is-primary ${focusedDropletClass(id)}`"
-                                 :style="{ width }"
-                                 @mouseenter="focusedDropletEnter(id)"
-                                 @mouseleave="focusedDropletLeave(id)"
-                            ></div>
-                            <div v-if="!Object.keys(bandwidthAllowanceData).length"
-                                 class="bar is-primary"
-                                 style="width: 5px;"
+                            <div v-for="(data, index) in bandwidthAllowanceData"
+                                 :key="index"
+                                 :class="`bar is-primary ${focusedDropletClass(data[0])}`"
+                                 :style="{ width: data[1] }"
+                                 @mouseenter="focusedDropletEnter(data[0])"
+                                 @mouseleave="focusedDropletLeave(data[0])"
                             ></div>
                         </div>
                         <div class="bar-stack">
-                            <div v-for="(width, id) in bandwidthConsumptionData"
-                                 :key="id"
-                                 :class="`bar is-dark ${focusedDropletClass(id)}`"
-                                 :style="{ width }"
-                                 @mouseenter="focusedDropletEnter(id)"
-                                 @mouseleave="focusedDropletLeave(id)"
-                            ></div>
-                            <div v-if="!Object.keys(bandwidthConsumptionData).length"
-                                 class="bar is-dark"
-                                 style="width: 5px;"
+                            <div v-for="(data, index) in bandwidthConsumptionData"
+                                 :key="index"
+                                 :class="`bar is-dark ${focusedDropletClass(data[0])}`"
+                                 :style="{ width: data[1] }"
+                                 @mouseenter="focusedDropletEnter(data[0])"
+                                 @mouseleave="focusedDropletLeave(data[0])"
                             ></div>
                         </div>
                     </div>
@@ -183,9 +175,9 @@ limitations under the License.
                 activeDroplets: {},
                 hasActiveDroplets: false,
                 bandwidthAllowance: 0,
-                bandwidthAllowanceData: {},
+                bandwidthAllowanceData: [],
                 bandwidthConsumption: 0,
-                bandwidthConsumptionData: {},
+                bandwidthConsumptionData: [],
                 bandwidthOverage: 0,
                 dropletCost: 0,
                 focusedDroplet: null,
@@ -258,6 +250,7 @@ limitations under the License.
                 }
             },
             update() {
+                // Calculate the totals
                 this.$data.dropletCost = this.getDropletCost();
                 this.$data.bandwidthAllowance = this.getBandwidthAllowance();
                 this.$data.bandwidthConsumption = this.getBandwidthConsumption();
@@ -268,20 +261,28 @@ limitations under the License.
 
                 // Calculate the per Droplet stacks
                 const barMaxWidth = Math.max(this.$data.bandwidthConsumption, this.$data.bandwidthAllowance);
-                this.$data.bandwidthAllowanceData = {};
-                this.$data.bandwidthConsumptionData = {};
+                const newBandwidthAllowanceData = [];
+                const newBandwidthConsumptionData = [];
                 for (const droplet of this.$refs.activeDroplets) {
-                    this.$set(this.$data.bandwidthAllowanceData,
-                              droplet.$vnode.key, `${droplet.bandwidthAllowance() / barMaxWidth * 100}%`);
-                    this.$set(this.$data.bandwidthConsumptionData,
-                              droplet.$vnode.key, `${droplet.$data.consumption / barMaxWidth * 100}%`);
+                    newBandwidthAllowanceData.push([droplet.$vnode.key, `${droplet.bandwidthAllowance() / barMaxWidth * 100}%`]);
+                    newBandwidthConsumptionData.push([droplet.$vnode.key, `${droplet.$data.consumption / barMaxWidth * 100}%`]);
                 }
 
+                // Filler bars
+                if (!newBandwidthAllowanceData.length || this.$data.bandwidthAllowance === 0)
+                    newBandwidthAllowanceData.push(['', '5px']);
+                if (!newBandwidthConsumptionData.length || this.$data.bandwidthConsumption === 0)
+                    newBandwidthConsumptionData.push(['', '5px']);
+
+                // Save it all
+                this.$data.bandwidthAllowanceData = newBandwidthAllowanceData;
+                this.$data.bandwidthConsumptionData = newBandwidthConsumptionData;
                 this.save();
             },
             removed(id) {
                 this.$delete(this.$data.activeDroplets, id);
                 this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
+                if (this.$data.focusedDroplet === id) this.$data.focusedDroplet = null;
                 this.$nextTick(this.update);
             },
             picked(slug) {
@@ -305,9 +306,11 @@ limitations under the License.
                 return this.$refs.activeDroplets.reduce((total, val) => { return total + val.dropletCost(); }, 0);
             },
             focusedDropletLeave(id) {
+                if (id === '') return;
                 if (this.$data.focusedDroplet === id) this.$data.focusedDroplet = null;
             },
             focusedDropletEnter(id) {
+                if (id === '') return;
                 this.$data.focusedDroplet = id;
             },
             focusedDropletClass(id) {
