@@ -64,7 +64,7 @@ limitations under the License.
                 <p><em><sup>$</sup>{{ dropletCost().toLocaleString() }}</em></p>
                 <p><sub>Monthly Droplet Cost</sub></p>
             </div>
-            <a class="button is-tiny" @click="remove" v-tippy title="Remove this Droplet">
+            <a v-tippy class="button is-tiny" title="Remove this Droplet" @click="remove">
                 <i class="fas fa-times"></i>
             </a>
         </div>

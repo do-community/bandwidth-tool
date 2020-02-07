@@ -16,7 +16,7 @@ limitations under the License.
 
 <template>
     <div class="all do-bulma">
-        <Header title="Bandwidth Tool">
+        <Header title="Bandwidth Planner">
             <template v-slot:description>
                 A small tool to help explain DigitalOcean Droplet/Account bandwidth allowances.
             </template>
@@ -29,9 +29,10 @@ limitations under the License.
                             <div v-for="(width, id) in bandwidthAllowanceData"
                                  :key="id"
                                  :class="`bar is-primary ${focusedDropletClass(id)}`"
+                                 :style="{ width }"
                                  @mouseenter="focusedDropletEnter(id)"
                                  @mouseleave="focusedDropletLeave(id)"
-                                 :style="{ width }"></div>
+                            ></div>
                             <div v-if="!Object.keys(bandwidthAllowanceData).length"
                                  class="bar is-primary"
                                  style="width: 5px;"
@@ -41,9 +42,10 @@ limitations under the License.
                             <div v-for="(width, id) in bandwidthConsumptionData"
                                  :key="id"
                                  :class="`bar is-dark ${focusedDropletClass(id)}`"
+                                 :style="{ width }"
                                  @mouseenter="focusedDropletEnter(id)"
                                  @mouseleave="focusedDropletLeave(id)"
-                                 :style="{ width }"></div>
+                            ></div>
                             <div v-if="!Object.keys(bandwidthConsumptionData).length"
                                  class="bar is-dark"
                                  style="width: 5px;"
@@ -270,9 +272,9 @@ limitations under the License.
                 this.$data.bandwidthConsumptionData = {};
                 for (const droplet of this.$refs.activeDroplets) {
                     this.$set(this.$data.bandwidthAllowanceData,
-                        droplet.$vnode.key, `${droplet.bandwidthAllowance() / barMaxWidth * 100}%`);
+                              droplet.$vnode.key, `${droplet.bandwidthAllowance() / barMaxWidth * 100}%`);
                     this.$set(this.$data.bandwidthConsumptionData,
-                        droplet.$vnode.key, `${droplet.$data.consumption / barMaxWidth * 100}%`);
+                              droplet.$vnode.key, `${droplet.$data.consumption / barMaxWidth * 100}%`);
                 }
 
                 this.save();
