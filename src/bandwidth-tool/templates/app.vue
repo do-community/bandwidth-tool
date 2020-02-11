@@ -16,95 +16,31 @@ limitations under the License.
 
 <template>
     <div class="all do-bulma">
-        <Header title="Bandwidth Planner">
+        <Header :title="i18n.templates.app.title">
             <template v-slot:description>
-                A small tool to help explain DigitalOcean Droplet/Account bandwidth allowances.
+                {{ i18n.templates.app.description }}
             </template>
             <template v-slot:header>
-                <div class="panel bandwidth">
-                    <h2>Account Bandwidth Pool</h2>
-
-                    <div class="bars">
-                        <div class="bar-stack">
-                            <div v-for="(data, index) in bandwidthAllowanceData"
-                                 :key="index"
-                                 :class="`bar is-primary ${focusedDropletClass(data[0])}`"
-                                 :style="{ width: data[1] }"
-                                 @mouseenter="focusedDropletEnter(data[0])"
-                                 @mouseleave="focusedDropletLeave(data[0])"
-                            ></div>
-                        </div>
-                        <div class="bar-stack">
-                            <div v-for="(data, index) in bandwidthConsumptionData"
-                                 :key="index"
-                                 :class="`bar is-dark ${focusedDropletClass(data[0])}`"
-                                 :style="{ width: data[1] }"
-                                 @mouseenter="focusedDropletEnter(data[0])"
-                                 @mouseleave="focusedDropletLeave(data[0])"
-                            ></div>
-                        </div>
-                    </div>
-
-                    <div class="stats">
-                        <div class="data">
-                            <p class="allowance">
-                                <span>Estimated allowance:</span>
-                                <b>{{ bandwidthAllowance.toLocaleString() }} TB</b>
-                            </p>
-                            <p class="consumption">
-                                <span>Estimated consumption:</span>
-                                <b>{{ bandwidthConsumption.toLocaleString() }} TB</b>
-                            </p>
-                            <div v-if="bandwidthOverage">
-                                <br />
-                                <p>
-                                    Your estimated bandwidth consumption exceeds the estimated allowance in your pool.
-                                    <br />This will result in an overage charge!
-                                </p>
-                                <p>
-                                    <span>Estimated overage:</span>
-                                    <b>
-                                        ${{ (bandwidthOverage * 0.01).toLocaleString() }}
-                                    </b>
-                                    <small class="has-text-muted">
-                                        ({{ bandwidthOverage.toLocaleString() }} GB
-                                        @ $0.01 / GB)
-                                    </small>
-                                </p>
-                            </div>
-                            <div v-else>
-                                <p>
-                                    <small class="has-text-muted">
-                                        Your estimated bandwidth consumption is less than the estimated allowance pool
-                                        on your account in a month, so you should not be charged anything extra for
-                                        bandwidth usage.
-                                    </small>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="info">
-                            <p>
-                                Bandwidth allowance from Droplets is accrued at the account level and shared between
-                                all Droplets on your DigitalOcean account.
-                            </p>
-                            <p>
-                                Find out more about how accounts are charged for bandwidth usage in our
-                                <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">
-                                    bandwidth billing docs</a>.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <Pool
+                    :bandwidth-allowance="bandwidthAllowance"
+                    :bandwidth-allowance-data="bandwidthAllowanceData"
+                    :bandwidth-consumption="bandwidthConsumption"
+                    :bandwidth-consumption-data="bandwidthConsumptionData"
+                    :bandwidth-overage="bandwidthOverage"
+                    :focused-droplet-class="focusedDropletClass"
+                    :focused-droplet-enter="focusedDropletEnter"
+                    :focused-droplet-leave="focusedDropletLeave"
+                ></Pool>
             </template>
             <template v-slot:buttons>
             </template>
         </Header>
 
         <div class="main container">
-            <h2>Droplets</h2>
+            <h2>{{ i18n.templates.app.droplets }}</h2>
             <div v-if="hasActiveDroplets">
                 <p class="has-text-muted">
-                    The estimated cost of your Droplets is ${{ dropletCost.toLocaleString() }} / mo.
+                    {{ i18n.templates.app.estimatedCost }} ${{ dropletCost.toLocaleString() }} / mo.
                 </p>
                 <div class="panel-list panel-list-vertical">
                     <ActiveDroplet
@@ -122,18 +58,18 @@ limitations under the License.
             </div>
             <div v-else>
                 <p class="has-text-muted">
-                    Select a Droplet below to get started estimating the bandwidth allowance on your account!
+                    {{ i18n.templates.app.selectToStart }}
                 </p>
                 <div class="panel-list panel-list-vertical">
                     <SkeletonDroplet></SkeletonDroplet>
                 </div>
             </div>
 
-            <h3>Droplet Picker</h3>
+            <h3>{{ i18n.templates.app.picker }}</h3>
             <Picker :droplets="droplets" @picked="picked"></Picker>
         </div>
 
-        <Footer text=""></Footer>
+        <Footer :text="i18n.templates.app.oss"></Footer>
     </div>
 </template>
 
@@ -152,8 +88,10 @@ limitations under the License.
         droplets[type].push(droplet);
     }
 
+    const i18n = require('../i18n');
     const Header = require('do-vue/src/templates/header').default;
     const Footer = require('do-vue/src/templates/footer').default;
+    const Pool = require('./pool');
     const ActiveDroplet = require('./droplets/active_droplet');
     const SkeletonDroplet = require('./droplets/skeleton_droplet');
     const Picker = require('./picker');
@@ -165,12 +103,14 @@ limitations under the License.
         components: {
             Header,
             Footer,
+            Pool,
             ActiveDroplet,
             SkeletonDroplet,
             Picker,
         },
         data() {
             return {
+                i18n,
                 droplets,
                 activeDroplets: {},
                 hasActiveDroplets: false,

@@ -18,13 +18,27 @@ limitations under the License.
     <div class="panel is-droplet">
         <div class="info">
             <div class="primary-info">
-                <p><em><sup>$</sup>{{ droplet.price_monthly }}<sub> / mo</sub></em></p>
-                <p><em>{{ droplet.transfer }} TB<sub> transfer</sub></em></p>
+                <p>
+                    <em>
+                        <sup>$</sup>
+                        {{ droplet.price_monthly }}
+                        <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
+                    </em>
+                </p>
+                <p>
+                    <em>
+                        {{ droplet.transfer }} {{ i18n.templates.droplets.droplet.transferUnit }}
+                        <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
+                    </em>
+                </p>
             </div>
             <div class="secondary-info">
-                <p>{{ droplet.memory / 1024 }} GB</p>
-                <p>{{ droplet.vcpus }} CPU{{ droplet.vcpus === 1 ? '' : 's' }}</p>
-                <p>{{ droplet.disk }} GB SSD disk</p>
+                <p>{{ droplet.memory / 1024 }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
+                <p>
+                    {{ droplet.vcpus }}
+                    {{ i18n.templates.droplets.droplet[droplet.vcpus === 1 ? 'cpuSingular' : 'cpuPlural'] }}
+                </p>
+                <p>{{ droplet.disk }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
                 <p v-if="droplet.subType">
                     {{ droplet.subType }}
                 </p>
@@ -33,38 +47,38 @@ limitations under the License.
         </div>
         <div class="right">
             <div class="input-container">
-                <span class="label">Droplet will exist for</span>
+                <span class="label">{{ i18n.templates.droplets.activeDroplet.hoursLabel }}</span>
                 <div class="control">
                     <div class="control">
                         <input ref="hours" type="number" min="0" max="744" step="1" :value="hours" @input="update" />
-                        <span class="suffix">hours</span>
+                        <span class="suffix">{{ i18n.templates.droplets.activeDroplet.hoursUnit }}</span>
                     </div>
                     <i v-tippy
-                       title="Droplet pricing and billing is capped at 672 hours a month, or 28 days."
+                       :title="i18n.templates.droplets.activeDroplet.hoursTooltip"
                        class="far fa-question-circle help"
                     ></i>
                 </div>
-                <span class="label">(monthly)</span>
+                <span class="label">{{ i18n.templates.droplets.activeDroplet.monthly }}</span>
             </div>
             <div class="input-container">
-                <span class="label">Outbound data consumption</span>
+                <span class="label">{{ i18n.templates.droplets.activeDroplet.consumptionLabel }}</span>
                 <div class="control">
                     <div class="control">
                         <input ref="consumption" type="number" min="0" step="0.5" :value="consumption" @input="update" />
-                        <span class="suffix">TB</span>
+                        <span class="suffix">{{ i18n.templates.droplets.activeDroplet.consumptionUnit }}</span>
                     </div>
                     <i v-tippy
-                       title="Use this to visualize the consumption of your account bandwidth pool by each Droplet."
+                       :title="i18n.templates.droplets.activeDroplet.consumptionTooltip"
                        class="far fa-question-circle help"
                     ></i>
                 </div>
-                <span class="label">(monthly)</span>
+                <span class="label">{{ i18n.templates.droplets.activeDroplet.monthly }}</span>
             </div>
             <div class="tertiary-info">
                 <p><em><sup>$</sup>{{ dropletCost().toLocaleString() }}</em></p>
-                <p><sub>Monthly Droplet Cost</sub></p>
+                <p><sub>{{ i18n.templates.droplets.activeDroplet.monthlyCost }}</sub></p>
             </div>
-            <a v-tippy class="button is-tiny" title="Remove this Droplet" @click="remove">
+            <a v-tippy class="button is-tiny" :title="i18n.templates.droplets.activeDroplet.remove" @click="remove">
                 <i class="fas fa-times"></i>
             </a>
         </div>
@@ -72,6 +86,7 @@ limitations under the License.
 </template>
 
 <script>
+    const i18n = require('../../i18n');
     const Vue = require('vue').default;
     const VueTippy = require('vue-tippy').default;
     Vue.use(VueTippy);
@@ -83,6 +98,7 @@ limitations under the License.
         },
         data() {
             return {
+                i18n,
                 hours: 744,
                 consumption: 0,
             };
