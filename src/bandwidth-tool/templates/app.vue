@@ -16,9 +16,9 @@ limitations under the License.
 
 <template>
     <div class="all do-bulma">
-        <Header title="Bandwidth Planner">
+        <Header :title="i18n.templates.app.title">
             <template v-slot:description>
-                A small tool to help explain DigitalOcean Droplet/Account bandwidth allowances.
+                {{ i18n.templates.app.description }}
             </template>
             <template v-slot:header>
                 <div class="panel bandwidth">
@@ -133,7 +133,7 @@ limitations under the License.
             <Picker :droplets="droplets" @picked="picked"></Picker>
         </div>
 
-        <Footer text=""></Footer>
+        <Footer :text="i18n.templates.app.oss"></Footer>
     </div>
 </template>
 
@@ -152,6 +152,7 @@ limitations under the License.
         droplets[type].push(droplet);
     }
 
+    const i18n = require('../i18n');
     const Header = require('do-vue/src/templates/header').default;
     const Footer = require('do-vue/src/templates/footer').default;
     const ActiveDroplet = require('./droplets/active_droplet');
@@ -171,6 +172,7 @@ limitations under the License.
         },
         data() {
             return {
+                i18n,
                 droplets,
                 activeDroplets: {},
                 hasActiveDroplets: false,

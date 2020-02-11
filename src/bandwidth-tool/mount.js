@@ -17,8 +17,9 @@ limitations under the License.
 require('babel-polyfill');
 const Vue = require('vue').default;
 const App = require('./templates/app.vue');
+const i18n = require('./i18n');
 
-document.head.title = 'Bandwidth Tool';
+document.head.title = i18n.templates.app.title;
 
 new Vue({
     render: h => h(App),
