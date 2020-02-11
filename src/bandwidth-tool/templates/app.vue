@@ -37,10 +37,10 @@ limitations under the License.
         </Header>
 
         <div class="main container">
-            <h2>Droplets</h2>
+            <h2>{{ i18n.templates.app.droplets }}</h2>
             <div v-if="hasActiveDroplets">
                 <p class="has-text-muted">
-                    The estimated cost of your Droplets is ${{ dropletCost.toLocaleString() }} / mo.
+                    {{ i18n.templates.app.estimatedCost}} ${{ dropletCost.toLocaleString() }} / mo.
                 </p>
                 <div class="panel-list panel-list-vertical">
                     <ActiveDroplet
@@ -58,14 +58,14 @@ limitations under the License.
             </div>
             <div v-else>
                 <p class="has-text-muted">
-                    Select a Droplet below to get started estimating the bandwidth allowance on your account!
+                    {{ i18n.templates.app.selectToStart }}
                 </p>
                 <div class="panel-list panel-list-vertical">
                     <SkeletonDroplet></SkeletonDroplet>
                 </div>
             </div>
 
-            <h3>Droplet Picker</h3>
+            <h3>{{ i18n.templates.app.picker }}</h3>
             <Picker :droplets="droplets" @picked="picked"></Picker>
         </div>
 
