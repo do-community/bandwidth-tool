@@ -16,23 +16,45 @@ limitations under the License.
 
 <template>
     <div class="panel selectable is-droplet">
-        <p><em><sup>$</sup>{{ droplet.price_monthly }}<sub> / mo</sub></em></p>
-        <p><em>{{ droplet.transfer }} TB<sub> transfer</sub></em></p>
+        <p>
+            <em>
+                <sup>$</sup>
+                {{ droplet.price_monthly }}
+                <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
+            </em>
+        </p>
+        <p>
+            <em>
+                {{ droplet.transfer }} {{ i18n.templates.droplets.droplet.transferUnit }}
+                <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
+            </em>
+        </p>
         <hr />
-        <p>{{ droplet.memory / 1024 }} GB <sub> / {{ droplet.vcpus }} CPU{{ droplet.vcpus === 1 ? '' : 's' }}</sub></p>
-        <p>{{ droplet.disk }} GB <sub> SSD disk</sub></p>
+        <p>{{ droplet.memory / 1024 }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
+        <p>
+            {{ droplet.vcpus }}
+            {{ i18n.templates.droplets.droplet[droplet.vcpus === 1 ? 'cpuSingular' : 'cpuPlural'] }}
+        </p>
+        <p>{{ droplet.disk }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
         <p v-if="droplet.subType">
-            <sub>{{ droplet.subType }}</sub>
+            {{ droplet.subType }}
         </p>
         <p><code>{{ droplet.slug }}</code></p>
     </div>
 </template>
 
 <script>
+    const i18n = require('../../i18n');
+
     module.exports = {
         name: 'PickerDroplet',
         props: {
             droplet: Object,
+        },
+        data() {
+            return {
+                i18n,
+            };
         },
     };
 </script>
