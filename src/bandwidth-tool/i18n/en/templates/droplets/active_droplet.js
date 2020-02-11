@@ -1,11 +1,4 @@
 module.exports = {
-    month: 'mo',
-    transferUnit: 'TB',
-    transfer: 'transfer',
-    memoryUnit: 'GB',
-    cpuSingular: 'CPU',
-    cpuPlural: 'CPUs',
-    diskSuffix: 'GB SSD disk',
     hoursLabel: 'Droplet will exist for',
     hoursUnit: 'hours',
     hoursTooltip: 'Droplet pricing and billing is capped at 672 hours a month, or 28 days.',
