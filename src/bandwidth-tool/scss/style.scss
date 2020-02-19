@@ -48,6 +48,10 @@ $header: #0071fe;
     h3 {
       @include sailec-bold;
 
+      margin: $margin 0;
+    }
+
+    p {
       margin: 0;
     }
   }
@@ -63,7 +67,11 @@ $header: #0071fe;
     }
 
     .pool {
-      margin: 3rem 0;
+      margin: 3rem 0 0;
+
+      + * {
+        margin-top: 3rem;
+      }
 
       .stats {
         align-items: center;
@@ -226,8 +234,8 @@ $header: #0071fe;
   }
 
   .panel {
-    transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
     box-shadow: none;
+    transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
 
     &.focused-droplet {
       box-shadow: 0 2px 4px rgba($dark-blue, .06);

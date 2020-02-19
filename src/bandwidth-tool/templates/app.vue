@@ -22,16 +22,17 @@ limitations under the License.
             </h2>
             <div class="columns">
                 <div class="column">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-hidden="true"
-                         class="www-Icon www-Icon--xlarge bui-u-mb--regular">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-hidden="true">
                         <g fill="none" fill-rule="evenodd">
                             <rect fill="#F2F7FF" width="40" height="40" rx="4"></rect>
                             <path d="M17 16.25h8.25m-3-3l3 3-3 3m.75 4.5h-8.25m3 3l-3-3 3-3" stroke="#0069FF"
-                                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                            ></path>
                             <path
                                 d="M28.25 8.75h-16.5a3 3 0 0 0-3 3v16.5a3 3 0 0 0 3 3h16.5a3 3 0 0 0 3-3v-16.5a3 3 0 0 0-3-3z"
                                 stroke="#0069FF" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round"></path>
+                                stroke-linejoin="round"
+                            ></path>
                         </g>
                     </svg>
                     <h3>Bandwidth pool</h3>
@@ -42,16 +43,17 @@ limitations under the License.
                     </p>
                 </div>
                 <div class="column">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-hidden="true"
-                         class="www-Icon www-Icon--xlarge bui-u-mb--regular">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-hidden="true">
                         <g fill="none" fill-rule="evenodd">
                             <rect fill="#F2F7FF" width="40" height="40" rx="4"></rect>
                             <path d="M17 16.25h8.25m-3-3l3 3-3 3m.75 4.5h-8.25m3 3l-3-3 3-3" stroke="#0069FF"
-                                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                            ></path>
                             <path
                                 d="M28.25 8.75h-16.5a3 3 0 0 0-3 3v16.5a3 3 0 0 0 3 3h16.5a3 3 0 0 0 3-3v-16.5a3 3 0 0 0-3-3z"
                                 stroke="#0069FF" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round"></path>
+                                stroke-linejoin="round"
+                            ></path>
                         </g>
                     </svg>
                     <h3>Overage charges</h3>
@@ -109,9 +111,6 @@ limitations under the License.
                 </div>
             </div>
             <div v-else>
-                <!--<p class="has-text-muted">
-                    {{ i18n.templates.app.selectToStart }}
-                </p>-->
                 <div class="panel-list panel-list-vertical">
                     <SkeletonDroplet></SkeletonDroplet>
                 </div>
