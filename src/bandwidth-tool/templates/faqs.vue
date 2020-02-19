@@ -16,18 +16,17 @@ limitations under the License.
 
 <template>
     <div class="container faqs">
-        <h2>Bandwidth FAQs</h2>
+        <h2>{{ i18n.templates.faqs.title }}</h2>
         <p class="has-text-muted">
-            For more information, please see our
+            {{ i18n.templates.faqs.forMoreInfo }}
             <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">
-                bandwidth billing docs</a>.
+                {{ i18n.templates.faqs.docs }}</a>.
         </p>
 
-        <h4>A question</h4>
-        <p>An answer, stolen from another part of the site probably because I don't want to write new things.</p>
-
-        <h4>Another question</h4>
-        <p>Really, this is just another answer to fill some space. Maybe we'll put useful content here later.</p>
+        <template v-for="item in i18n.templates.faqs.items">
+            <h4>{{ item.question }}</h4>
+            <p>{{ item.answer }}</p>
+        </template>
     </div>
 </template>
 

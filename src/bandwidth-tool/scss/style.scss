@@ -237,8 +237,37 @@ $header: #0071fe;
     box-shadow: none;
     transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
 
+    &.selectable {
+      &:hover {
+        background: lighten($primary, 47.5%);
+        box-shadow: 0 2px 4px rgba($dark-blue, .06);
+
+        a {
+          &.button {
+            &.is-primary {
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      a {
+        &.button {
+          &.is-primary {
+            font-size: .9em;
+            height: $margin * 1.5;
+            line-height: $margin * 1.5;
+            opacity: 0;
+            padding: 0 ($margin / 1.5);
+            pointer-events: none;
+            transition: opacity .2s ease-in-out;
+          }
+        }
+      }
+    }
+
     &.focused-droplet {
-      box-shadow: 0 2px 4px rgba($dark-blue, .06);
+      box-shadow: 0 2px 4px rgba($dark-blue, .12);
     }
 
     &.unfocused-droplet {

@@ -51,7 +51,8 @@ limitations under the License.
                 </p>
                 <div v-if="bandwidthOverage">
                     <br />
-                    <p v-html="i18n.templates.pool.overageWarning"></p>
+                    <p>{{ i18n.templates.pool.overageWarning }}</p>
+                    <br />
                     <p>
                         <span>{{ i18n.templates.pool.overage }}</span>
                         <b>

@@ -66,7 +66,6 @@ limitations under the License.
                     </div>
 
                     <div class="droplet-picker">
-                        <h3>{{ i18n.templates.app.picker }}</h3>
                         <Picker :droplets="droplets" @picked="picked"></Picker>
                     </div>
                 </div>

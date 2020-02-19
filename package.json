@@ -35,7 +35,7 @@
     "@babel/runtime": "^7.5.5",
     "babel-polyfill": "^6.26.0",
     "do-bulma": "git+https://github.com/do-community/do-bulma.git",
-    "do-vue": "git+https://github.com/do-community/do-vue.git#MattIPv4/www-template",
+    "do-vue": "git+https://github.com/do-community/do-vue.git",
     "node-fetch": "^2.6.0",
     "parcel-bundler": "^1.12.4",
     "query-string": "^6.10.1",

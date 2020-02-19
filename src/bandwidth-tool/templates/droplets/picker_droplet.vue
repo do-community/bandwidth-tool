@@ -29,7 +29,9 @@ limitations under the License.
                 <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
             </em>
         </p>
-        <hr />
+
+        <a class="button is-primary is-tiny">Add</a>
+
         <p>{{ droplet.memory / 1024 }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
         <p>
             {{ droplet.vcpus }}
