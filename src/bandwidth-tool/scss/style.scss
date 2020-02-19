@@ -26,12 +26,12 @@ $header: #0071fe;
       background: $input-disabled;
       max-width: none;
 
-      .container {
+      > .container {
         padding: 0;
-      }
 
-      .panel {
-        box-shadow: 0 2px 4px rgba($dark-blue, .06);
+        > .panel {
+          box-shadow: 0 2px 4px rgba($dark-blue, .06);
+        }
       }
     }
   }
@@ -67,11 +67,7 @@ $header: #0071fe;
     }
 
     .pool {
-      margin: 3rem 0 0;
-
-      + * {
-        margin-top: 3rem;
-      }
+      margin: 3rem 0;
 
       .stats {
         align-items: center;
@@ -120,6 +116,10 @@ $header: #0071fe;
           }
         }
       }
+    }
+
+    .droplets {
+      margin: 0 0 3rem;
     }
   }
 
