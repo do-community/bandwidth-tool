@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <template>
-    <div class="panel bandwidth">
+    <div class="pool">
         <h2>{{ i18n.templates.pool.title }}</h2>
 
         <div class="bars">

@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'Bandwidth Planner',
+    title: 'Bandwidth Calculator',
     description: 'A small tool to help explain DigitalOcean Droplet/Account bandwidth allowances.',
     droplets: 'Droplets',
     estimatedCost: 'The estimated cost of your Droplets is',

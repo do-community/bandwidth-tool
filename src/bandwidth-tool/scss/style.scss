@@ -18,63 +18,98 @@ $header: #0071fe;
 @import "~do-bulma/src/style";
 
 .do-bulma {
-  .header {
-    .container {
-      > div {
-        flex-grow: 1;
-        margin: 0;
+  .container {
+    padding: ($margin * 4) 0;
+    width: 100%;
+
+    &.inset {
+      background: $input-disabled;
+      max-width: none;
+
+      .container {
+        padding: 0;
       }
+
+      .panel {
+        box-shadow: 0 2px 4px rgba($dark-blue, .06);
+      }
+    }
+  }
+
+  .explainer {
+    h2 {
+      @include sailec-bold;
+
+      font-size: 36px;
+      margin: ($margin) 0 ($margin * 4);
+      text-align: center;
+    }
+
+    h3 {
+      @include sailec-bold;
+
+      margin: 0;
     }
   }
 
   .bandwidth {
     margin: 0;
+    padding: 3.75rem;
     text-align: left;
 
-    .stats {
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      margin-top: 1rem;
+    h1,
+    h3 {
+      margin: 0;
+    }
 
-      .data {
-        flex-basis: 55%;
-        padding-right: 1.5rem;
+    .pool {
+      margin: 3rem 0;
 
-        p {
-          margin: 0;
+      .stats {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        margin-top: 1rem;
 
-          span,
-          b {
-            font-size: $font-size * 1.1;
+        .data {
+          flex-basis: 55%;
+          padding-right: 1.5rem;
+
+          p {
+            margin: 0;
+
+            span,
+            b {
+              font-size: $font-size * 1.1;
+            }
+          }
+
+          .allowance {
+            b {
+              color: $primary;
+            }
+          }
+
+          .consumption {
+            b {
+              color: $dark-blue;
+            }
           }
         }
 
-        .allowance {
-          b {
-            color: $primary;
+        .info {
+          flex-basis: 45%;
+          padding-left: 1.5rem;
+
+          p {
+            color: $muted;
+            font-size: $font-size * .8;
+            text-align: right;
           }
-        }
 
-        .consumption {
-          b {
-            color: $dark-blue;
+          a {
+            white-space: nowrap;
           }
-        }
-      }
-
-      .info {
-        flex-basis: 45%;
-        padding-left: 1.5rem;
-
-        p {
-          color: $muted;
-          font-size: $font-size * .8;
-          text-align: right;
-        }
-
-        a {
-          white-space: nowrap;
         }
       }
     }
@@ -191,11 +226,23 @@ $header: #0071fe;
   }
 
   .panel {
-    transition: opacity .2s ease-in-out, background .2s ease-in-out;
+    transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    box-shadow: none;
+
+    &.focused-droplet {
+      box-shadow: 0 2px 4px rgba($dark-blue, .06);
+    }
 
     &.unfocused-droplet {
       background: darken($background, 5%);
       opacity: .8;
+    }
+
+    &.is-droplet {
+      sup {
+        line-height: inherit;
+        top: 0;
+      }
     }
   }
 
