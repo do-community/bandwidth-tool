@@ -18,6 +18,7 @@ $header: #0071fe;
 @import "~do-bulma/src/style";
 
 .do-bulma {
+  $pretty--color-dark: $primary;
   @import "~pretty-checkbox/src/pretty-checkbox";
 
   .container {
@@ -250,12 +251,6 @@ $header: #0071fe;
     }
   }
 
-  .tabs {
-    &.picker {
-      margin: 0;
-    }
-  }
-
   .panel {
     box-shadow: none;
     transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
@@ -318,40 +313,41 @@ $header: #0071fe;
     }
   }
 
-  .pretty{
-    &.p-switch {
-      &.p-fill {
-        input {
-          &:checked {
-            ~ .state {
-              &::before {
-                background: $primary !important;
-                border-color: $primary !important;
-              }
+  .picker {
+    .tabs {
+      margin: 0;
+    }
 
-              label {
-                &::after {
-                  left: calc(1em - 2px);
+    .pretty {
+      &.p-fill {
+        &.p-switch {
+          input {
+            &:checked {
+              ~ .state {
+                label {
+                  &::after {
+                    left: calc(1em - 2px);
+                  }
                 }
               }
             }
           }
-        }
 
-        .state {
-          &::before {
-            height: 1em;
-            top: 0;
-            transition: all .2s ease-in-out;
-          }
-
-          label {
-            &::before,
-            &:after {
+          .state {
+            &::before {
               height: 1em;
-              width: 1em;
               top: 0;
               transition: all .2s ease-in-out;
+            }
+
+            label {
+              &::before,
+              &::after {
+                height: 1em;
+                top: 0;
+                transition: all .2s ease-in-out;
+                width: 1em;
+              }
             }
           }
         }

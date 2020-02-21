@@ -15,8 +15,8 @@ limitations under the License.
 -->
 
 <template>
-    <div>
-        <div class="tabs picker">
+    <div class="picker">
+        <div class="tabs">
             <ul>
                 <li v-for="key in keys" :class="category === key ? 'is-active' : ''">
                     <a @click="setCategory(key)">{{ key }}</a>
@@ -25,7 +25,7 @@ limitations under the License.
         </div>
 
         <PrettyCheck class="p-switch p-fill" :checked="false" @change="toggleType">
-            Kubernetes Pools
+            {{ i18n.templates.picker.kubernetes }}
         </PrettyCheck>
 
         <div class="panel-list">
@@ -42,6 +42,7 @@ limitations under the License.
 <script>
     const PickerDroplet = require('./droplets/picker_droplet');
     const PrettyCheck = require('pretty-checkbox-vue/check');
+    const i18n = require('../i18n');
     const { dropletTypes } = require('../utils/dropletType');
 
     const getDroplets = (droplets, category) => {
@@ -59,6 +60,7 @@ limitations under the License.
         },
         data() {
             return {
+                i18n,
                 category: 'Standard',
                 type: 'droplet',
                 keys: dropletTypes,
