@@ -1,6 +1,6 @@
 module.exports = {
     title: 'Bandwidth Calculator',
-    description: 'A small tool to help calculate and explain bandwidth allowances for Droplets and Kubernetes nodes on DigitalOcean.',
+    description: 'A tool to help calculate and explain bandwidth allowances for Droplets and Kubernetes nodes on DigitalOcean.',
     droplets: 'Droplets',
     estimatedCost: 'The estimated cost of your Droplets is',
     selectToStart: 'Select a Droplet below to get started estimating the bandwidth allowance on your account!',
