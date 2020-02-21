@@ -27,7 +27,8 @@ limitations under the License.
                 </p>
                 <p>
                     <em>
-                        {{ droplet.transfer }} {{ i18n.templates.droplets.droplet.transferUnit }}
+                        {{ (droplet.transfer * 1024).toLocaleString() }}
+                        {{ i18n.templates.droplets.droplet.transferUnitSmall }}
                         <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
                     </em>
                 </p>
@@ -64,7 +65,7 @@ limitations under the License.
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.consumptionLabel }}</span>
                 <div class="control">
                     <div class="control">
-                        <input ref="consumption" type="number" min="0" step="0.5" :value="consumption" @input="update" />
+                        <input ref="consumption" type="number" min="0" step="64" :value="consumption" @input="update" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.consumptionUnit }}</span>
                     </div>
                     <i v-tippy
@@ -116,7 +117,7 @@ limitations under the License.
                 return Math.min(672, Math.max(0, this.$data.hours));
             },
             bandwidthAllowance() {
-                return this.$props.droplet.transfer * (this.cappedHours() / 672);
+                return this.$props.droplet.transfer * 1024 * (this.cappedHours() / 672);
             },
             dropletCost() {
                 if (this.cappedHours() >= 672) return this.$props.droplet.price_monthly;

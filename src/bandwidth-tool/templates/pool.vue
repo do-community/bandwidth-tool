@@ -43,11 +43,11 @@ limitations under the License.
             <div class="data">
                 <p class="allowance">
                     <span>{{ i18n.templates.pool.allowance }}</span>
-                    <b>{{ bandwidthAllowance.toLocaleString() }} TB</b>
+                    <b>{{ bandwidthAllowance.toLocaleString() }} {{ i18n.templates.pool.allowanceUnit }}</b>
                 </p>
                 <p class="consumption">
                     <span>{{ i18n.templates.pool.consumption }}</span>
-                    <b>{{ bandwidthConsumption.toLocaleString() }} TB</b>
+                    <b>{{ bandwidthConsumption.toLocaleString() }} {{ i18n.templates.pool.consumptionUnit }}</b>
                 </p>
                 <div v-if="bandwidthOverage">
                     <br />

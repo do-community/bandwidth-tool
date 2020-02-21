@@ -191,6 +191,14 @@ $header: #0071fe;
               margin: 0;
               padding: 0 ($margin / 2);
               width: $height * 2.5;
+
+              &:focus {
+                box-shadow: 0 0 2px rgba($primary, .5);
+
+                ~ .suffix {
+                  color: $primary;
+                }
+              }
             }
 
             .suffix {
@@ -200,6 +208,8 @@ $header: #0071fe;
               position: absolute;
               right: $margin * 1.5;
               top: ($height * .6 - $font-size) / 2;
+              transition: color .2s ease-in-out;
+              z-index: 10;
             }
 
             i {

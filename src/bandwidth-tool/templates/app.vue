@@ -204,7 +204,7 @@ limitations under the License.
                 this.$data.bandwidthAllowance = this.getBandwidthAllowance();
                 this.$data.bandwidthConsumption = this.getBandwidthConsumption();
                 this.$data.bandwidthOverage = Math.max(
-                    (this.$data.bandwidthConsumption - this.$data.bandwidthAllowance) * 1000,
+                    (this.$data.bandwidthConsumption - this.$data.bandwidthAllowance),
                     0,
                 );
 
