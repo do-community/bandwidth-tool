@@ -17,7 +17,7 @@ limitations under the License.
 <template>
     <div class="container faqs">
         <h2>{{ i18n.templates.faqs.title }}</h2>
-        <p v-html="render(i18n.templates.faqs.forMoreInfo)" class="has-text-muted"></p>
+        <p class="has-text-muted" v-html="render(i18n.templates.faqs.forMoreInfo)"></p>
 
         <template v-for="item in i18n.templates.faqs.items">
             <h4>{{ item.question }}</h4>
