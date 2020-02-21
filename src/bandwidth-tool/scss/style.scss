@@ -298,6 +298,13 @@ $header: #0071fe;
         line-height: inherit;
         top: 0;
       }
+
+      .sub-block {
+        bottom: unset;
+        display: block;
+        line-height: 1.5;
+        top: -.2em;
+      }
     }
   }
 

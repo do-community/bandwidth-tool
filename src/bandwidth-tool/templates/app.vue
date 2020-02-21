@@ -86,6 +86,8 @@ limitations under the License.
     const dropletData = require('../../build/droplets');
     const droplets = {};
     for (const droplet of dropletData) {
+        if (!droplet.available) continue;
+        if (!droplet.regions.length) continue;
         const type = dropletType(droplet.slug);
         if (!type) continue;
         if (!(type in droplets)) droplets[type] = [];
