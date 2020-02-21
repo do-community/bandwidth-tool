@@ -30,6 +30,18 @@ limitations under the License.
             <span>{{ i18n.templates.picker.kubernetes }}</span>
         </div>
 
+        <div v-if="subCategories.length" class="radio">
+            <PrettyRadio
+                v-for="subCat in subCategories"
+                :checked="subCat === subCategory"
+                class="p-default p-round"
+                name="subCategory"
+                @change="setSubCategory(subCat)"
+            >
+                {{ subCat }}
+            </PrettyRadio>
+        </div>
+
         <div class="panel-list">
             <PickerDroplet
                 v-for="droplet in display"
@@ -44,6 +56,7 @@ limitations under the License.
 <script>
     const PickerDroplet = require('./droplets/picker_droplet');
     const PrettyCheck = require('pretty-checkbox-vue/check');
+    const PrettyRadio = require('pretty-checkbox-vue/radio');
     const i18n = require('../i18n');
     const { dropletTypes } = require('../utils/dropletType');
 
@@ -56,6 +69,7 @@ limitations under the License.
         components: {
             PickerDroplet,
             PrettyCheck,
+            PrettyRadio,
         },
         props: {
             droplets: Object,
@@ -64,6 +78,8 @@ limitations under the License.
             return {
                 i18n,
                 category: 'Standard',
+                subCategory: undefined,
+                subCategories: [],
                 type: 'droplet',
                 keys: dropletTypes,
                 display: getDroplets(this.$props.droplets, 'Standard'),
@@ -72,7 +88,16 @@ limitations under the License.
         methods: {
             setCategory(key) {
                 this.$data.category = key;
-                this.$data.display = getDroplets(this.$props.droplets, key);
+                const droplets = getDroplets(this.$props.droplets, key);
+                const subCats = [...new Set(droplets.map(d => d.subType).filter(d => !!d))];
+                this.$data.subCategories = subCats;
+                this.$data.subCategory = subCats.length ? subCats[0] : undefined;
+                this.$data.display = droplets.filter(d => d.subType === this.$data.subCategory);
+            },
+            setSubCategory(key) {
+                this.$data.subCategory = key;
+                this.$data.display = getDroplets(this.$props.droplets, this.$data.category)
+                    .filter(d => d.subType === this.$data.subCategory);
             },
             toggleType() {
                 if (this.$data.type === 'droplet') return this.$data.type = 'kubernetes';
