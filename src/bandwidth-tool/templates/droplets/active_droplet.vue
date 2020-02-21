@@ -37,6 +37,7 @@ limitations under the License.
                         <sup>$</sup>
                         {{ droplet.price_monthly }}
                         <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
+                        <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.droplet.node }}</sub>
                     </em>
                 </p>
                 <p>
@@ -44,6 +45,7 @@ limitations under the License.
                         {{ (droplet.transfer * 1024).toLocaleString() }}
                         {{ i18n.templates.droplets.droplet.transferUnitSmall }}
                         <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
+                        <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.droplet.node }}</sub>
                     </em>
                 </p>
             </div>
@@ -61,8 +63,28 @@ limitations under the License.
             </div>
         </div>
         <div class="right">
+            <div v-if="type === 'kubernetes'" class="input-container">
+                <span class="label">{{ i18n.templates.droplets.activeDroplet.nodesLabel }}</span>
+                <div class="control">
+                    <div class="control">
+                        <input ref="nodes" type="number" min="1" step="1" :value="nodes" @input="update" />
+                        <span class="suffix">{{ i18n.templates.droplets.activeDroplet.nodesUnit }}</span>
+                    </div>
+                    <i v-tippy
+                       :title="i18n.templates.droplets.activeDroplet.nodesTooltip"
+                       class="far fa-question-circle help"
+                    ></i>
+                </div>
+                <span class="label">&nbsp;</span>
+            </div>
+
             <div class="input-container">
-                <span class="label">{{ i18n.templates.droplets.activeDroplet.hoursLabel }}</span>
+                <span v-if="type === 'kubernetes'" class="label">
+                    {{ i18n.templates.droplets.activeDroplet.poolHoursLabel }}
+                </span>
+                <span v-else class="label">
+                    {{ i18n.templates.droplets.activeDroplet.hoursLabel }}
+                </span>
                 <div class="control">
                     <div class="control">
                         <input ref="hours" type="number" min="0" max="744" step="1" :value="hours" @input="update" />
@@ -75,6 +97,7 @@ limitations under the License.
                 </div>
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.monthly }}</span>
             </div>
+
             <div class="input-container">
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.consumptionLabel }}</span>
                 <div class="control">
@@ -89,9 +112,13 @@ limitations under the License.
                 </div>
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.monthly }}</span>
             </div>
+
             <div class="tertiary-info">
                 <p><em><sup>$</sup>{{ dropletCost().toLocaleString() }}</em></p>
-                <p><sub>{{ i18n.templates.droplets.activeDroplet.monthlyCost }}</sub></p>
+                <p>
+                    <sub v-if="type === 'kubernetes'">{{ i18n.templates.droplets.activeDroplet.poolMonthlyCost }}</sub>
+                    <sub v-else>{{ i18n.templates.droplets.activeDroplet.monthlyCost }}</sub>
+                </p>
             </div>
             <a v-tippy class="button is-tiny" :title="i18n.templates.droplets.activeDroplet.remove" @click="remove">
                 <i class="fas fa-times"></i>
@@ -127,13 +154,14 @@ limitations under the License.
             update() {
                 this.$data.hours = Number(this.$refs.hours.value);
                 this.$data.consumption = Number(this.$refs.consumption.value);
+                this.$data.nodes = Number(this.$refs.nodes.value);
                 this.$emit('update');
             },
             cappedHours() {
                 return Math.min(672, Math.max(0, this.$data.hours));
             },
             nodeMultiplier() {
-                if (this.$props.type === 'kubernetes') Math.max(this.$data.nodes, 1);
+                if (this.$props.type === 'kubernetes') return Math.max(this.$data.nodes, 1);
                 return 1;
             },
             bandwidthAllowance() {

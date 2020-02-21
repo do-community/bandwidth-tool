@@ -18,8 +18,8 @@ limitations under the License.
     <div>
         <div class="tabs picker">
             <ul>
-                <li v-for="key in keys" :class="type === key ? 'is-active' : ''">
-                    <a @click="setType(key)">{{ key }}</a>
+                <li v-for="key in keys" :class="category === key ? 'is-active' : ''">
+                    <a @click="setCategory(key)">{{ key }}</a>
                 </li>
             </ul>
         </div>
@@ -37,8 +37,8 @@ limitations under the License.
     const PickerDroplet = require('./droplets/picker_droplet');
     const { dropletTypes } = require('../utils/dropletType');
 
-    const getDroplets = (droplets, type) => {
-        return droplets[type].sort((a, b) => a.price - b.price);
+    const getDroplets = (droplets, category) => {
+        return droplets[category].sort((a, b) => a.price - b.price);
     };
 
     module.exports = {
@@ -51,14 +51,14 @@ limitations under the License.
         },
         data() {
             return {
-                type: 'Standard',
+                category: 'Standard',
                 keys: dropletTypes,
                 display: getDroplets(this.$props.droplets, 'Standard'),
             };
         },
         methods: {
-            setType(key) {
-                this.$data.type = key;
+            setCategory(key) {
+                this.$data.category = key;
                 this.$data.display = getDroplets(this.$props.droplets, key);
             },
             picked(slug) {
