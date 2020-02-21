@@ -96,7 +96,7 @@ limitations under the License.
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.hoursUnit }}</span>
                     </div>
                     <i v-tippy
-                       :title="i18n.templates.droplets.activeDroplet.hoursTooltip"
+                       :title="i18n.templates.droplets.activeDroplet[type === 'kubernetes' ? 'poolHoursTooltip' : 'hoursTooltip']"
                        class="far fa-question-circle help"
                     ></i>
                 </div>
@@ -167,8 +167,12 @@ limitations under the License.
                 this.$data.nodes = Number(this.$refs.nodes ? this.$refs.nodes.value : this.$data.nodes);
                 this.$emit('update');
             },
+            maxHours() {
+                if (this.$props.type === 'kubernetes') return 744;
+                return 672;
+            },
             cappedHours() {
-                return Math.min(672, Math.max(0, this.$data.hours));
+                return Math.min(this.maxHours(), Math.max(0, this.$data.hours));
             },
             nodeMultiplier() {
                 if (this.$props.type === 'kubernetes') return Math.max(this.$data.nodes, 1);
@@ -178,8 +182,7 @@ limitations under the License.
                 return this.$props.droplet.transfer * 1000 * (this.cappedHours() / 672) * this.nodeMultiplier();
             },
             dropletCost() {
-                if (this.cappedHours() >= 672) return this.$props.droplet.price_monthly * this.nodeMultiplier();
-                return this.$props.droplet.price_hourly * this.cappedHours() * this.nodeMultiplier();
+                return this.$props.droplet.price_monthly * (this.cappedHours() / this.maxHours()) * this.nodeMultiplier();
             },
         },
     };

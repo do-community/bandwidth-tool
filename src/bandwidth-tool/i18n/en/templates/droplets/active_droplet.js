@@ -7,6 +7,7 @@ module.exports = {
     poolHoursLabel: 'Pool will exist for',
     hoursUnit: 'hours',
     hoursTooltip: 'Droplet pricing and billing is capped at 672 hours a month, or 28 days.',
+    poolHoursTooltip: 'Kubernetes pool nodes can generate additional bandwidth allowance compared to Droplets, as they are billed up to 744 hours a month, or 31 days, instead of the normal 672 hours (28 days).',
 
     monthly: '(monthly)',
 
