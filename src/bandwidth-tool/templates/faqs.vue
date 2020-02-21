@@ -17,21 +17,19 @@ limitations under the License.
 <template>
     <div class="container faqs">
         <h2>{{ i18n.templates.faqs.title }}</h2>
-        <p class="has-text-muted">
-            {{ i18n.templates.faqs.forMoreInfo }}
-            <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">
-                {{ i18n.templates.faqs.docs }}</a>.
-        </p>
+        <p v-html="render(i18n.templates.faqs.forMoreInfo)" class="has-text-muted"></p>
 
         <template v-for="item in i18n.templates.faqs.items">
             <h4>{{ item.question }}</h4>
-            <p>{{ item.answer }}</p>
+            <p v-html="render(item.answer)"></p>
         </template>
     </div>
 </template>
 
 <script>
     const i18n = require('../i18n');
+    const md = require('markdown-it')();
+    const render = text => md.renderInline(text);
 
     module.exports = {
         name: 'FAQs',
@@ -39,6 +37,9 @@ limitations under the License.
             return {
                 i18n,
             };
+        },
+        methods: {
+            render,
         },
     };
 </script>
