@@ -62,7 +62,7 @@ limitations under the License.
                 this.$data.display = getDroplets(this.$props.droplets, key);
             },
             picked(slug) {
-                this.$emit('picked', slug);
+                this.$emit('picked', slug, 'droplet');
             },
         },
     };

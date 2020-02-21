@@ -46,7 +46,8 @@ limitations under the License.
                                     v-for="(droplet, id) in activeDroplets"
                                     :key="id"
                                     ref="activeDroplets"
-                                    :droplet="droplet"
+                                    :droplet="droplet[0]"
+                                    :type="droplet[1]"
                                     :class="focusedDropletClass(id)"
                                     @mouseenter.native="focusedDropletEnter(id)"
                                     @mouseleave.native="focusedDropletLeave(id)"
@@ -153,7 +154,7 @@ limitations under the License.
                     if (!droplet) continue;
                     const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                     const id = keys.length ? Math.max(...keys) + 1 : 0;
-                    this.$set(this.$data.activeDroplets, id, droplet[0]);
+                    this.$set(this.$data.activeDroplets, id, [droplet[0], item.type]);
                     this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
 
                     // Once rendered, set the data in the ref
@@ -162,6 +163,7 @@ limitations under the License.
                         if (!ref) return;
                         ref[0].$data.hours = item.hours;
                         ref[0].$data.consumption = item.consumption;
+                        ref[0].$data.nodes = item.nodes;
                     });
                 }
 
@@ -176,8 +178,10 @@ limitations under the License.
                 const data = this.$refs.activeDroplets.map(ref => {
                     return {
                         slug: ref.$props.droplet.slug,
+                        type: ref.$props.type,
                         hours: ref.$data.hours,
                         consumption: ref.$data.consumption,
+                        nodes: ref.$data.nodes,
                     };
                 });
 
@@ -240,11 +244,11 @@ limitations under the License.
                 if (this.$data.focusedDroplet === id) this.$data.focusedDroplet = null;
                 this.$nextTick(this.update);
             },
-            picked(slug) {
+            picked(slug, type) {
                 const droplet = dropletData.filter(d => d.slug === slug)[0];
                 const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                 const id = keys.length ? Math.max(...keys) + 1 : 0;
-                this.$set(this.$data.activeDroplets, id, droplet);
+                this.$set(this.$data.activeDroplets, id, [droplet, type]);
                 this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
                 this.$nextTick(this.update);
             },

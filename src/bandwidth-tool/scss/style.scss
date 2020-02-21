@@ -126,6 +126,17 @@ $header: #0071fe;
   .panel-list {
     &.panel-list-vertical {
       .panel {
+        .icon {
+          height: 2.5rem;
+          margin: 0 .25rem 0 0;
+          width: 2.5rem;
+
+          svg {
+            height: auto;
+            width: auto;
+          }
+        }
+
         .info {
           display: flex;
           flex-direction: column;
