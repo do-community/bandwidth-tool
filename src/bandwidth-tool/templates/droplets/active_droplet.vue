@@ -16,25 +16,8 @@ limitations under the License.
 
 <template>
     <div class="panel is-droplet">
-        <div v-if="type === 'kubernetes'" class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45" aria-hidden="true">
-                <path fill="none" stroke="#0069FF" stroke-width="2"
-                      d="M36.779 23.119c0 7.962-6.454 14.416-14.416 14.416-7.962 0-14.416-6.454-14.416-14.416 0-7.962 6.454-14.417 14.416-14.417 7.962 0 14.416 6.455 14.416 14.417zm-9.212.031c0 2.844-2.306 5.151-5.151 5.151-2.845 0-5.151-2.307-5.151-5.151 0-2.845 2.306-5.151 5.151-5.151 2.845 0 5.151 2.306 5.151 5.151zm-5.153-5.291V3.435v14.424zM6.999 10.598l11.22 9.136-11.22-9.136zm30.833 0l-11.219 9.136 11.219-9.136zm4.001 16.795l-14.11-3.095 14.11 3.095zM3 27.393l14.11-3.095L3 27.393zM31.2 41l-6.405-13.343L31.2 41zm-17.558 0l6.304-13.343L13.642 41z"
-                ></path>
-            </svg>
-        </div>
-        <div v-else class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45" aria-hidden="true">
-                <g stroke="#0069FF" stroke-width="2" fill="none" fill-rule="evenodd">
-                    <path
-                        d="M22.6 41.2C14.2 41.2 7 34.3 7 25.8 7 12.9 22.6 4.2 22.6 4.2s15.6 9 15.6 21.7c0 8.4-7.1 15.3-15.6 15.3z"
-                    ></path>
-                    <path
-                        d="M22.6 30.8c-2.9 0-5.2-2.3-5.2-5.2 0-4 5.2-7.8 5.2-7.8s5.2 3.7 5.2 7.8c0 2.9-2.3 5.2-5.2 5.2z"
-                    ></path>
-                </g>
-            </svg>
-        </div>
+        <KubernetesIcon v-if="type === 'kubernetes'"></KubernetesIcon>
+        <DropletIcon v-else></DropletIcon>
 
         <div class="info">
             <div class="primary-info">
@@ -42,7 +25,7 @@ limitations under the License.
                     <em>
                         <sup>$</sup>{{ droplet.price_monthly }}
                         <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
-                        <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.droplet.node }}</sub>
+                        <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.activeDroplet.node }}</sub>
                     </em>
                 </p>
                 <p>
@@ -50,7 +33,7 @@ limitations under the License.
                         {{ droplet.transfer.toLocaleString() }}
                         {{ i18n.templates.droplets.droplet.transferUnit }}
                         <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
-                        <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.droplet.node }}</sub>
+                        <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.activeDroplet.node }}</sub>
                     </em>
                 </p>
             </div>
@@ -143,11 +126,18 @@ limitations under the License.
     const VueTippy = require('vue-tippy').default;
     Vue.use(VueTippy);
 
+    const DropletIcon = require('../icons/droplet_icon');
+    const KubernetesIcon = require('../icons/kubernetes_icon');
+
     module.exports = {
         name: 'ActiveDroplet',
         props: {
             droplet: Object,
             type: String,
+        },
+        components: {
+            DropletIcon,
+            KubernetesIcon,
         },
         data() {
             return {

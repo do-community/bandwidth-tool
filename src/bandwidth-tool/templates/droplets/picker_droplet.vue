@@ -19,16 +19,19 @@ limitations under the License.
         <p>
             <em>
                 <sup>$</sup>{{ droplet.price_monthly }}
+                <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
                 <sub v-if="type === 'kubernetes'" class="sub-block">
-                    / {{ i18n.templates.droplets.droplet.month }} / {{ i18n.templates.droplets.droplet.node }}
+                    {{ i18n.templates.droplets.pickerDroplet.perNode }}
                 </sub>
-                <sub v-else> / {{ i18n.templates.droplets.droplet.month }}</sub>
             </em>
         </p>
         <p>
             <em>
                 {{ droplet.transfer }} {{ i18n.templates.droplets.droplet.transferUnit }}
                 <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
+                <sub v-if="type === 'kubernetes'" class="sub-block">
+                    {{ i18n.templates.droplets.pickerDroplet.perNode }}
+                </sub>
             </em>
         </p>
 

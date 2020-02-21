@@ -24,9 +24,11 @@ limitations under the License.
             </ul>
         </div>
 
-        <PrettyCheck class="p-switch p-fill" :checked="false" @change="toggleType">
-            {{ i18n.templates.picker.kubernetes }}
-        </PrettyCheck>
+        <div class="switch">
+            <span>{{ i18n.templates.picker.droplets }}</span>
+            <PrettyCheck class="p-switch p-fill" :checked="false" @change="toggleType"></PrettyCheck>
+            <span>{{ i18n.templates.picker.kubernetes }}</span>
+        </div>
 
         <div class="panel-list">
             <PickerDroplet

@@ -303,7 +303,8 @@ $header: #0071fe;
         bottom: unset;
         display: block;
         line-height: 1.5;
-        top: -.2em;
+        margin-bottom: .5em;
+        top: -.1em;
       }
     }
   }
@@ -325,35 +326,46 @@ $header: #0071fe;
       margin: 0;
     }
 
-    .pretty {
-      &.p-fill {
-        &.p-switch {
-          input {
-            &:checked {
-              ~ .state {
-                label {
-                  &::after {
-                    left: calc(1em - 2px);
+    .switch {
+      margin: 0 .5rem .3rem;
+      padding: 0 .15rem;
+
+      .pretty {
+        &.p-fill {
+          &.p-switch {
+            line-height: 1.1;
+            margin: 0 .25rem;
+
+            input {
+              &:checked {
+                ~ .state {
+                  label {
+                    &::after {
+                      left: calc(1em - 2px);
+                    }
                   }
                 }
               }
             }
-          }
 
-          .state {
-            &::before {
-              height: 1em;
-              top: 0;
-              transition: all .2s ease-in-out;
-            }
-
-            label {
-              &::before,
-              &::after {
+            .state {
+              &::before {
                 height: 1em;
                 top: 0;
                 transition: all .2s ease-in-out;
-                width: 1em;
+              }
+
+              label {
+                min-width: 2em;
+                text-indent: 0;
+
+                &::before,
+                &::after {
+                  height: 1em;
+                  top: 0;
+                  transition: all .2s ease-in-out;
+                  width: 1em;
+                }
               }
             }
           }

@@ -1,3 +1,4 @@
 module.exports = {
-    kubernetes: 'Kubernetes Pools',
+    droplets: 'Droplets',
+    kubernetes: 'Kubernetes Pool Nodes',
 };
