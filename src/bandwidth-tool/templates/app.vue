@@ -38,9 +38,9 @@ limitations under the License.
                     <div class="droplets">
                         <h2>{{ i18n.templates.app.droplets }}</h2>
                         <div v-if="hasActiveDroplets">
-                            <p class="has-text-muted">
+                            <!--<p class="has-text-muted">
                                 {{ i18n.templates.app.estimatedCost }} ${{ dropletCost.toLocaleString() }} / mo.
-                            </p>
+                            </p>-->
                             <div class="panel-list panel-list-vertical">
                                 <ActiveDroplet
                                     v-for="(droplet, id) in activeDroplets"
