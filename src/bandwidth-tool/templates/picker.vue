@@ -23,10 +23,16 @@ limitations under the License.
                 </li>
             </ul>
         </div>
+
+        <PrettyCheck class="p-switch p-fill" :checked="false" @change="toggleType">
+            Kubernetes Pools
+        </PrettyCheck>
+
         <div class="panel-list">
             <PickerDroplet
                 v-for="droplet in display"
                 :droplet="droplet"
+                :type="type"
                 @click.native="picked(droplet.slug)"
             ></PickerDroplet>
         </div>
@@ -35,6 +41,7 @@ limitations under the License.
 
 <script>
     const PickerDroplet = require('./droplets/picker_droplet');
+    const PrettyCheck = require('pretty-checkbox-vue/check');
     const { dropletTypes } = require('../utils/dropletType');
 
     const getDroplets = (droplets, category) => {
@@ -45,6 +52,7 @@ limitations under the License.
         name: 'Picker',
         components: {
             PickerDroplet,
+            PrettyCheck,
         },
         props: {
             droplets: Object,
@@ -52,6 +60,7 @@ limitations under the License.
         data() {
             return {
                 category: 'Standard',
+                type: 'droplet',
                 keys: dropletTypes,
                 display: getDroplets(this.$props.droplets, 'Standard'),
             };
@@ -61,8 +70,12 @@ limitations under the License.
                 this.$data.category = key;
                 this.$data.display = getDroplets(this.$props.droplets, key);
             },
+            toggleType() {
+                if (this.$data.type === 'droplet') return this.$data.type = 'kubernetes';
+                this.$data.type = 'droplet';
+            },
             picked(slug) {
-                this.$emit('picked', slug, 'droplet');
+                this.$emit('picked', slug, this.$data.type);
             },
         },
     };

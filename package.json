@@ -38,6 +38,7 @@
     "do-vue": "git+https://github.com/do-community/do-vue.git",
     "node-fetch": "^2.6.0",
     "parcel-bundler": "^1.12.4",
+    "pretty-checkbox-vue": "^1.1.9",
     "query-string": "^6.10.1",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",

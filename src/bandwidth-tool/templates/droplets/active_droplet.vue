@@ -34,8 +34,7 @@ limitations under the License.
             <div class="primary-info">
                 <p>
                     <em>
-                        <sup>$</sup>
-                        {{ droplet.price_monthly }}
+                        <sup>$</sup>{{ droplet.price_monthly }}
                         <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
                         <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.droplet.node }}</sub>
                     </em>
@@ -120,7 +119,12 @@ limitations under the License.
                     <sub v-else>{{ i18n.templates.droplets.activeDroplet.monthlyCost }}</sub>
                 </p>
             </div>
-            <a v-tippy class="button is-tiny" :title="i18n.templates.droplets.activeDroplet.remove" @click="remove">
+
+            <a v-tippy
+               class="button is-tiny"
+               :title="i18n.templates.droplets.activeDroplet[type === 'kubernetes' ? 'poolRemove' : 'remove']"
+               @click="remove"
+            >
                 <i class="fas fa-times"></i>
             </a>
         </div>

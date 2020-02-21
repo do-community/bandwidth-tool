@@ -18,4 +18,5 @@ module.exports = {
     poolMonthlyCost: 'Monthly Pool Cost',
 
     remove: 'Remove this Droplet',
+    poolRemove: 'Remove this Kubernetes Pool',
 };

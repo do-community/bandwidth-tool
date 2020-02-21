@@ -18,6 +18,8 @@ $header: #0071fe;
 @import "~do-bulma/src/style";
 
 .do-bulma {
+  @import "~pretty-checkbox/src/pretty-checkbox";
+
   .container {
     padding: ($margin * 4) 0;
     width: 100%;
@@ -311,6 +313,47 @@ $header: #0071fe;
 
         &.unfocused-droplet {
           opacity: .4;
+        }
+      }
+    }
+  }
+
+  .pretty{
+    &.p-switch {
+      &.p-fill {
+        input {
+          &:checked {
+            ~ .state {
+              &::before {
+                background: $primary !important;
+                border-color: $primary !important;
+              }
+
+              label {
+                &::after {
+                  left: calc(1em - 2px);
+                }
+              }
+            }
+          }
+        }
+
+        .state {
+          &::before {
+            height: 1em;
+            top: 0;
+            transition: all .2s ease-in-out;
+          }
+
+          label {
+            &::before,
+            &:after {
+              height: 1em;
+              width: 1em;
+              top: 0;
+              transition: all .2s ease-in-out;
+            }
+          }
         }
       }
     }

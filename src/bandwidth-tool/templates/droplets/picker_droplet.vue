@@ -18,9 +18,9 @@ limitations under the License.
     <div class="panel selectable is-droplet">
         <p>
             <em>
-                <sup>$</sup>
-                {{ droplet.price_monthly }}
+                <sup>$</sup>{{ droplet.price_monthly }}
                 <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
+                <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.droplet.node }}</sub>
             </em>
         </p>
         <p>
@@ -52,6 +52,7 @@ limitations under the License.
         name: 'PickerDroplet',
         props: {
             droplet: Object,
+            type: String,
         },
         data() {
             return {
