@@ -18,8 +18,8 @@ limitations under the License.
     <div class="picker">
         <div class="tabs">
             <ul>
-                <li v-for="key in keys" :class="category === key ? 'is-active' : ''">
-                    <a @click="setCategory(key)">{{ key }}</a>
+                <li v-for="cat in categories" :class="cat === category ? 'is-active' : ''">
+                    <a @click="setCategory(cat)">{{ cat }}</a>
                 </li>
             </ul>
         </div>
@@ -59,6 +59,8 @@ limitations under the License.
     const PrettyRadio = require('pretty-checkbox-vue/radio');
     const i18n = require('../i18n');
     const { dropletTypes } = require('../utils/dropletType');
+    const kubernetesData = require('../../build/kubernetes');
+    const kubernetes = kubernetesData.map(x => x.slug);
 
     const getDroplets = (droplets, category) => {
         return droplets[category].sort((a, b) => a.price - b.price);
@@ -78,40 +80,50 @@ limitations under the License.
             return {
                 i18n,
                 category: 'Standard',
+                categories: dropletTypes,
                 subCategory: undefined,
                 subCategories: [],
                 type: 'droplet',
-                keys: dropletTypes,
                 display: getDroplets(this.$props.droplets, 'Standard'),
             };
         },
         methods: {
-            setCategory(key) {
-                this.$data.category = key;
+            getDroplets() {
+                let droplets = getDroplets(this.$props.droplets, this.$data.category);
+                if (this.$data.type === 'kubernetes') droplets = droplets.filter(d => kubernetes.includes(d.slug));
+                return droplets;
+            },
+            setCategory(cat) {
+                this.$data.category = cat;
 
-                // Get droplets and all the subcats
-                const droplets = getDroplets(this.$props.droplets, key);
+                // Get droplets (kubernetes uses a limited subset)
+                const droplets = this.getDroplets();
+
+                // Set the subcats
                 const subCats = [...new Set(droplets.map(d => d.subType))].filter(d => !!d).sort();
-
-                // Set the default subcat
+                this.$data.subCategories = subCats;
                 this.$data.subCategory = subCats.length ? subCats[0] : undefined;
-
-                // Set the subcats for picking (note: in k8s world, variants are't available and 1x is always used)
-                this.$data.subCategories = this.$data.type === 'kubernetes' ? [] : subCats;
 
                 // Set the droplets to show, filtered by subcat
                 this.$data.display = droplets.filter(d => d.subType === this.$data.subCategory);
             },
-            setSubCategory(key) {
-                this.$data.subCategory = key;
-                this.$data.display = getDroplets(this.$props.droplets, this.$data.category)
-                    .filter(d => d.subType === this.$data.subCategory);
+            setSubCategory(subcat) {
+                this.$data.subCategory = subcat;
+                this.$data.display = this.getDroplets().filter(d => d.subType === this.$data.subCategory);
             },
             toggleType() {
                 if (this.$data.type === 'droplet') this.$data.type = 'kubernetes';
                 else this.$data.type = 'droplet';
 
-                // Re-run category setting to deal with kubernetes not using subcats
+                // Set the cats (use dropletTypes to preserve custom order)
+                let droplets = Object.values(this.$props.droplets).flat();
+                if (this.$data.type === 'kubernetes') droplets = droplets.filter(d => kubernetes.includes(d.slug));
+                const dropletCats = [...new Set(droplets.map(d => d.type))].filter(d => !!d);
+                const cats = dropletTypes.filter(c => dropletCats.includes(c));
+                this.$data.categories = cats;
+                this.$data.category = cats.includes(this.$data.category) ? this.$data.category : cats[0];
+
+                // Re-run category setting to deal with kubernetes not using all droplets
                 this.setCategory(this.$data.category);
             },
             picked(slug) {
