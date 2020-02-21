@@ -88,10 +88,18 @@ limitations under the License.
         methods: {
             setCategory(key) {
                 this.$data.category = key;
+
+                // Get droplets and all the subcats
                 const droplets = getDroplets(this.$props.droplets, key);
-                const subCats = [...new Set(droplets.map(d => d.subType).filter(d => !!d))];
-                this.$data.subCategories = subCats;
+                const subCats = [...new Set(droplets.map(d => d.subType))].filter(d => !!d).sort();
+
+                // Set the default subcat
                 this.$data.subCategory = subCats.length ? subCats[0] : undefined;
+
+                // Set the subcats for picking (note: in k8s world, variants are't available and 1x is always used)
+                this.$data.subCategories = this.$data.type === 'kubernetes' ? [] : subCats;
+
+                // Set the droplets to show, filtered by subcat
                 this.$data.display = droplets.filter(d => d.subType === this.$data.subCategory);
             },
             setSubCategory(key) {
@@ -100,8 +108,11 @@ limitations under the License.
                     .filter(d => d.subType === this.$data.subCategory);
             },
             toggleType() {
-                if (this.$data.type === 'droplet') return this.$data.type = 'kubernetes';
-                this.$data.type = 'droplet';
+                if (this.$data.type === 'droplet') this.$data.type = 'kubernetes';
+                else this.$data.type = 'droplet';
+
+                // Re-run category setting to deal with kubernetes not using subcats
+                this.setCategory(this.$data.category);
             },
             picked(slug) {
                 this.$emit('picked', slug, this.$data.type);
