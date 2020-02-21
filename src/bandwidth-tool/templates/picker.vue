@@ -16,18 +16,18 @@ limitations under the License.
 
 <template>
     <div class="picker">
+        <div class="switch">
+            <span>{{ i18n.templates.picker.droplets }}</span>
+            <PrettyCheck class="p-switch p-fill" :checked="false" @change="toggleType"></PrettyCheck>
+            <span>{{ i18n.templates.picker.kubernetes }}</span>
+        </div>
+
         <div class="tabs">
             <ul>
                 <li v-for="cat in categories" :class="cat === category ? 'is-active' : ''">
                     <a @click="setCategory(cat)">{{ cat }}</a>
                 </li>
             </ul>
-        </div>
-
-        <div class="switch">
-            <span>{{ i18n.templates.picker.droplets }}</span>
-            <PrettyCheck class="p-switch p-fill" :checked="false" @change="toggleType"></PrettyCheck>
-            <span>{{ i18n.templates.picker.kubernetes }}</span>
         </div>
 
         <div v-if="subCategories.length" class="radio">
