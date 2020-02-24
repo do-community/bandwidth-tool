@@ -99,10 +99,14 @@ limitations under the License.
                 // Get droplets (kubernetes uses a limited subset)
                 const droplets = this.getDroplets();
 
-                // Set the subcats
+                // Get the subcats
                 const subCats = [...new Set(droplets.map(d => d.subType))].filter(d => !!d).sort();
-                this.$data.subCategories = subCats;
+
+                // Set the default subcat
                 this.$data.subCategory = subCats.length ? subCats[0] : undefined;
+
+                // Set the subcats for picking (note: in k8s world, variants are't available and 1x is always used)
+                this.$data.subCategories = this.$data.type === 'kubernetes' ? [] : subCats;
 
                 // Set the droplets to show, filtered by subcat
                 this.$data.display = droplets.filter(d => d.subType === this.$data.subCategory);
