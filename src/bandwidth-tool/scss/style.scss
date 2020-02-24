@@ -383,4 +383,17 @@ $header: #0071fe;
       }
     }
   }
+
+  .faqs {
+    h4 {
+      font-size: .9rem;
+      margin: ($margin * 2) 0 ($margin / 2);
+      text-transform: none;
+
+      + p {
+        font-size: .85rem;
+        margin: 0 0 ($margin / 2);
+      }
+    }
+  }
 }
