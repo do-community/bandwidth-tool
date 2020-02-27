@@ -386,12 +386,13 @@ $header: #0071fe;
 
   .faqs {
     h4 {
-      font-size: .9rem;
+      color: $dark-blue;
+      font-size: .95rem;
       margin: ($margin * 2) 0 ($margin / 2);
       text-transform: none;
 
       + p {
-        font-size: .85rem;
+        font-size: .9rem;
         margin: 0 0 ($margin / 2);
       }
     }
