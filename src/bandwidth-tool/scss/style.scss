@@ -407,17 +407,66 @@ $header: #0071fe;
     justify-content: center;
 
     .button {
+      box-shadow: 0 2px 4px rgba($dark-blue, .06);
       font-size: 18px;
       height: $margin * 3.5;
       padding: 0 $margin * 2.5;
+      transition: background .2s ease-in-out, box-shadow .2s ease-in-out, color .2s ease-in-out;
+
+      &:hover,
+      &:focus {
+        box-shadow: 0 2px 4px rgba($dark-blue, .16);
+      }
     }
   }
 
   .droplet-picker-modal {
-    padding: 0 ($margin * 10);
+    padding: 8vh 8vw;
+
+    @media (max-width: $breakpoint) {
+      padding: $margin;
+    }
 
     .modal-card {
+      height: 100%;
+      position: relative;
       width: 100%;
+
+      @media (max-width: $breakpoint) {
+        overflow: auto;
+        padding: ($margin / 2);
+      }
+
+      .modal-card-head {
+        padding: 0 ($margin / 2);
+        position: absolute;
+        right: $margin * 4;
+        top: $margin * 2;
+
+        @media (max-width: $breakpoint) {
+          padding: $margin ($margin / 2);
+          right: $margin;
+          top: 0;
+        }
+
+        .delete {
+          $delete-size: 30px;
+
+          height: $delete-size;
+          max-height: $delete-size;
+          max-width: $delete-size;
+          min-height: $delete-size;
+          min-width: $delete-size;
+          width: $delete-size;
+        }
+      }
+
+      .modal-card-body {
+        @media (max-width: $breakpoint) {
+          overflow: initial;
+          padding: ($margin / 2);
+        }
+      }
     }
   }
 
@@ -435,21 +484,10 @@ $header: #0071fe;
           @media (max-width: $breakpoint) {
             align-items: flex-start;
             display: inline-flex;
-            flex-direction: column;
-            flex-grow: 0;
+            flex-wrap: wrap;
             margin: 0;
-          }
-
-          li {
-            @media (max-width: $breakpoint) {
-              width: 100%;
-            }
-
-            a {
-              @media (max-width: $breakpoint) {
-                justify-content: flex-start;
-              }
-            }
+            max-width: 100%;
+            padding: 0 ($margin * 3) 0 0;
           }
         }
       }
