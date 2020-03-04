@@ -30,20 +30,20 @@ limitations under the License.
                 </p>
                 <p>
                     <em>
-                        {{ droplet.transfer.toLocaleString() }}
-                        {{ i18n.templates.droplets.droplet.transferUnit }}
+                        {{ (droplet.transfer * 1000).toLocaleString() }}
+                        {{ i18n.templates.droplets.droplet.transferUnitSmall }}
                         <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
                         <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.activeDroplet.node }}</sub>
                     </em>
                 </p>
             </div>
             <div class="secondary-info">
-                <p>{{ droplet.memory / 1024 }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
                 <p>
-                    {{ droplet.vcpus }}
+                    {{ droplet.vcpus.toLocaleString() }}
                     {{ i18n.templates.droplets.droplet[droplet.vcpus === 1 ? 'cpuSingular' : 'cpuPlural'] }}
                 </p>
-                <p>{{ droplet.disk }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
+                <p>{{ (droplet.memory / 1024).toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
+                <p>{{ droplet.disk.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
                 <p v-if="droplet.subType">
                     {{ droplet.subType }}
                 </p>
