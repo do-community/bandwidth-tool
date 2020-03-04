@@ -393,98 +393,120 @@ $header: #0071fe;
     }
   }
 
-  .picker {
-    .tabs {
-      margin: 0;
+  .droplet-picker-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
-      @media (max-width: $breakpoint) {
-        border-bottom: $thin-border;
-        margin: 0 0 $margin;
-      }
-
-      ul {
-        @media (max-width: $breakpoint) {
-          align-items: flex-start;
-          display: inline-flex;
-          flex-direction: column;
-          flex-grow: 0;
-          margin: 0;
-        }
-
-        li {
-          @media (max-width: $breakpoint) {
-            width: 100%;
-          }
-
-          a {
-            @media (max-width: $breakpoint) {
-              justify-content: flex-start;
-            }
-          }
-        }
-      }
+    .button {
+      font-size: 18px;
+      height: $margin * 3.5;
+      padding: 0 $margin * 2.5;
     }
+  }
 
-    .switch {
-      margin: 0 .5rem .5rem;
-      padding: 0 .15rem;
+  .droplet-picker-modal {
+    padding: 0 ($margin * 10);
 
-      > span {
-        display: inline-block;
+    .modal-card {
+      width: 100%;
+    }
+  }
+
+  .droplet-picker {
+    .picker {
+      .tabs {
+        margin: 0;
 
         @media (max-width: $breakpoint) {
-          display: block;
+          border-bottom: $thin-border;
+          margin: 0 0 $margin;
+        }
+
+        ul {
+          @media (max-width: $breakpoint) {
+            align-items: flex-start;
+            display: inline-flex;
+            flex-direction: column;
+            flex-grow: 0;
+            margin: 0;
+          }
+
+          li {
+            @media (max-width: $breakpoint) {
+              width: 100%;
+            }
+
+            a {
+              @media (max-width: $breakpoint) {
+                justify-content: flex-start;
+              }
+            }
+          }
         }
       }
 
-      .pretty {
-        &.p-fill {
-          &.p-switch {
-            line-height: 1.1;
-            margin: 0 .25rem;
+      .switch {
+        margin: 0 .5rem .5rem;
+        padding: 0 .15rem;
 
-            @media (max-width: $breakpoint) {
-              margin: .75rem 0;
-              transform: rotate(90deg);
-            }
+        > span {
+          display: inline-block;
 
-            input {
-              &:checked {
-                ~ .state {
-                  label {
-                    &::after {
-                      left: calc(1em - 2px);
+          @media (max-width: $breakpoint) {
+            display: block;
+          }
+        }
 
-                      @media (max-width: $breakpoint) {
-                        left: calc(1em + 1px);
+        .pretty {
+          &.p-fill {
+            &.p-switch {
+              line-height: 1.1;
+              margin: 0 .25rem;
+
+              @media (max-width: $breakpoint) {
+                margin: .75rem 0;
+                transform: rotate(90deg);
+              }
+
+              input {
+                &:checked {
+                  ~ .state {
+                    label {
+                      &::after {
+                        left: calc(1em - 2px);
+
+                        @media (max-width: $breakpoint) {
+                          left: calc(1em + 1px);
+                        }
                       }
                     }
                   }
                 }
               }
-            }
 
-            .state {
-              &::before {
-                height: 1em;
-                top: 0;
-                transition: all .2s ease-in-out;
-              }
-
-              label {
-                min-width: 2em;
-                text-indent: 0;
-
-                &::before,
-                &::after {
+              .state {
+                &::before {
                   height: 1em;
                   top: 0;
                   transition: all .2s ease-in-out;
-                  width: 1em;
+                }
 
-                  @media (max-width: $breakpoint) {
-                    left: 1px;
-                    top: 1px;
+                label {
+                  min-width: 2em;
+                  text-indent: 0;
+
+                  &::before,
+                  &::after {
+                    height: 1em;
+                    top: 0;
+                    transition: all .2s ease-in-out;
+                    width: 1em;
+
+                    @media (max-width: $breakpoint) {
+                      left: 1px;
+                      top: 1px;
+                    }
                   }
                 }
               }
@@ -492,14 +514,14 @@ $header: #0071fe;
           }
         }
       }
-    }
 
-    .radio {
-      margin: .5rem;
+      .radio {
+        margin: .5rem;
 
-      label {
-        color: $text;
-        font-size: 1rem;
+        label {
+          color: $text;
+          font-size: 1rem;
+        }
       }
     }
   }
