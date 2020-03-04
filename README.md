@@ -1,6 +1,6 @@
 # Bandwidth Calculator
 
-A tool to help calculate and explain bandwidth allowances for Droplets and Kubernetes nodes on DigitalOcean.
+A tool to help calculate and explain bandwidth allowances for Droplets on DigitalOcean.
 
 ---
 

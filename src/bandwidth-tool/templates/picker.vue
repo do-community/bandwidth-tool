@@ -24,11 +24,11 @@ limitations under the License.
             </ul>
         </div>
 
-        <div class="switch">
+        <!--<div class="switch">
             <span>{{ i18n.templates.picker.droplets }}</span>
             <PrettyCheck class="p-switch p-fill" :checked="false" @change="toggleType"></PrettyCheck>
             <span>{{ i18n.templates.picker.kubernetes }}</span>
-        </div>
+        </div>-->
 
         <div v-if="subCategories.length" class="radio">
             <PrettyRadio
