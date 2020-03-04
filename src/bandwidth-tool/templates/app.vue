@@ -86,21 +86,11 @@ limitations under the License.
 <script>
     const queryString = require('query-string');
 
+    const i18n = require('../i18n');
+    const compareArrays = require('../utils/compareArrays');
     const { dropletType, dropletSubType } = require('../utils/dropletType');
     const dropletData = require('../../build/droplets');
-    const droplets = {};
-    for (const droplet of dropletData) {
-        if (!droplet.available) continue;
-        if (!droplet.regions.length) continue;
-        const type = dropletType(droplet.slug);
-        if (!type) continue;
-        if (!(type in droplets)) droplets[type] = [];
-        droplet.type = type;
-        droplet.subType = dropletSubType(droplet.slug);
-        droplets[type].push(droplet);
-    }
 
-    const i18n = require('../i18n');
     const Footer = require('do-vue/src/templates/footer').default;
     const Modal = require('do-vue/src/templates/modal').default;
     const Pool = require('./pool');
@@ -109,7 +99,17 @@ limitations under the License.
     const Picker = require('./picker');
     const FAQs = require('./faqs');
 
-    const compareArrays = require('../utils/compareArrays');
+    // Build the Droplet data
+    const droplets = {};
+    for (const droplet of dropletData) {
+        if (!droplet.available || !droplet.regions.length) continue;
+        const type = dropletType(droplet.slug);
+        if (!type) continue;
+        if (!(type in droplets)) droplets[type] = [];
+        droplet.type = type;
+        droplet.subType = dropletSubType(droplet.slug);
+        droplets[type].push(droplet);
+    }
 
     module.exports = {
         name: 'App',
