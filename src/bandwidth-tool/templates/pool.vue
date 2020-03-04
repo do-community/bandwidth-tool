@@ -49,28 +49,26 @@ limitations under the License.
                     <span>{{ i18n.templates.pool.consumption }}</span>
                     <b>{{ bandwidthConsumption.toLocaleString() }} {{ i18n.templates.pool.consumptionUnit }}</b>
                 </p>
-                <div v-if="bandwidthOverage">
-                    <br />
-                    <p>{{ i18n.templates.pool.overageWarning }}</p>
-                    <br />
-                    <p>
-                        <span>{{ i18n.templates.pool.overage }}</span>
-                        <b>
-                            ${{ (bandwidthOverage * 0.01).toLocaleString() }}
-                        </b>
-                        <small class="has-text-muted">
-                            ({{ bandwidthOverage.toLocaleString() }} GB
-                            @ $0.01 / GB)
-                        </small>
-                    </p>
-                </div>
-                <div v-else>
-                    <p>
-                        <small class="has-text-muted">
-                            {{ i18n.templates.pool.overageOkay }}
-                        </small>
-                    </p>
-                </div>
+
+                <br />
+                <p v-if="bandwidthOverage">{{ i18n.templates.pool.overageWarning }}</p>
+                <p v-else>
+                    <small class="has-text-muted">
+                        {{ i18n.templates.pool.overageOkay }}
+                    </small>
+                </p>
+
+                <br />
+                <p>
+                    <span>{{ i18n.templates.pool.overage }}</span>
+                    <b>
+                        ${{ (bandwidthOverage * 0.01).toLocaleString() }}
+                    </b>
+                    <small class="has-text-muted">
+                        ({{ bandwidthOverage.toLocaleString() }} GB
+                        @ $0.01 / GB)
+                    </small>
+                </p>
             </div>
             <div class="info">
                 <p>
