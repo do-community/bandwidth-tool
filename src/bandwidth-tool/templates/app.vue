@@ -67,7 +67,7 @@ limitations under the License.
                     </div>
 
                     <div class="droplet-picker-button">
-                        <a class="button is-primary" @click="showPicker">Add a Droplet</a>
+                        <a class="button is-primary" @click="showPicker">{{ i18n.templates.app.addADroplet }}</a>
                     </div>
                 </div>
             </div>
