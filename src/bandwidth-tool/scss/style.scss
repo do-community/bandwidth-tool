@@ -17,6 +17,10 @@ limitations under the License.
 $header: #0071fe;
 @import "~do-bulma/src/style";
 
+.helpfulness-cont {
+  margin: ($margin * 4) 0 0;
+}
+
 .do-bulma {
   $pretty--color-default: $primary;
   $pretty--color-dark: $primary;
@@ -438,10 +442,12 @@ $header: #0071fe;
       }
 
       .modal-card-head {
+        min-width: auto;
         padding: 0 ($margin / 2);
         position: absolute;
         right: $margin * 4;
         top: $margin * 2;
+        width: auto;
 
         @media (max-width: $breakpoint) {
           padding: $margin ($margin / 2);
