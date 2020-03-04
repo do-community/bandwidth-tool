@@ -43,7 +43,7 @@ limitations under the License.
             <div class="data">
                 <p class="allowance">
                     <span>{{ i18n.templates.pool.allowance }}</span>
-                    <b>{{ (bandwidthAllowance / 1000).toLocaleString() }} {{ i18n.templates.pool.allowanceUnit }}</b>
+                    <b>{{ bandwidthAllowance.toLocaleString() }} {{ i18n.templates.pool.allowanceUnit }}</b>
                 </p>
                 <p class="consumption">
                     <span>{{ i18n.templates.pool.consumption }}</span>

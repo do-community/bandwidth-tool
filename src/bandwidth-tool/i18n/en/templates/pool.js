@@ -1,7 +1,7 @@
 module.exports = {
     title: 'Account Bandwidth Pool',
     allowance: 'Estimated allowance:',
-    allowanceUnit: 'TB',
+    allowanceUnit: 'GB',
     consumption: 'Estimated consumption:',
     consumptionUnit: 'GB',
     overage: 'Estimated overage:',
