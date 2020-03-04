@@ -150,6 +150,17 @@ limitations under the License.
             load() {
                 // Get the old data
                 const data = this.get();
+
+                // If no data, add a default demo Droplet
+                if (!data.length) data.push({
+                    slug: 's-1vcpu-2gb',
+                    type: 'droplet',
+                    hours: 722,
+                    consumption: 0,
+                    nodes: 1,
+                });
+
+                // Work through the initial droplets and load them in the tool
                 for (const item of data) {
                     // Insert as a new active droplet
                     const droplet = dropletData.filter(d => d.slug === item.slug);
