@@ -4,7 +4,7 @@ module.exports = {
     items: [
         {
             question: 'Do data transfers between my Droplets in the same datacenter count against my bandwidth usage?',
-            answer: 'If your Droplets are contained within a [DigitalOcean Private Network](https://www.digitalocean.com/docs/networking/private-networking/), transfers between your Droplets within the same datacenter do not count against your bandwidth. Otherwise, all other outbound transfers count against your bandwidth usage. Any inbound traffic doesn\'t count against your bandwidth usage.',
+            answer: 'If your Droplets transfer data via a DigitalOcean Private Network interface, transfers between your Droplets do not count against your bandwidth. Otherwise, all other outbound transfers using a public interface count against your bandwidth usage. Any inbound transfers don\'t count against your bandwidth usage.',
         },
         {
             question: 'Do data transfers between my Droplets in different datacenter regions count against my bandwidth usage?',
@@ -21,6 +21,10 @@ module.exports = {
         {
             question: 'Will I receive a billing alert if I reach my bandwidth limit before the month is over?',
             answer: 'No. We cannot calculate the full bandwidth pool before the month is over.',
+        },
+        {
+            question: 'Can I use this tool to calculate the bandwidth for Kubernetes clusters?',
+            answer: 'Yes. Each node in a Kubernetes cluster is treated as a Droplet and uses the same bandwidth billing system.',
         },
     ],
 };
