@@ -160,7 +160,7 @@ limitations under the License.
                     slug: 's-1vcpu-2gb',
                     type: 'droplet',
                     hours: 722,
-                    consumption: 0,
+                    consumption: 1500,
                     nodes: 1,
                 });
 
