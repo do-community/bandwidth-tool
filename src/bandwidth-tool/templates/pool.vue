@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <template>
-    <div class="panel bandwidth">
+    <div class="pool">
         <h2>{{ i18n.templates.pool.title }}</h2>
 
         <div class="bars">
@@ -43,33 +43,34 @@ limitations under the License.
             <div class="data">
                 <p class="allowance">
                     <span>{{ i18n.templates.pool.allowance }}</span>
-                    <b>{{ bandwidthAllowance.toLocaleString() }} TB</b>
+                    <b>{{ bandwidthAllowance.toLocaleString() }} {{ i18n.templates.pool.allowanceUnit }}</b>
                 </p>
                 <p class="consumption">
                     <span>{{ i18n.templates.pool.consumption }}</span>
-                    <b>{{ bandwidthConsumption.toLocaleString() }} TB</b>
+                    <b>{{ bandwidthConsumption.toLocaleString() }} {{ i18n.templates.pool.consumptionUnit }}</b>
                 </p>
-                <div v-if="bandwidthOverage">
-                    <br />
-                    <p v-html="i18n.templates.pool.overageWarning"></p>
-                    <p>
-                        <span>{{ i18n.templates.pool.overage }}</span>
-                        <b>
-                            ${{ (bandwidthOverage * 0.01).toLocaleString() }}
-                        </b>
-                        <small class="has-text-muted">
-                            ({{ bandwidthOverage.toLocaleString() }} GB
-                            @ $0.01 / GB)
-                        </small>
-                    </p>
-                </div>
-                <div v-else>
-                    <p>
-                        <small class="has-text-muted">
-                            {{ i18n.templates.pool.overageOkay }}
-                        </small>
-                    </p>
-                </div>
+
+                <br />
+                <p v-if="bandwidthOverage">
+                    {{ i18n.templates.pool.overageWarning }}
+                </p>
+                <p v-else>
+                    <small class="has-text-muted">
+                        {{ i18n.templates.pool.overageOkay }}
+                    </small>
+                </p>
+
+                <br />
+                <p>
+                    <span>{{ i18n.templates.pool.overage }}</span>
+                    <b>
+                        ${{ (bandwidthOverage * 0.01).toLocaleString() }}
+                    </b>
+                    <small class="has-text-muted">
+                        ({{ bandwidthOverage.toLocaleString() }} GB
+                        @ $0.01 / GB)
+                    </small>
+                </p>
             </div>
             <div class="info">
                 <p>

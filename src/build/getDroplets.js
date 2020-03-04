@@ -1,19 +1,6 @@
-const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
-
-let token = process.env.DIGITALOCEAN_TOKEN;
-if (fs.existsSync(path.join(__dirname, '..', '..', 'config.js'))) {
-    const config = require('../../config');
-    token = config.token;
-}
-
-const get = async url => {
-    const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` },
-    });
-    return await res.json();
-};
+const get = require('./get');
 
 const save = async data => {
     await fs.promises.writeFile(path.join(__dirname, 'droplets.json'), JSON.stringify(data));

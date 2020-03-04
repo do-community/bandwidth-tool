@@ -17,82 +17,194 @@ limitations under the License.
 $header: #0071fe;
 @import "~do-bulma/src/style";
 
+.helpfulness-cont {
+  margin: ($margin * 4) 0 0;
+}
+
 .do-bulma {
-  .header {
-    .container {
-      > div {
-        flex-grow: 1;
-        margin: 0;
+  $pretty--color-default: $primary;
+  $pretty--color-dark: $primary;
+  @import "~pretty-checkbox/src/pretty-checkbox";
+
+  .container {
+    padding: ($margin * 4) 0;
+    width: 100%;
+
+    @media (max-width: $breakpoint) {
+      padding: $margin;
+    }
+
+    &.inset {
+      background: $input-disabled;
+      max-width: none;
+
+      @media (max-width: $breakpoint) {
+        padding: $margin ($margin / 2);
       }
+
+      > .container {
+        padding: 0;
+
+        > .panel {
+          box-shadow: 0 2px 4px rgba($dark-blue, .06);
+        }
+      }
+    }
+  }
+
+  .explainer {
+    h2 {
+      @include sailec-bold;
+
+      font-size: 36px;
+      margin: $margin 0 ($margin * 4);
+      text-align: center;
+
+      @media (max-width: $breakpoint) {
+        margin: $margin 0 ($margin * 2);
+      }
+    }
+
+    h3 {
+      @include sailec-bold;
+
+      margin: $margin 0;
+    }
+
+    p {
+      margin: 0;
     }
   }
 
   .bandwidth {
     margin: 0;
+    padding: 3.75rem;
     text-align: left;
 
-    .stats {
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      margin-top: 1rem;
+    @media (max-width: $breakpoint) {
+      padding: 1.5rem;
+    }
 
-      .data {
-        flex-basis: 55%;
-        padding-right: 1.5rem;
+    h1,
+    h3 {
+      margin: 0;
+    }
 
-        p {
-          margin: 0;
+    .pool {
+      margin: 3rem 0;
 
-          span,
-          b {
-            font-size: $font-size * 1.1;
+      .stats {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        margin-top: 1rem;
+
+        @media (max-width: $breakpoint) {
+          flex-direction: column;
+        }
+
+        .data {
+          flex-basis: 55%;
+          padding-right: 1.5rem;
+
+          @media (max-width: $breakpoint) {
+            flex-basis: 100%;
+            padding: .5rem 0;
+          }
+
+          p {
+            margin: 0;
+
+            span,
+            b {
+              font-size: $font-size * 1.1;
+            }
+          }
+
+          .allowance {
+            b {
+              color: $primary;
+            }
+          }
+
+          .consumption {
+            b {
+              color: $dark-blue;
+            }
           }
         }
 
-        .allowance {
-          b {
-            color: $primary;
-          }
-        }
+        .info {
+          flex-basis: 45%;
+          padding-left: 1.5rem;
 
-        .consumption {
-          b {
-            color: $dark-blue;
+          @media (max-width: $breakpoint) {
+            flex-basis: 100%;
+            padding: .5rem 0;
+          }
+
+          p {
+            color: $muted;
+            font-size: $font-size * .8;
+            text-align: right;
+
+            @media (max-width: $breakpoint) {
+              text-align: left;
+            }
+          }
+
+          a {
+            white-space: nowrap;
           }
         }
       }
+    }
 
-      .info {
-        flex-basis: 45%;
-        padding-left: 1.5rem;
-
-        p {
-          color: $muted;
-          font-size: $font-size * .8;
-          text-align: right;
-        }
-
-        a {
-          white-space: nowrap;
-        }
-      }
+    .droplets {
+      margin: 0 0 3rem;
     }
   }
 
   .panel-list {
     &.panel-list-vertical {
       .panel {
+        @media (max-width: $breakpoint) {
+          flex-direction: column;
+        }
+
+        .icon {
+          height: 2.5rem;
+          margin: 0 .25rem 0 0;
+          width: 2.5rem;
+
+          @media (max-width: $breakpoint) {
+            margin: 0 0 .25rem;
+          }
+
+          svg {
+            height: auto;
+            width: auto;
+          }
+        }
+
         .info {
           display: flex;
           flex-direction: column;
           margin: .2rem 1rem 0 .2rem;
+
+          @media (max-width: $breakpoint) {
+            margin: .2rem 0 1rem .2rem;
+          }
 
           .primary-info,
           .secondary-info {
             align-items: center;
             display: flex;
             flex-direction: row;
+
+            @media (max-width: $breakpoint) {
+              flex-wrap: wrap;
+            }
 
             p {
               margin: 0;
@@ -128,74 +240,156 @@ $header: #0071fe;
           justify-content: center;
           margin: 0 2.5rem;
 
+          @media (max-width: $breakpoint) {
+            margin: 1rem 0;
+          }
+
           p {
             margin: 0;
           }
         }
 
-        .input-container {
-          display: flex;
-          flex-direction: column;
-          margin: 0 .5rem;
-          width: auto;
-
-          .control {
-            display: inline-block;
-            position: relative;
-
-            input {
-              height: $height * .6;
-              margin: 0;
-              padding: 0 ($margin / 2);
-              width: $height * 2.5;
-            }
-
-            .suffix {
-              color: $text-secondary;
-              line-height: 1;
-              pointer-events: none;
-              position: absolute;
-              right: $margin * 1.5;
-              top: ($height * .6 - $font-size) / 2;
-            }
-
-            i {
-              position: initial;
-            }
+        .right {
+          @media (max-width: $breakpoint) {
+            flex-direction: column;
+            margin: 0;
           }
 
-          .label {
-            @include sailec-regular;
+          .input-container {
+            display: flex;
+            flex-direction: column;
+            margin: 0 .5rem;
+            width: auto;
 
-            color: $muted;
-            font-size: $font-size * .7;
-            line-height: 1;
-
-            &:not(:first-child) {
-              margin-top: .25rem;
+            @media (max-width: $breakpoint) {
+              margin: .5rem 0;
             }
 
-            &:not(:last-child) {
-              margin-bottom: .25rem;
+            .control {
+              display: inline-block;
+              position: relative;
+
+              input {
+                height: $height * .6;
+                margin: 0;
+                padding: 0 ($margin / 2);
+                width: $height * 2.5;
+
+                &:focus {
+                  box-shadow: 0 0 2px rgba($primary, .5);
+
+                  ~ .suffix {
+                    color: $primary;
+                  }
+                }
+              }
+
+              .suffix {
+                color: $text-secondary;
+                line-height: 1;
+                pointer-events: none;
+                position: absolute;
+                right: $margin * 1.5;
+                top: ($height * .6 - $font-size) / 2;
+                transition: color .2s ease-in-out;
+                z-index: 10;
+              }
+
+              i {
+                position: initial;
+              }
+            }
+
+            .label {
+              @include sailec-regular;
+
+              color: $muted;
+              font-size: $font-size * .7;
+              line-height: 1;
+
+              &:not(:first-child) {
+                margin-top: .25rem;
+              }
+
+              &:not(:last-child) {
+                margin-bottom: .25rem;
+              }
             }
           }
         }
       }
     }
-  }
 
-  .tabs {
-    &.picker {
-      margin: 0;
+    .panel {
+      @media (max-width: $breakpoint) {
+        flex-basis: calc(50% - 1rem);
+      }
     }
   }
 
   .panel {
-    transition: opacity .2s ease-in-out, background .2s ease-in-out;
+    box-shadow: none;
+    transition: opacity .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+
+    &.selectable {
+      &:hover {
+        background: lighten($primary, 47.5%);
+        box-shadow: 0 2px 4px rgba($dark-blue, .06);
+
+        a {
+          &.button {
+            &.is-primary {
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      a {
+        &.button {
+          &.is-primary {
+            font-size: .9em;
+            height: $margin * 1.5;
+            line-height: $margin * 1.5;
+            opacity: 0;
+            padding: 0 ($margin / 1.5);
+            pointer-events: none;
+            transition: opacity .2s ease-in-out;
+          }
+        }
+      }
+    }
+
+    &.focused-droplet {
+      box-shadow: 0 2px 4px rgba($dark-blue, .12);
+    }
 
     &.unfocused-droplet {
       background: darken($background, 5%);
       opacity: .8;
+    }
+
+    &.is-droplet {
+      p {
+        small {
+          em {
+            font-size: 18px;
+          }
+        }
+      }
+
+      sup {
+        line-height: inherit;
+        top: 0;
+      }
+
+      .sub-block {
+        bottom: unset;
+        display: block;
+        line-height: 1.5;
+        margin-bottom: .5em;
+        top: -.1em;
+      }
     }
   }
 
@@ -207,6 +401,193 @@ $header: #0071fe;
         &.unfocused-droplet {
           opacity: .4;
         }
+      }
+    }
+  }
+
+  .droplet-picker-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .button {
+      box-shadow: 0 2px 4px rgba($dark-blue, .06);
+      font-size: 18px;
+      height: $margin * 3.5;
+      padding: 0 $margin * 2.5;
+      transition: background .2s ease-in-out, box-shadow .2s ease-in-out, color .2s ease-in-out;
+
+      &:hover,
+      &:focus {
+        box-shadow: 0 2px 4px rgba($dark-blue, .16);
+      }
+    }
+  }
+
+  .droplet-picker-modal {
+    padding: 8vh 8vw;
+
+    @media (max-width: $breakpoint) {
+      padding: $margin;
+    }
+
+    .modal-card {
+      height: 100%;
+      position: relative;
+      width: 100%;
+
+      @media (max-width: $breakpoint) {
+        overflow: auto;
+        padding: ($margin / 2);
+      }
+
+      .modal-card-head {
+        min-width: auto;
+        padding: 0 ($margin / 2);
+        position: absolute;
+        right: $margin * 4;
+        top: $margin * 2;
+        width: auto;
+
+        @media (max-width: $breakpoint) {
+          padding: $margin ($margin / 2);
+          right: $margin;
+          top: 0;
+        }
+
+        .delete {
+          $delete-size: 30px;
+
+          height: $delete-size;
+          max-height: $delete-size;
+          max-width: $delete-size;
+          min-height: $delete-size;
+          min-width: $delete-size;
+          width: $delete-size;
+        }
+      }
+
+      .modal-card-body {
+        @media (max-width: $breakpoint) {
+          overflow: initial;
+          padding: ($margin / 2);
+        }
+      }
+    }
+  }
+
+  .droplet-picker {
+    .picker {
+      .tabs {
+        margin: 0;
+
+        @media (max-width: $breakpoint) {
+          border-bottom: $thin-border;
+          margin: 0 0 $margin;
+        }
+
+        ul {
+          @media (max-width: $breakpoint) {
+            align-items: flex-start;
+            display: inline-flex;
+            flex-wrap: wrap;
+            margin: 0;
+            max-width: 100%;
+            padding: 0 ($margin * 3) 0 0;
+          }
+        }
+      }
+
+      .switch {
+        margin: 0 .5rem .5rem;
+        padding: 0 .15rem;
+
+        > span {
+          display: inline-block;
+
+          @media (max-width: $breakpoint) {
+            display: block;
+          }
+        }
+
+        .pretty {
+          &.p-fill {
+            &.p-switch {
+              line-height: 1.1;
+              margin: 0 .25rem;
+
+              @media (max-width: $breakpoint) {
+                margin: .75rem 0;
+                transform: rotate(90deg);
+              }
+
+              input {
+                &:checked {
+                  ~ .state {
+                    label {
+                      &::after {
+                        left: calc(1em - 2px);
+
+                        @media (max-width: $breakpoint) {
+                          left: calc(1em + 1px);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+              .state {
+                &::before {
+                  height: 1em;
+                  top: 0;
+                  transition: all .2s ease-in-out;
+                }
+
+                label {
+                  min-width: 2em;
+                  text-indent: 0;
+
+                  &::before,
+                  &::after {
+                    height: 1em;
+                    top: 0;
+                    transition: all .2s ease-in-out;
+                    width: 1em;
+
+                    @media (max-width: $breakpoint) {
+                      left: 1px;
+                      top: 1px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .radio {
+        margin: .5rem;
+
+        label {
+          color: $text;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .faqs {
+    h4 {
+      color: $dark-blue;
+      font-size: .95rem;
+      margin: ($margin * 2) 0 ($margin / 2);
+      text-transform: none;
+
+      + p {
+        font-size: .9rem;
+        margin: 0 0 ($margin / 2);
       }
     }
   }

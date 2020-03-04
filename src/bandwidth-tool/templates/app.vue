@@ -16,70 +16,93 @@ limitations under the License.
 
 <template>
     <div class="all do-bulma">
-        <Header :title="i18n.templates.app.title">
-            <template v-slot:description>
-                {{ i18n.templates.app.description }}
-            </template>
-            <template v-slot:header>
-                <Pool
-                    :bandwidth-allowance="bandwidthAllowance"
-                    :bandwidth-allowance-data="bandwidthAllowanceData"
-                    :bandwidth-consumption="bandwidthConsumption"
-                    :bandwidth-consumption-data="bandwidthConsumptionData"
-                    :bandwidth-overage="bandwidthOverage"
-                    :focused-droplet-class="focusedDropletClass"
-                    :focused-droplet-enter="focusedDropletEnter"
-                    :focused-droplet-leave="focusedDropletLeave"
-                ></Pool>
-            </template>
-            <template v-slot:buttons>
-            </template>
-        </Header>
+        <div class="container inset">
+            <div class="container">
+                <div class="panel bandwidth">
+                    <h1>{{ i18n.templates.app.title }}</h1>
+                    <h3><small>{{ i18n.templates.app.description }}</small></h3>
 
-        <div class="main container">
-            <h2>{{ i18n.templates.app.droplets }}</h2>
-            <div v-if="hasActiveDroplets">
-                <p class="has-text-muted">
-                    {{ i18n.templates.app.estimatedCost }} ${{ dropletCost.toLocaleString() }} / mo.
-                </p>
-                <div class="panel-list panel-list-vertical">
-                    <ActiveDroplet
-                        v-for="(droplet, id) in activeDroplets"
-                        :key="id"
-                        ref="activeDroplets"
-                        :droplet="droplet"
-                        :class="focusedDropletClass(id)"
-                        @mouseenter.native="focusedDropletEnter(id)"
-                        @mouseleave.native="focusedDropletLeave(id)"
-                        @remove="removed(id)"
-                        @update="update"
-                    ></ActiveDroplet>
+                    <Pool
+                        :bandwidth-allowance="bandwidthAllowance"
+                        :bandwidth-allowance-data="bandwidthAllowanceData"
+                        :bandwidth-consumption="bandwidthConsumption"
+                        :bandwidth-consumption-data="bandwidthConsumptionData"
+                        :bandwidth-overage="bandwidthOverage"
+                        :focused-droplet-class="focusedDropletClass"
+                        :focused-droplet-enter="focusedDropletEnter"
+                        :focused-droplet-leave="focusedDropletLeave"
+                    ></Pool>
+
+                    <div class="droplets">
+                        <h2>{{ i18n.templates.app.droplets }}</h2>
+                        <div v-if="hasActiveDroplets">
+                            <!--<p class="has-text-muted">
+                                {{ i18n.templates.app.estimatedCost }} ${{ dropletCost.toLocaleString() }} / mo.
+                            </p>-->
+                            <div class="panel-list panel-list-vertical">
+                                <ActiveDroplet
+                                    v-for="(droplet, id) in activeDroplets"
+                                    :key="id"
+                                    ref="activeDroplets"
+                                    :droplet="droplet[0]"
+                                    :type="droplet[1]"
+                                    :class="focusedDropletClass(id)"
+                                    @mouseenter.native="focusedDropletEnter(id)"
+                                    @mouseleave.native="focusedDropletLeave(id)"
+                                    @remove="removed(id)"
+                                    @update="update"
+                                ></ActiveDroplet>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p class="has-text-muted">
+                                {{ i18n.templates.app.selectToStart }}
+                            </p>
+                            <div class="panel-list panel-list-vertical">
+                                <SkeletonDroplet></SkeletonDroplet>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="droplet-picker-button">
+                        <a class="button is-primary" @click="showPicker">{{ i18n.templates.app.addADroplet }}</a>
+                    </div>
                 </div>
             </div>
-            <div v-else>
-                <p class="has-text-muted">
-                    {{ i18n.templates.app.selectToStart }}
-                </p>
-                <div class="panel-list panel-list-vertical">
-                    <SkeletonDroplet></SkeletonDroplet>
-                </div>
-            </div>
-
-            <h3>{{ i18n.templates.app.picker }}</h3>
-            <Picker :droplets="droplets" @picked="picked"></Picker>
         </div>
 
+        <FAQs></FAQs>
+
         <Footer :text="i18n.templates.app.oss"></Footer>
+
+        <Modal ref="modal" class="droplet-picker-modal">
+            <div class="droplet-picker">
+                <Picker :droplets="droplets" @picked="picked"></Picker>
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
     const queryString = require('query-string');
 
+    const i18n = require('../i18n');
+    const compareArrays = require('../utils/compareArrays');
     const { dropletType, dropletSubType } = require('../utils/dropletType');
     const dropletData = require('../../build/droplets');
+
+    const Footer = require('do-vue/src/templates/footer').default;
+    const Modal = require('do-vue/src/templates/modal').default;
+    const Pool = require('./pool');
+    const ActiveDroplet = require('./droplets/active_droplet');
+    const SkeletonDroplet = require('./droplets/skeleton_droplet');
+    const Picker = require('./picker');
+    const FAQs = require('./faqs');
+
+    // Build the Droplet data
     const droplets = {};
     for (const droplet of dropletData) {
+        if (!droplet.available || !droplet.regions.length) continue;
         const type = dropletType(droplet.slug);
         if (!type) continue;
         if (!(type in droplets)) droplets[type] = [];
@@ -88,25 +111,16 @@ limitations under the License.
         droplets[type].push(droplet);
     }
 
-    const i18n = require('../i18n');
-    const Header = require('do-vue/src/templates/header').default;
-    const Footer = require('do-vue/src/templates/footer').default;
-    const Pool = require('./pool');
-    const ActiveDroplet = require('./droplets/active_droplet');
-    const SkeletonDroplet = require('./droplets/skeleton_droplet');
-    const Picker = require('./picker');
-
-    const compareArrays = require('../utils/compareArrays');
-
     module.exports = {
         name: 'App',
         components: {
-            Header,
             Footer,
+            Modal,
             Pool,
             ActiveDroplet,
             SkeletonDroplet,
             Picker,
+            FAQs,
         },
         data() {
             return {
@@ -140,13 +154,24 @@ limitations under the License.
             load() {
                 // Get the old data
                 const data = this.get();
+
+                // If no data, add a default demo Droplet
+                if (!data.length) data.push({
+                    slug: 's-1vcpu-2gb',
+                    type: 'droplet',
+                    hours: 722,
+                    consumption: 1500,
+                    nodes: 1,
+                });
+
+                // Work through the initial droplets and load them in the tool
                 for (const item of data) {
                     // Insert as a new active droplet
                     const droplet = dropletData.filter(d => d.slug === item.slug);
                     if (!droplet) continue;
                     const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                     const id = keys.length ? Math.max(...keys) + 1 : 0;
-                    this.$set(this.$data.activeDroplets, id, droplet[0]);
+                    this.$set(this.$data.activeDroplets, id, [droplet[0], item.type]);
                     this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
 
                     // Once rendered, set the data in the ref
@@ -155,6 +180,7 @@ limitations under the License.
                         if (!ref) return;
                         ref[0].$data.hours = item.hours;
                         ref[0].$data.consumption = item.consumption;
+                        ref[0].$data.nodes = item.nodes;
                     });
                 }
 
@@ -166,11 +192,15 @@ limitations under the License.
             save() {
                 // Get the new data to save
                 if (!this.$refs.activeDroplets) return;
-                const data = this.$refs.activeDroplets.map(ref => { return {
-                    slug: ref.$props.droplet.slug,
-                    hours: ref.$data.hours,
-                    consumption: ref.$data.consumption,
-                }; });
+                const data = this.$refs.activeDroplets.map(ref => {
+                    return {
+                        slug: ref.$props.droplet.slug,
+                        type: ref.$props.type,
+                        hours: ref.$data.hours,
+                        consumption: ref.$data.consumption,
+                        nodes: ref.$data.nodes,
+                    };
+                });
 
                 // Get the old data, check if changed droplets
                 const last = this.get();
@@ -195,7 +225,7 @@ limitations under the License.
                 this.$data.bandwidthAllowance = this.getBandwidthAllowance();
                 this.$data.bandwidthConsumption = this.getBandwidthConsumption();
                 this.$data.bandwidthOverage = Math.max(
-                    (this.$data.bandwidthConsumption - this.$data.bandwidthAllowance) * 1000,
+                    (this.$data.bandwidthConsumption - this.$data.bandwidthAllowance),
                     0,
                 );
 
@@ -231,25 +261,32 @@ limitations under the License.
                 if (this.$data.focusedDroplet === id) this.$data.focusedDroplet = null;
                 this.$nextTick(this.update);
             },
-            picked(slug) {
+            picked(slug, type) {
                 const droplet = dropletData.filter(d => d.slug === slug)[0];
                 const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                 const id = keys.length ? Math.max(...keys) + 1 : 0;
-                this.$set(this.$data.activeDroplets, id, droplet);
+                this.$set(this.$data.activeDroplets, id, [droplet, type]);
                 this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
+                this.$refs.modal.close();
                 this.$nextTick(this.update);
             },
             getBandwidthAllowance() {
                 if (!this.$refs.activeDroplets) return 0;
-                return this.$refs.activeDroplets.reduce((total, val) => { return total + val.bandwidthAllowance(); }, 0);
+                return this.$refs.activeDroplets.reduce((total, val) => {
+                    return total + val.bandwidthAllowance();
+                }, 0);
             },
             getBandwidthConsumption() {
                 if (!this.$refs.activeDroplets) return 0;
-                return this.$refs.activeDroplets.reduce((total, val) => { return total + val.$data.consumption; }, 0);
+                return this.$refs.activeDroplets.reduce((total, val) => {
+                    return total + val.$data.consumption;
+                }, 0);
             },
             getDropletCost() {
                 if (!this.$refs.activeDroplets) return 0;
-                return this.$refs.activeDroplets.reduce((total, val) => { return total + val.dropletCost(); }, 0);
+                return this.$refs.activeDroplets.reduce((total, val) => {
+                    return total + val.dropletCost();
+                }, 0);
             },
             focusedDropletLeave(id) {
                 if (id === '') return;
@@ -263,6 +300,10 @@ limitations under the License.
                 if (this.$data.focusedDroplet === null) return '';
                 if (id === this.$data.focusedDroplet) return 'focused-droplet';
                 return 'unfocused-droplet';
+            },
+            showPicker(e) {
+                e.preventDefault();
+                this.$refs.modal.open();
             },
         },
         mounted() {

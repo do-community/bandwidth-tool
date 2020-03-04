@@ -8,4 +8,5 @@ build/base.html
 build/svg/
 .DS_Store
 src/build/droplets.json
+src/build/kubernetes.json
 config.js
