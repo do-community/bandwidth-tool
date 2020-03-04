@@ -16,8 +16,6 @@ limitations under the License.
 
 <template>
     <div class="all do-bulma">
-        <Explainer></Explainer>
-
         <div class="container inset">
             <div class="container">
                 <div class="panel bandwidth">
@@ -105,7 +103,6 @@ limitations under the License.
     const i18n = require('../i18n');
     const Footer = require('do-vue/src/templates/footer').default;
     const Modal = require('do-vue/src/templates/modal').default;
-    const Explainer = require('./explainer');
     const Pool = require('./pool');
     const ActiveDroplet = require('./droplets/active_droplet');
     const SkeletonDroplet = require('./droplets/skeleton_droplet');
@@ -119,7 +116,6 @@ limitations under the License.
         components: {
             Footer,
             Modal,
-            Explainer,
             Pool,
             ActiveDroplet,
             SkeletonDroplet,
