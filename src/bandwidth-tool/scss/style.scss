@@ -366,6 +366,14 @@ $header: #0071fe;
     }
 
     &.is-droplet {
+      p {
+        small {
+          em {
+            font-size: 18px;
+          }
+        }
+      }
+
       sup {
         line-height: inherit;
         top: 0;

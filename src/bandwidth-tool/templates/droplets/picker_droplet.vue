@@ -18,7 +18,7 @@ limitations under the License.
     <div class="panel selectable is-droplet">
         <p>
             <em>
-                <sup>$</sup>{{ droplet.price_monthly }}
+                <sup>$</sup>{{ droplet.price_monthly.toLocaleString() }}
                 <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
                 <sub v-if="type === 'kubernetes'" class="sub-block">
                     {{ i18n.templates.droplets.pickerDroplet.perNode }}
@@ -26,23 +26,25 @@ limitations under the License.
             </em>
         </p>
         <p>
-            <em>
-                {{ droplet.transfer }} {{ i18n.templates.droplets.droplet.transferUnit }}
-                <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
-                <sub v-if="type === 'kubernetes'" class="sub-block">
-                    {{ i18n.templates.droplets.pickerDroplet.perNode }}
-                </sub>
-            </em>
+            <small>
+                <em>
+                    {{ (droplet.transfer * 1000).toLocaleString() }} {{ i18n.templates.droplets.droplet.transferUnitSmall }}
+                    <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
+                    <sub v-if="type === 'kubernetes'" class="sub-block">
+                        {{ i18n.templates.droplets.pickerDroplet.perNode }}
+                    </sub>
+                </em>
+            </small>
         </p>
 
         <a class="button is-primary is-tiny">Add</a>
 
-        <p>{{ droplet.memory / 1024 }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
         <p>
-            {{ droplet.vcpus }}
+            {{ droplet.vcpus.toLocaleString() }}
             {{ i18n.templates.droplets.droplet[droplet.vcpus === 1 ? 'cpuSingular' : 'cpuPlural'] }}
         </p>
-        <p>{{ droplet.disk }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
+        <p>{{ (droplet.memory / 1024).toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
+        <p>{{ droplet.disk.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
         <p v-if="droplet.subType">
             {{ droplet.subType }}
         </p>
