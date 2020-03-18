@@ -22,8 +22,8 @@ $header: #0071fe;
 }
 
 .do-bulma {
-  $pretty--color-default: $primary;
   $pretty--color-dark: $primary;
+  $pretty--color-default: $primary;
   @import "~pretty-checkbox/src/pretty-checkbox";
 
   .container {
@@ -432,12 +432,14 @@ $header: #0071fe;
     }
 
     .modal-card {
+      $delete-size: 30px;
+
       height: 100%;
+      overflow: auto;
       position: relative;
       width: 100%;
 
       @media (max-width: $breakpoint) {
-        overflow: auto;
         padding: ($margin / 2);
       }
 
@@ -445,19 +447,18 @@ $header: #0071fe;
         min-width: auto;
         padding: 0 ($margin / 2);
         position: absolute;
-        right: $margin * 4;
+        right: $margin * 3.75;
         top: $margin * 2;
         width: auto;
+        z-index: 10;
 
         @media (max-width: $breakpoint) {
           padding: $margin ($margin / 2);
-          right: $margin;
+          right: $margin * .75;
           top: 0;
         }
 
         .delete {
-          $delete-size: 30px;
-
           height: $delete-size;
           max-height: $delete-size;
           max-width: $delete-size;
@@ -468,9 +469,14 @@ $header: #0071fe;
       }
 
       .modal-card-body {
-        @media (max-width: $breakpoint) {
-          overflow: initial;
-          padding: ($margin / 2);
+        overflow: initial;
+
+        .tabs {
+          margin: 0 ($delete-size + $margin * 3) 0 0;
+
+          @media (max-width: $breakpoint) {
+            margin: 0 ($delete-size + $margin) 0 0;
+          }
         }
       }
     }
