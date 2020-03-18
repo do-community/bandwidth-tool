@@ -55,7 +55,7 @@ limitations under the License.
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.nodesLabel }}</span>
                 <div class="control">
                     <div class="control">
-                        <input ref="nodes" type="number" min="1" step="1" :value="nodes" @input="update" />
+                        <input type="number" min="1" step="1" v-model.lazy.number="nodes" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.nodesUnit }}</span>
                     </div>
                     <i v-tippy
@@ -75,7 +75,7 @@ limitations under the License.
                 </span>
                 <div class="control">
                     <div class="control">
-                        <input ref="hours" type="number" min="0" max="744" step="1" :value="hours" @input="update" />
+                        <input type="number" min="0" max="744" step="1" v-model.lazy.number="hours" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.hoursUnit }}</span>
                     </div>
                     <i v-tippy
@@ -90,7 +90,7 @@ limitations under the License.
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.consumptionLabel }}</span>
                 <div class="control">
                     <div class="control">
-                        <input ref="consumption" type="number" min="0" step="100" :value="consumption" @input="update" />
+                        <input type="number" min="0" step="100" v-model.lazy.number="consumption" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.consumptionUnit }}</span>
                     </div>
                     <i v-tippy
@@ -147,15 +147,20 @@ limitations under the License.
                 nodes: 1,
             };
         },
+        watch: {
+            hours() {
+                this.$emit('update');
+            },
+            consumption() {
+                this.$emit('update');
+            },
+            nodes() {
+                this.$emit('update');
+            },
+        },
         methods: {
             remove() {
                 this.$emit('remove');
-            },
-            update() {
-                this.$data.hours = Number(this.$refs.hours.value);
-                this.$data.consumption = Number(this.$refs.consumption.value);
-                this.$data.nodes = Number(this.$refs.nodes ? this.$refs.nodes.value : this.$data.nodes);
-                this.$emit('update');
             },
             maxHours() {
                 if (this.$props.type === 'kubernetes') return 744;
