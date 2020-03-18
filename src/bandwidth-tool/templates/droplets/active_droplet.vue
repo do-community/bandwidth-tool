@@ -55,7 +55,7 @@ limitations under the License.
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.nodesLabel }}</span>
                 <div class="control">
                     <div class="control">
-                        <input type="number" min="1" step="1" v-model.lazy.number="nodes" />
+                        <input v-model.lazy.number="nodes" type="number" min="1" step="1" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.nodesUnit }}</span>
                     </div>
                     <i v-tippy
@@ -75,7 +75,7 @@ limitations under the License.
                 </span>
                 <div class="control">
                     <div class="control">
-                        <input type="number" min="0" max="744" step="1" v-model.lazy.number="hours" />
+                        <input v-model.lazy.number="hours" type="number" min="0" max="744" step="1" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.hoursUnit }}</span>
                     </div>
                     <i v-tippy
@@ -90,7 +90,7 @@ limitations under the License.
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.consumptionLabel }}</span>
                 <div class="control">
                     <div class="control">
-                        <input type="number" min="0" step="100" v-model.lazy.number="consumption" />
+                        <input v-model.lazy.number="consumption" type="number" min="0" step="100" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.consumptionUnit }}</span>
                     </div>
                     <i v-tippy
