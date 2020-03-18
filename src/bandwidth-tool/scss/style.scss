@@ -482,19 +482,7 @@ $header: #0071fe;
         margin: 0;
 
         @media (max-width: $breakpoint) {
-          border-bottom: $thin-border;
           margin: 0 0 $margin;
-        }
-
-        ul {
-          @media (max-width: $breakpoint) {
-            align-items: flex-start;
-            display: inline-flex;
-            flex-wrap: wrap;
-            margin: 0;
-            max-width: 100%;
-            padding: 0 ($margin * 3) 0 0;
-          }
         }
       }
 
