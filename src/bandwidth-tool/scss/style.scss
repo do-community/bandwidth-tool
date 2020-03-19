@@ -328,14 +328,10 @@ $header: #0071fe;
   }
 
   .panel {
-    box-shadow: none;
-    transition: opacity $transition, background $transition, box-shadow $transition;
+    transition: opacity $transition, box-shadow $transition;
 
-    &.selectable {
+    &.is-selectable {
       &:hover {
-        background: lighten($primary, 47.5%);
-        box-shadow: 0 2px 4px rgba($dark-blue, .06);
-
         a {
           &.button {
             &.is-primary {
@@ -360,29 +356,7 @@ $header: #0071fe;
       }
     }
 
-    &.focused-droplet {
-      box-shadow: 0 2px 4px rgba($dark-blue, .12);
-    }
-
-    &.unfocused-droplet {
-      background: darken($background, 5%);
-      opacity: .8;
-    }
-
     &.is-droplet {
-      p {
-        small {
-          em {
-            font-size: 18px;
-          }
-        }
-      }
-
-      sup {
-        line-height: inherit;
-        top: 0;
-      }
-
       .sub-block {
         bottom: unset;
         display: block;
@@ -398,7 +372,7 @@ $header: #0071fe;
       .bar {
         transition: width $transition, opacity $transition;
 
-        &.unfocused-droplet {
+        &.is-unfocused {
           opacity: .4;
         }
       }

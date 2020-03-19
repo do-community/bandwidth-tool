@@ -15,7 +15,7 @@ limitations under the License.
 -->
 
 <template>
-    <div class="panel selectable is-droplet">
+    <div class="panel is-selectable is-droplet">
         <p>
             <em>
                 <sup>$</sup>{{ droplet.price_monthly.toLocaleString() }}

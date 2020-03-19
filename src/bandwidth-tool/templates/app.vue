@@ -298,8 +298,8 @@ limitations under the License.
             },
             focusedDropletClass(id) {
                 if (this.$data.focusedDroplet === null) return '';
-                if (id === this.$data.focusedDroplet) return 'focused-droplet';
-                return 'unfocused-droplet';
+                if (id === this.$data.focusedDroplet) return 'is-focused';
+                return 'is-unfocused';
             },
             showPicker(e) {
                 e.preventDefault();
