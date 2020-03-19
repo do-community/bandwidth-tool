@@ -515,6 +515,8 @@ $header: #0071fe;
                 }
 
                 label {
+                  @include sailec-regular;
+
                   min-width: 2em;
                   text-indent: 0;
 
@@ -541,6 +543,8 @@ $header: #0071fe;
         margin: .5rem;
 
         label {
+          @include sailec-regular;
+
           color: $text;
           font-size: 1rem;
         }
