@@ -191,22 +191,22 @@ limitations under the License.
             iconType() {
                 if (this.$props.type === 'kubernetes') return 'KubernetesIcon';
                 switch (this.$props.droplet.type) {
-                    case 'Standard':
-                        return 'StandardDropletIcon';
+                case 'Standard':
+                    return 'StandardDropletIcon';
 
-                    case 'General Purpose':
-                        return 'GeneralDropletIcon';
+                case 'General Purpose':
+                    return 'GeneralDropletIcon';
 
-                    case 'CPU-Optimized':
-                        return 'CPUDropletIcon';
+                case 'CPU-Optimized':
+                    return 'CPUDropletIcon';
 
-                    case 'Memory-Optimized':
-                        return 'MemoryDropletIcon';
+                case 'Memory-Optimized':
+                    return 'MemoryDropletIcon';
 
-                    default:
-                        return 'DropletIcon';
+                default:
+                    return 'DropletIcon';
                 }
-            }
-        }
+            },
+        },
     };
 </script>
