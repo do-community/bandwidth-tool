@@ -16,8 +16,7 @@ limitations under the License.
 
 <template>
     <div class="panel is-droplet">
-        <KubernetesIcon v-if="type === 'kubernetes'"></KubernetesIcon>
-        <DropletIcon v-else></DropletIcon>
+        <component :is="iconType"></component>
 
         <div class="info">
             <div class="primary-info">
@@ -126,8 +125,12 @@ limitations under the License.
     const VueTippy = require('vue-tippy').default;
     Vue.use(VueTippy);
 
+    const CPUDropletIcon = require('../icons/cpu_droplet_icon');
     const DropletIcon = require('../icons/droplet_icon');
+    const GeneralDropletIcon = require('../icons/general_droplet_icon');
     const KubernetesIcon = require('../icons/kubernetes_icon');
+    const MemoryDropletIcon = require('../icons/memory_droplet_icon');
+    const StandardDropletIcon = require('../icons/standard_droplet_icon');
 
     module.exports = {
         name: 'ActiveDroplet',
@@ -136,8 +139,12 @@ limitations under the License.
             type: String,
         },
         components: {
+            CPUDropletIcon,
             DropletIcon,
+            GeneralDropletIcon,
             KubernetesIcon,
+            MemoryDropletIcon,
+            StandardDropletIcon,
         },
         data() {
             return {
@@ -180,5 +187,26 @@ limitations under the License.
                 return this.$props.droplet.price_monthly * (this.cappedHours() / this.maxHours()) * this.nodeMultiplier();
             },
         },
+        computed: {
+            iconType() {
+                if (this.$props.type === 'kubernetes') return 'KubernetesIcon';
+                switch (this.$props.droplet.type) {
+                    case 'Standard':
+                        return 'StandardDropletIcon';
+
+                    case 'General Purpose':
+                        return 'GeneralDropletIcon';
+
+                    case 'CPU-Optimized':
+                        return 'CPUDropletIcon';
+
+                    case 'Memory-Optimized':
+                        return 'MemoryDropletIcon';
+
+                    default:
+                        return 'DropletIcon';
+                }
+            }
+        }
     };
 </script>
