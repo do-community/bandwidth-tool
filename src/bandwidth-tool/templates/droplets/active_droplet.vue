@@ -16,8 +16,7 @@ limitations under the License.
 
 <template>
     <div class="panel is-droplet">
-        <KubernetesIcon v-if="type === 'kubernetes'"></KubernetesIcon>
-        <DropletIcon v-else></DropletIcon>
+        <component :is="iconType"></component>
 
         <div class="info">
             <div class="primary-info">
@@ -55,7 +54,7 @@ limitations under the License.
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.nodesLabel }}</span>
                 <div class="control">
                     <div class="control">
-                        <input ref="nodes" type="number" min="1" step="1" :value="nodes" @input="update" />
+                        <input v-model.lazy.number="nodes" type="number" min="1" step="1" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.nodesUnit }}</span>
                     </div>
                     <i v-tippy
@@ -75,7 +74,7 @@ limitations under the License.
                 </span>
                 <div class="control">
                     <div class="control">
-                        <input ref="hours" type="number" min="0" max="744" step="1" :value="hours" @input="update" />
+                        <input v-model.lazy.number="hours" type="number" min="0" max="744" step="1" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.hoursUnit }}</span>
                     </div>
                     <i v-tippy
@@ -90,7 +89,7 @@ limitations under the License.
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.consumptionLabel }}</span>
                 <div class="control">
                     <div class="control">
-                        <input ref="consumption" type="number" min="0" step="100" :value="consumption" @input="update" />
+                        <input v-model.lazy.number="consumption" type="number" min="0" step="100" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.consumptionUnit }}</span>
                     </div>
                     <i v-tippy
@@ -126,8 +125,12 @@ limitations under the License.
     const VueTippy = require('vue-tippy').default;
     Vue.use(VueTippy);
 
+    const CPUDropletIcon = require('../icons/cpu_droplet_icon');
     const DropletIcon = require('../icons/droplet_icon');
+    const GeneralDropletIcon = require('../icons/general_droplet_icon');
     const KubernetesIcon = require('../icons/kubernetes_icon');
+    const MemoryDropletIcon = require('../icons/memory_droplet_icon');
+    const StandardDropletIcon = require('../icons/standard_droplet_icon');
 
     module.exports = {
         name: 'ActiveDroplet',
@@ -136,8 +139,12 @@ limitations under the License.
             type: String,
         },
         components: {
+            CPUDropletIcon,
             DropletIcon,
+            GeneralDropletIcon,
             KubernetesIcon,
+            MemoryDropletIcon,
+            StandardDropletIcon,
         },
         data() {
             return {
@@ -147,15 +154,20 @@ limitations under the License.
                 nodes: 1,
             };
         },
+        watch: {
+            hours() {
+                this.$emit('update');
+            },
+            consumption() {
+                this.$emit('update');
+            },
+            nodes() {
+                this.$emit('update');
+            },
+        },
         methods: {
             remove() {
                 this.$emit('remove');
-            },
-            update() {
-                this.$data.hours = Number(this.$refs.hours.value);
-                this.$data.consumption = Number(this.$refs.consumption.value);
-                this.$data.nodes = Number(this.$refs.nodes ? this.$refs.nodes.value : this.$data.nodes);
-                this.$emit('update');
             },
             maxHours() {
                 if (this.$props.type === 'kubernetes') return 744;
@@ -173,6 +185,27 @@ limitations under the License.
             },
             dropletCost() {
                 return this.$props.droplet.price_monthly * (this.cappedHours() / this.maxHours()) * this.nodeMultiplier();
+            },
+        },
+        computed: {
+            iconType() {
+                if (this.$props.type === 'kubernetes') return 'KubernetesIcon';
+                switch (this.$props.droplet.type) {
+                case 'Standard':
+                    return 'StandardDropletIcon';
+
+                case 'General Purpose':
+                    return 'GeneralDropletIcon';
+
+                case 'CPU-Optimized':
+                    return 'CPUDropletIcon';
+
+                case 'Memory-Optimized':
+                    return 'MemoryDropletIcon';
+
+                default:
+                    return 'DropletIcon';
+                }
             },
         },
     };
