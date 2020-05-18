@@ -64,9 +64,7 @@ limitations under the License.
                         </div>
                     </div>
 
-                    <div class="droplet-picker-button">
-                        <a class="button is-primary" @click="showPicker">{{ i18n.templates.app.addADroplet }}</a>
-                    </div>
+                    <Picker :droplets="droplets" @picked="picked"></Picker>
                 </div>
             </div>
         </div>
@@ -74,12 +72,6 @@ limitations under the License.
         <FAQs></FAQs>
 
         <Footer :text="i18n.templates.app.oss"></Footer>
-
-        <Modal ref="modal" class="droplet-picker-modal">
-            <div class="droplet-picker">
-                <Picker :droplets="droplets" @picked="picked"></Picker>
-            </div>
-        </Modal>
     </div>
 </template>
 
@@ -92,7 +84,6 @@ limitations under the License.
     const dropletData = require('../../build/droplets');
 
     const Footer = require('do-vue/src/templates/footer').default;
-    const Modal = require('do-vue/src/templates/modal').default;
     const Pool = require('./pool');
     const ActiveDroplet = require('./droplets/active_droplet');
     const SkeletonDroplet = require('./droplets/skeleton_droplet');
@@ -115,7 +106,6 @@ limitations under the License.
         name: 'App',
         components: {
             Footer,
-            Modal,
             Pool,
             ActiveDroplet,
             SkeletonDroplet,
@@ -267,7 +257,6 @@ limitations under the License.
                 const id = keys.length ? Math.max(...keys) + 1 : 0;
                 this.$set(this.$data.activeDroplets, id, [droplet, type]);
                 this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
-                this.$refs.modal.close();
                 this.$nextTick(this.update);
             },
             getBandwidthAllowance() {
@@ -300,10 +289,6 @@ limitations under the License.
                 if (this.$data.focusedDroplet === null) return '';
                 if (id === this.$data.focusedDroplet) return 'is-focused';
                 return 'is-unfocused';
-            },
-            showPicker(e) {
-                e.preventDefault();
-                this.$refs.modal.open();
             },
         },
         mounted() {

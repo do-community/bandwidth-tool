@@ -400,64 +400,6 @@ $header: #0071fe;
     }
   }
 
-  .droplet-picker-modal {
-    padding: 8vh 8vw;
-
-    @media (max-width: $breakpoint) {
-      padding: $margin;
-    }
-
-    .modal-card {
-      $delete-size: 30px;
-
-      height: 100%;
-      overflow: auto;
-      position: relative;
-      width: 100%;
-
-      @media (max-width: $breakpoint) {
-        padding: ($margin / 2);
-      }
-
-      .modal-card-head {
-        min-width: auto;
-        padding: 0 ($margin / 2);
-        position: absolute;
-        right: $margin * 3.75;
-        top: $margin * 2;
-        width: auto;
-        z-index: 10;
-
-        @media (max-width: $breakpoint) {
-          padding: $margin ($margin / 2);
-          right: $margin * .75;
-          top: 0;
-        }
-
-        .delete {
-          height: $delete-size;
-          max-height: $delete-size;
-          max-width: $delete-size;
-          min-height: $delete-size;
-          min-width: $delete-size;
-          width: $delete-size;
-        }
-      }
-
-      .modal-card-body {
-        overflow: initial;
-
-        .tabs {
-          margin: 0 ($delete-size + $margin * 3) 0 0;
-
-          @media (max-width: $breakpoint) {
-            margin: 0 ($delete-size + $margin) 0 0;
-          }
-        }
-      }
-    }
-  }
-
   .droplet-picker {
     .picker {
       .tabs {
