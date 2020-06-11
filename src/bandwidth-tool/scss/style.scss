@@ -26,6 +26,16 @@ $header: #0071fe;
   $pretty--color-default: $primary;
   @import "~pretty-checkbox/src/pretty-checkbox";
 
+  // Reset community info box styles
+  .info {
+    background: none;
+    border-radius: 0;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+  }
+
   .container {
     padding: ($margin * 4) 0;
     width: 100%;
