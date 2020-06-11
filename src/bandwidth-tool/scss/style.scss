@@ -123,6 +123,7 @@ $header: #0071fe;
           }
 
           p {
+            color: $text;
             margin: 0;
 
             span,
@@ -369,6 +370,12 @@ $header: #0071fe;
     }
 
     &.is-droplet {
+      p {
+        em {
+          color: $mono-blue;
+        }
+      }
+
       .sub-block {
         bottom: unset;
         display: block;
