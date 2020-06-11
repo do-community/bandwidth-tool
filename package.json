@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build:clean && npm run build:template && npm run build:droplets && npm run build:kubernetes && npm run build:static && npm run build:tool",
     "build:clean": "do-vue clean",
-    "build:template": "WWW_TEMPLATE=true do-vue template",
+    "build:template": "do-vue template",
     "build:droplets": "node ./src/build/getDroplets.js",
     "build:kubernetes": "node ./src/build/getKubernetes.js",
     "build:static": "copyfiles --up 2 ./src/static/{*,**/*} dist",
