@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build:clean && npm run build:template && npm run build:droplets && npm run build:kubernetes && npm run build:static && npm run build:tool",
     "build:clean": "do-vue clean",
-    "build:template": "WWW_TEMPLATE=true do-vue template",
+    "build:template": "do-vue template",
     "build:droplets": "node ./src/build/getDroplets.js",
     "build:kubernetes": "node ./src/build/getKubernetes.js",
     "build:static": "copyfiles --up 2 ./src/static/{*,**/*} dist",
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/do-community/bandwidth-tool#readme",
   "dependencies": {
-    "@babel/runtime": "^7.9.6",
+    "@babel/runtime": "^7.10.2",
     "babel-polyfill": "^6.26.0",
     "do-bulma": "git+https://github.com/do-community/do-bulma.git",
     "do-vue": "git+https://github.com/do-community/do-vue.git",
@@ -41,20 +41,20 @@
     "node-fetch": "^2.6.0",
     "parcel-bundler": "^1.12.4",
     "pretty-checkbox-vue": "^1.1.9",
-    "query-string": "^6.12.1",
+    "query-string": "^6.13.1",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",
     "vue-tippy": "^4.4.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.9.6",
+    "@babel/plugin-transform-runtime": "^7.10.1",
     "@vue/component-compiler-utils": "^3.1.2",
-    "copyfiles": "^2.1.1",
+    "copyfiles": "^2.3.0",
     "eslint": "^6.8.0",
     "eslint-plugin-vue": "^5.2.3",
     "posthtml": "^0.11.4",
     "posthtml-extend": "^0.3.0",
-    "sass": "^1.26.5",
+    "sass": "^1.26.8",
     "sass-lint": "^1.13.1",
     "vue-template-compiler": "^2.6.10"
   }
