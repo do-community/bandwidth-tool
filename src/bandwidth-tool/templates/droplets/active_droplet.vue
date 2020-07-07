@@ -23,7 +23,7 @@ limitations under the License.
                 <p>
                     <em>
                         <sup>$</sup>{{ droplet.price_monthly }}
-                        <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
+                        <sub> {{ i18n.common.perMonth }}</sub>
                         <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.activeDroplet.node }}</sub>
                     </em>
                 </p>
@@ -90,7 +90,7 @@ limitations under the License.
                 <div class="control">
                     <div class="control">
                         <input v-model.lazy.number="consumption" type="number" min="0" step="100" />
-                        <span class="suffix">{{ i18n.templates.droplets.activeDroplet.consumptionUnit }}</span>
+                        <span class="suffix">{{ i18n.common.consumptionUnit }}</span>
                     </div>
                     <i v-tippy
                        :title="i18n.templates.droplets.activeDroplet.consumptionTooltip"

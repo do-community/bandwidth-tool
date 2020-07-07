@@ -55,10 +55,43 @@ limitations under the License.
                                 <tbody>
                                     <tr>
                                         <td>
-                                            {{ i18n.templates.app.estimatedCost }}
+                                            {{ i18n.templates.app.dropletBandWidthConsumption }}
                                         </td>
                                         <td>
-                                            <b>${{ dropletCost.toLocaleString() }} / mo</b>
+                                            <b>{{ (bandwidthConsumption - additionalBandwidthConsumption).toLocaleString() }} {{ i18n.common.consumptionUnit }}</b>
+                                            <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {{ i18n.templates.app.additionalBandWidthConsumption }}
+                                        </td>
+                                        <td>
+                                            <div class="input-container">
+                                                <div class="control">
+                                                    <div class="control">
+                                                        <input v-model.lazy.number="additionalBandwidthConsumption"
+                                                               type="number"
+                                                               min="0"
+                                                               step="100"
+                                                               @change="update"
+                                                        />
+                                                        <span class="suffix">
+                                                            {{ i18n.common.consumptionUnit }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <span class="label">{{ i18n.common.perMonth }}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hr">
+                                        <td>
+                                            {{ i18n.templates.app.estimatedDroplets }}
+                                        </td>
+                                        <td>
+                                            <b>${{ dropletCost.toLocaleString() }}</b>
+                                            <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
                                         </td>
                                     </tr>
                                     <tr>
@@ -66,12 +99,22 @@ limitations under the License.
                                             {{ i18n.templates.app.estimatedOverage }}
                                         </td>
                                         <td>
-                                            <b>${{ (bandwidthOverage * 0.01).toLocaleString() }} / mo</b>
+                                            <b>${{ (bandwidthOverage * 0.01).toLocaleString() }}</b>
+                                            <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
                                             <br />
                                             <small class="has-text-muted">
-                                                ({{ bandwidthOverage.toLocaleString() }} GB
-                                                @ $0.01 / GB)
+                                                ({{ bandwidthOverage.toLocaleString() }} {{ i18n.common.consumptionUnit }}
+                                                @ $0.01 / {{ i18n.common.consumptionUnit }})
                                             </small>
+                                        </td>
+                                    </tr>
+                                    <tr class="hr">
+                                        <td>
+                                            {{ i18n.templates.app.estimatedTotal }}
+                                        </td>
+                                        <td>
+                                            <b>${{ (dropletCost + bandwidthOverage * 0.01).toLocaleString() }}</b>
+                                            <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -144,6 +187,7 @@ limitations under the License.
                 bandwidthAllowance: 0,
                 bandwidthAllowanceData: [],
                 bandwidthConsumption: 0,
+                additionalBandwidthConsumption: 0,
                 bandwidthConsumptionData: [],
                 bandwidthOverage: 0,
                 dropletCost: 0,
@@ -256,6 +300,10 @@ limitations under the License.
                         `${droplet.$data.consumption / barMaxWidth * 100}%`,
                     ]);
                 }
+                newBandwidthConsumptionData.push([
+                    'additional',
+                    `${this.$data.additionalBandwidthConsumption / barMaxWidth * 100}%`,
+                ]);
 
                 // Filler bars
                 if (!newBandwidthAllowanceData.length || this.$data.bandwidthAllowance === 0)
@@ -288,11 +336,14 @@ limitations under the License.
                     return total + val.bandwidthAllowance();
                 }, 0);
             },
-            getBandwidthConsumption() {
+            getDropletBandwidthConsumption() {
                 if (!this.$refs.activeDroplets) return 0;
                 return this.$refs.activeDroplets.reduce((total, val) => {
                     return total + val.$data.consumption;
                 }, 0);
+            },
+            getBandwidthConsumption() {
+                return this.getDropletBandwidthConsumption() + this.$data.additionalBandwidthConsumption;
             },
             getDropletCost() {
                 if (!this.$refs.activeDroplets) return 0;

@@ -3,7 +3,6 @@ module.exports = {
     allowance: 'Estimated allowance:',
     allowanceUnit: 'GB',
     consumption: 'Estimated consumption:',
-    consumptionUnit: 'GB',
     overage: 'Estimated overage:',
     overageWarning: 'Your estimated bandwidth consumption exceeds the estimated allowance in your pool. This will result in an overage charge!',
     overageOkay: 'Your estimated bandwidth consumption is less than the estimated allowance pool on your account in a month, so you should not be charged anything extra for bandwidth usage.',

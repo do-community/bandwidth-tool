@@ -14,7 +14,6 @@ module.exports = {
     monthly: '(monthly)',
 
     consumptionLabel: 'Outbound data consumption',
-    consumptionUnit: 'GB',
     consumptionTooltip: 'Use this to visualize the consumption of your account bandwidth pool by each Droplet.',
 
     monthlyCost: 'Monthly Droplet Cost',

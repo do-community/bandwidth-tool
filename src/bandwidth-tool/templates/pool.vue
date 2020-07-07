@@ -47,7 +47,7 @@ limitations under the License.
                 </p>
                 <p class="consumption">
                     <span>{{ i18n.templates.pool.consumption }}</span>
-                    <b>{{ bandwidthConsumption.toLocaleString() }} {{ i18n.templates.pool.consumptionUnit }}</b>
+                    <b>{{ bandwidthConsumption.toLocaleString() }} {{ i18n.common.consumptionUnit }}</b>
                 </p>
 
                 <br />
@@ -67,8 +67,8 @@ limitations under the License.
                         ${{ (bandwidthOverage * 0.01).toLocaleString() }}
                     </b>
                     <small class="has-text-muted">
-                        ({{ bandwidthOverage.toLocaleString() }} GB
-                        @ $0.01 / GB)
+                        ({{ bandwidthOverage.toLocaleString() }} {{ i18n.common.consumptionUnit }}
+                        @ $0.01 / {{ i18n.common.consumptionUnit }})
                     </small>
                 </p>
             </div>

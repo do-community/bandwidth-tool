@@ -1,5 +1,4 @@
 module.exports = {
-    month: 'mo',
     node: 'node',
     transferUnit: 'TB',
     transferUnitSmall: 'GB',

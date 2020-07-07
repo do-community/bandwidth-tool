@@ -19,7 +19,7 @@ limitations under the License.
         <p>
             <em>
                 <sup>$</sup>{{ droplet.price_monthly.toLocaleString() }}
-                <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
+                <sub> {{ i18n.common.perMonth }}</sub>
                 <sub v-if="type === 'kubernetes'" class="sub-block">
                     {{ i18n.templates.droplets.pickerDroplet.perNode }}
                 </sub>
