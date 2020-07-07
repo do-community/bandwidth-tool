@@ -50,75 +50,6 @@ limitations under the License.
                                     @update="update"
                                 ></ActiveDroplet>
                             </div>
-
-                            <table class="table costs">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            {{ i18n.templates.app.dropletBandWidthConsumption }}
-                                        </td>
-                                        <td>
-                                            <b>{{ (bandwidthConsumption - additionalBandwidthConsumption).toLocaleString() }} {{ i18n.common.consumptionUnit }}</b>
-                                            <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            {{ i18n.templates.app.additionalBandWidthConsumption }}
-                                        </td>
-                                        <td>
-                                            <div class="input-container">
-                                                <div class="control">
-                                                    <div class="control">
-                                                        <input v-model.lazy.number="additionalBandwidthConsumption"
-                                                               type="number"
-                                                               min="0"
-                                                               step="100"
-                                                               @change="update"
-                                                        />
-                                                        <span class="suffix">
-                                                            {{ i18n.common.consumptionUnit }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <span class="label">{{ i18n.common.perMonth }}</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hr">
-                                        <td>
-                                            {{ i18n.templates.app.estimatedDroplets }}
-                                        </td>
-                                        <td>
-                                            <b>${{ dropletCost.toLocaleString() }}</b>
-                                            <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            {{ i18n.templates.app.estimatedOverage }}
-                                        </td>
-                                        <td>
-                                            <b>${{ (bandwidthOverage * 0.01).toLocaleString() }}</b>
-                                            <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
-                                            <br />
-                                            <small class="has-text-muted">
-                                                ({{ bandwidthOverage.toLocaleString() }} {{ i18n.common.consumptionUnit }}
-                                                @ $0.01 / {{ i18n.common.consumptionUnit }})
-                                            </small>
-                                        </td>
-                                    </tr>
-                                    <tr class="hr">
-                                        <td>
-                                            {{ i18n.templates.app.estimatedTotal }}
-                                        </td>
-                                        <td>
-                                            <b>${{ (dropletCost + bandwidthOverage * 0.01).toLocaleString() }}</b>
-                                            <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                         <div v-else>
                             <p class="has-text-muted">
@@ -128,6 +59,15 @@ limitations under the License.
                                 <SkeletonDroplet></SkeletonDroplet>
                             </div>
                         </div>
+
+                        <Costs
+                            ref="costs"
+                            :bandwidth-consumption="bandwidthConsumption"
+                            :droplet-cost="dropletCost"
+                            :bandwidth-overage="bandwidthOverage"
+                            @update="update"
+                            :style="{ display: hasActiveDroplets ? undefined : 'none' }"
+                        ></Costs>
                     </div>
 
                     <Picker :droplets="droplets" @picked="picked"></Picker>
@@ -153,6 +93,7 @@ limitations under the License.
     const Pool = require('./pool');
     const ActiveDroplet = require('./droplets/active_droplet');
     const SkeletonDroplet = require('./droplets/skeleton_droplet');
+    const Costs = require('./costs');
     const Picker = require('./picker');
     const FAQs = require('./faqs');
 
@@ -175,6 +116,7 @@ limitations under the License.
             Pool,
             ActiveDroplet,
             SkeletonDroplet,
+            Costs,
             Picker,
             FAQs,
         },
@@ -187,7 +129,6 @@ limitations under the License.
                 bandwidthAllowance: 0,
                 bandwidthAllowanceData: [],
                 bandwidthConsumption: 0,
-                additionalBandwidthConsumption: 0,
                 bandwidthConsumptionData: [],
                 bandwidthOverage: 0,
                 dropletCost: 0,
@@ -195,12 +136,11 @@ limitations under the License.
             };
         },
         methods: {
-            get() {
-                const parsed = queryString.parse(window.location.search);
+            safeActive(raw) {
                 try {
-                    if (!parsed.active) return [];
-                    if (!parsed.active.length) return [];
-                    const data = JSON.parse(parsed.active);
+                    if (!raw) return [];
+                    if (!raw.length) return [];
+                    const data = JSON.parse(raw);
                     if (!data) return [];
                     if (!Array.isArray(data)) return [];
                     return data;
@@ -208,12 +148,27 @@ limitations under the License.
                     return [];
                 }
             },
+            safeAdditional(raw) {
+                try {
+                    if (!raw) return 0;
+                    const data = parseInt(raw, 10);
+                    if (isNaN(data)) return 0;
+                    if (data < 0) return 0;
+                    return data;
+                } catch (_) {
+                    return 0;
+                }
+            },
+            get() {
+                const parsed = queryString.parse(window.location.search);
+                return { active: this.safeActive(parsed.active), additional: this.safeAdditional(parsed.additional) };
+            },
             load() {
                 // Get the old data
                 const data = this.get();
 
                 // If no data, add a default demo Droplet
-                if (!data.length) data.push({
+                if (!data.active.length) data.active.push({
                     slug: 's-1vcpu-2gb',
                     type: 'droplet',
                     hours: 722,
@@ -222,7 +177,7 @@ limitations under the License.
                 });
 
                 // Work through the initial droplets and load them in the tool
-                for (const item of data) {
+                for (const item of data.active) {
                     // Insert as a new active droplet
                     const droplet = dropletData.filter(d => d.slug === item.slug);
                     if (!droplet) continue;
@@ -240,6 +195,9 @@ limitations under the License.
                         ref[0].$data.nodes = item.nodes;
                     });
                 }
+
+                // Handle additional
+                this.$refs.costs.$data.additionalBandwidthConsumption = data.additional;
 
                 // Update a tick after the initial data is set in the refs
                 this.$nextTick(() => {
@@ -261,11 +219,12 @@ limitations under the License.
 
                 // Get the old data, check if changed droplets
                 const last = this.get();
-                const sameDroplets = compareArrays(data.map(x => x.slug), last.map(x => x.slug));
+                const sameDroplets = compareArrays(data.map(x => x.slug), last.active.map(x => x.slug));
 
                 // Create new query param
                 const parsed = queryString.parse(window.location.search);
                 parsed.active = JSON.stringify(data);
+                parsed.additional = this.$refs.costs.$data.additionalBandwidthConsumption;
 
                 // Save
                 if (sameDroplets) {
@@ -302,7 +261,7 @@ limitations under the License.
                 }
                 newBandwidthConsumptionData.push([
                     'additional',
-                    `${this.$data.additionalBandwidthConsumption / barMaxWidth * 100}%`,
+                    `${this.$refs.costs.$data.additionalBandwidthConsumption / barMaxWidth * 100}%`,
                 ]);
 
                 // Filler bars
@@ -343,7 +302,7 @@ limitations under the License.
                 }, 0);
             },
             getBandwidthConsumption() {
-                return this.getDropletBandwidthConsumption() + this.$data.additionalBandwidthConsumption;
+                return this.getDropletBandwidthConsumption() + this.$refs.costs.$data.additionalBandwidthConsumption;
             },
             getDropletCost() {
                 if (!this.$refs.activeDroplets) return 0;
