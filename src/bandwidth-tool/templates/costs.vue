@@ -17,75 +17,75 @@ limitations under the License.
 <template>
     <table class="table costs">
         <tbody>
-        <tr>
-            <td>
-                {{ i18n.templates.costs.dropletBandwidthConsumption }}
-            </td>
-            <td>
-                <b>
-                    {{ (bandwidthConsumption - additionalBandwidthConsumption).toLocaleString() }}
-                    {{ i18n.common.consumptionUnit }}
-                </b>
-                <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    {{ i18n.templates.costs.dropletBandwidthConsumption }}
+                </td>
+                <td>
+                    <b>
+                        {{ (bandwidthConsumption - additionalBandwidthConsumption).toLocaleString() }}
+                        {{ i18n.common.consumptionUnit }}
+                    </b>
+                    <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
+                </td>
+            </tr>
 
-        <tr>
-            <td>
-                {{ i18n.templates.costs.additionalBandwidthConsumption }}
-            </td>
-            <td>
-                <div class="input-container">
-                    <div class="control">
+            <tr>
+                <td>
+                    {{ i18n.templates.costs.additionalBandwidthConsumption }}
+                </td>
+                <td>
+                    <div class="input-container">
                         <div class="control">
-                            <input v-model.lazy.number="additionalBandwidthConsumption"
-                                   type="number"
-                                   min="0"
-                                   step="100"
-                                   @change="$emit('update')"
-                            />
-                            <span class="suffix">{{ i18n.common.consumptionUnit }}</span>
+                            <div class="control">
+                                <input v-model.lazy.number="additionalBandwidthConsumption"
+                                       type="number"
+                                       min="0"
+                                       step="100"
+                                       @change="$emit('update')"
+                                />
+                                <span class="suffix">{{ i18n.common.consumptionUnit }}</span>
+                            </div>
                         </div>
+                        <span class="label">{{ i18n.common.perMonth }}</span>
                     </div>
-                    <span class="label">{{ i18n.common.perMonth }}</span>
-                </div>
-            </td>
-        </tr>
+                </td>
+            </tr>
 
-        <tr class="hr">
-            <td>
-                {{ i18n.templates.costs.estimatedDroplets }}
-            </td>
-            <td>
-                <b>${{ dropletCost.toLocaleString() }}</b>
-                <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
-            </td>
-        </tr>
+            <tr class="hr">
+                <td>
+                    {{ i18n.templates.costs.estimatedDroplets }}
+                </td>
+                <td>
+                    <b>${{ dropletCost.toLocaleString() }}</b>
+                    <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
+                </td>
+            </tr>
 
-        <tr>
-            <td>
-                {{ i18n.templates.costs.estimatedOverage }}
-            </td>
-            <td>
-                <b>${{ (bandwidthOverage * 0.01).toLocaleString() }}</b>
-                <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
-                <br />
-                <small class="has-text-muted">
-                    ({{ bandwidthOverage.toLocaleString() }} {{ i18n.common.consumptionUnit }}
-                    @ $0.01 / {{ i18n.common.consumptionUnit }})
-                </small>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    {{ i18n.templates.costs.estimatedOverage }}
+                </td>
+                <td>
+                    <b>${{ (bandwidthOverage * 0.01).toLocaleString() }}</b>
+                    <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
+                    <br />
+                    <small class="has-text-muted">
+                        ({{ bandwidthOverage.toLocaleString() }} {{ i18n.common.consumptionUnit }}
+                        @ $0.01 / {{ i18n.common.consumptionUnit }})
+                    </small>
+                </td>
+            </tr>
 
-        <tr class="hr">
-            <td>
-                {{ i18n.templates.costs.estimatedTotal }}
-            </td>
-            <td>
-                <b>${{ (dropletCost + bandwidthOverage * 0.01).toLocaleString() }}</b>
-                <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
-            </td>
-        </tr>
+            <tr class="hr">
+                <td>
+                    {{ i18n.templates.costs.estimatedTotal }}
+                </td>
+                <td>
+                    <b>${{ (dropletCost + bandwidthOverage * 0.01).toLocaleString() }}</b>
+                    <small class="has-text-muted">{{ i18n.common.perMonth }}</small>
+                </td>
+            </tr>
         </tbody>
     </table>
 </template>

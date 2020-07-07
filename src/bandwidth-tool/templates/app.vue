@@ -65,8 +65,8 @@ limitations under the License.
                             :bandwidth-consumption="bandwidthConsumption"
                             :droplet-cost="dropletCost"
                             :bandwidth-overage="bandwidthOverage"
-                            @update="update"
                             :style="{ display: hasActiveDroplets ? undefined : 'none' }"
+                            @update="update"
                         ></Costs>
                     </div>
 
