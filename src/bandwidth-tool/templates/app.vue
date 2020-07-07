@@ -36,9 +36,6 @@ limitations under the License.
                     <div class="droplets">
                         <h2>{{ i18n.templates.app.droplets }}</h2>
                         <div v-if="hasActiveDroplets">
-                            <!--<p class="has-text-muted">
-                                {{ i18n.templates.app.estimatedCost }} ${{ dropletCost.toLocaleString() }} / mo.
-                            </p>-->
                             <div class="panel-list panel-list-vertical">
                                 <ActiveDroplet
                                     v-for="(droplet, id) in activeDroplets"
@@ -53,6 +50,32 @@ limitations under the License.
                                     @update="update"
                                 ></ActiveDroplet>
                             </div>
+
+                            <table class="table costs">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            {{ i18n.templates.app.estimatedCost }}
+                                        </td>
+                                        <td>
+                                            <b>${{ dropletCost.toLocaleString() }} / mo</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {{ i18n.templates.app.estimatedOverage }}
+                                        </td>
+                                        <td>
+                                            <b>${{ (bandwidthOverage * 0.01).toLocaleString() }} / mo</b>
+                                            <br />
+                                            <small class="has-text-muted">
+                                                ({{ bandwidthOverage.toLocaleString() }} GB
+                                                @ $0.01 / GB)
+                                            </small>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div v-else>
                             <p class="has-text-muted">

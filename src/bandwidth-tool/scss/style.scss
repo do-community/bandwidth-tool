@@ -398,6 +398,27 @@ $header: #0071fe;
     }
   }
 
+  .costs {
+    border: 0;
+    margin: ($margin * 1.5) 0 ($margin * 1.5) auto;
+
+    tr {
+      border: 0;
+
+      td {
+        border: 0;
+        text-align: left;
+
+        &:not(:last-child) {
+          border-color: $border;
+          border-style: solid;
+          border-width: 0 1px 0 0;
+          text-align: right;
+        }
+      }
+    }
+  }
+
   .droplet-picker-button {
     display: flex;
     flex-direction: row;
