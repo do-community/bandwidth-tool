@@ -20,7 +20,14 @@ limitations under the License.
             <div class="container">
                 <div class="panel bandwidth">
                     <h1>{{ i18n.templates.app.title }}</h1>
-                    <h3><small>{{ i18n.templates.app.description }}</small></h3>
+                    <h3>
+                        <small>
+                            {{ i18n.templates.app.description }}
+                            {{ i18n.templates.app.forMoreInfo }}
+                            <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">
+                                {{ i18n.templates.app.docs }}</a>.
+                        </small>
+                    </h3>
 
                     <Pool
                         :bandwidth-allowance="bandwidthAllowance"

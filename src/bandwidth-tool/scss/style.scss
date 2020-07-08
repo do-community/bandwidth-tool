@@ -100,25 +100,33 @@ $header: #0071fe;
       margin: 0;
     }
 
+    h3 {
+      small {
+        font-size: .8em;
+      }
+    }
+
     .pool {
       margin: 3rem 0;
 
+      h2 {
+        small {
+          font-size: .65em;
+
+          i {
+            color: inherit;
+          }
+        }
+      }
+
       .stats {
         align-items: center;
-        display: flex;
-        flex-direction: row;
-        margin-top: 1rem;
-
-        @media (max-width: $breakpoint) {
-          flex-direction: column;
-        }
+        margin: 1rem 0 0;
 
         .data {
-          flex-basis: 55%;
-          padding-right: 1.5rem;
+          padding: 0 1.5rem 0 0;
 
           @media (max-width: $breakpoint) {
-            flex-basis: 100%;
             padding: .5rem 0;
           }
 
@@ -146,11 +154,9 @@ $header: #0071fe;
         }
 
         .info {
-          flex-basis: 45%;
-          padding-left: 1.5rem;
+          padding: 0 0 0 1.5rem;
 
           @media (max-width: $breakpoint) {
-            flex-basis: 100%;
             padding: .5rem 0;
           }
 
