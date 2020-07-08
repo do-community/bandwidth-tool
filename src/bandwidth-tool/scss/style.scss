@@ -411,7 +411,7 @@ $header: #0071fe;
   .costs {
     table {
       border: 0;
-      margin: ($margin * 1.5) 0 ($margin * 1) auto;
+      margin: ($margin * .5) 0 ($margin * 1) auto;
 
       tr {
         border: 0;
@@ -448,8 +448,22 @@ $header: #0071fe;
     p {
       color: $muted;
       font-size: $font-size * .7;
-      margin: ($margin * 1) 0 ($margin * 1.5);
+      margin: ($margin * .5) 0 ($margin * 1.5);
       text-align: right;
+
+      &.collapse {
+        cursor: pointer;
+        font-size: $font-size * .85;
+        margin: ($margin * 1.5) 0 0;
+
+        i {
+          font-size: 1.5em;
+          margin: 0 0 0 .05rem;
+          text-align: center;
+          vertical-align: top;
+          width: 1rem;
+        }
+      }
     }
   }
 

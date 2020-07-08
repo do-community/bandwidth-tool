@@ -16,7 +16,13 @@ limitations under the License.
 
 <template>
     <div class="costs">
-        <table class="table">
+        <p class="collapse" @click="toggle">
+            {{ i18n.templates.costs.summary }}
+            <i v-if="summaryVisible" class="fas fa-caret-down"></i>
+            <i v-else class="fas fa-caret-right"></i>
+        </p>
+
+        <table v-if="summaryVisible" class="table">
             <tbody>
                 <tr>
                     <td>
@@ -91,7 +97,8 @@ limitations under the License.
         </table>
 
         <p>
-            Export as <a @click="() => xlsx(false)">XLSX</a> / <a @click="() => xlsx(true)">CSV</a>
+            {{ i18n.templates.costs.exportAs }}
+            <a @click="() => xlsx(false)">XLSX</a> / <a @click="() => xlsx(true)">CSV</a>
         </p>
     </div>
 </template>
@@ -112,9 +119,13 @@ limitations under the License.
             return {
                 i18n,
                 additionalBandwidthConsumption: 0,
+                summaryVisible: false,
             };
         },
         methods: {
+            toggle() {
+                this.$data.summaryVisible = !this.$data.summaryVisible;
+            },
             async xlsx (asCsv) {
                 // Create the basic sheet
                 const workbook = new Excel.Workbook();
