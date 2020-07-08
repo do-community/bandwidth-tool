@@ -55,7 +55,7 @@ limitations under the License.
 
                 <tr class="hr">
                     <td>
-                        {{ i18n.templates.costs.estimatedDroplets }}
+                        {{ i18n.templates.costs.estimatedDroplet }}
                     </td>
                     <td>
                         <b>${{ dropletCost.toLocaleString() }}</b>
@@ -118,10 +118,10 @@ limitations under the License.
             async xlsx (asCsv) {
                 // Create the basic sheet
                 const workbook = new Excel.Workbook();
-                workbook.creator = 'DigitalOcean';
+                workbook.creator = i18n.templates.costs.digitalOcean;
                 workbook.created = new Date();
                 workbook.modified = new Date();
-                const sheet = workbook.addWorksheet('Bandwidth Calculator');
+                const sheet = workbook.addWorksheet(i18n.templates.app.title);
 
                 // Generic styles to be reused
                 const headerFont = {
@@ -143,16 +143,16 @@ limitations under the License.
 
                 // Add the header
                 const headers = sheet.addRow([
-                    'Droplet slug',
-                    'vCPUs',
-                    'RAM (GB)',
-                    'Disk (GB)',
-                    'Transfer (GB)',
-                    'Monthly Cost',
-                    'Lifetime (hours)',
-                    'Lifetime Transfer (GB)',
-                    'Consumption (GB)',
-                    'Estimated Droplet Cost',
+                    i18n.templates.costs.dropletSlug,
+                    i18n.templates.droplets.droplet.cpuPlural,
+                    `${i18n.templates.costs.memory} (${i18n.templates.droplets.droplet.memoryUnit})`,
+                    `${i18n.templates.costs.disk} (${i18n.templates.droplets.droplet.memoryUnit})`,
+                    `${i18n.templates.costs.transfer} (${i18n.common.consumptionUnit})`,
+                    i18n.templates.costs.monthlyCost,
+                    i18n.templates.costs.lifetimeHours,
+                    `${i18n.templates.costs.lifetimeTransfer} (${i18n.common.consumptionUnit})`,
+                    `${i18n.templates.costs.consumption} (${i18n.common.consumptionUnit})`,
+                    i18n.templates.costs.estimatedDroplet,
                 ]);
                 headers.font = headerFont;
                 headers.alignment = {
@@ -218,7 +218,7 @@ limitations under the License.
                         inputFill,
                     ],
                     [
-                        i18n.templates.costs.estimatedDroplets,
+                        i18n.templates.costs.estimatedDroplet,
                         this.$props.dropletCost,
                         `SUM(J2:J${spacer.number - 1})`,
                         moneyFormat,
