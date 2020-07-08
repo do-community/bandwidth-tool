@@ -65,6 +65,7 @@ limitations under the License.
                             :bandwidth-consumption="bandwidthConsumption"
                             :droplet-cost="dropletCost"
                             :bandwidth-overage="bandwidthOverage"
+                            :active-droplets="$refs.activeDroplets"
                             :style="{ display: hasActiveDroplets ? undefined : 'none' }"
                             @update="update"
                         ></Costs>
@@ -136,6 +137,10 @@ limitations under the License.
             };
         },
         methods: {
+            /**
+             * URL loading logic
+             */
+
             safeActive(raw) {
                 try {
                     if (!raw) return [];
@@ -204,6 +209,11 @@ limitations under the License.
                     this.$nextTick(this.update);
                 });
             },
+
+            /**
+             * URL saving logic
+             */
+
             save() {
                 // Get the new data to save
                 if (!this.$refs.activeDroplets) return;
@@ -235,6 +245,11 @@ limitations under the License.
                     window.history.pushState({}, '', `?${queryString.stringify(parsed)}`);
                 }
             },
+
+            /**
+             * Calculation & update logic
+             */
+
             update() {
                 // Calculate the totals
                 this.$data.dropletCost = this.getDropletCost();

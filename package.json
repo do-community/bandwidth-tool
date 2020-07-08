@@ -37,6 +37,7 @@
     "babel-polyfill": "^6.26.0",
     "do-bulma": "git+https://github.com/do-community/do-bulma.git",
     "do-vue": "git+https://github.com/do-community/do-vue.git",
+    "exceljs": "^4.1.0",
     "markdown-it": "^10.0.0",
     "node-fetch": "^2.6.0",
     "parcel-bundler": "^1.12.4",

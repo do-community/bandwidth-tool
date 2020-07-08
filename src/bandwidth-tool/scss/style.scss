@@ -399,38 +399,47 @@ $header: #0071fe;
   }
 
   .costs {
-    border: 0;
-    margin: ($margin * 1.5) 0 ($margin * 1.5) auto;
-
-    tr {
+    table {
       border: 0;
+      margin: ($margin * 1.5) 0 ($margin * 1) auto;
 
-      &.hr {
-        border-top: 2px solid $border;
-      }
-
-      td {
+      tr {
         border: 0;
-        text-align: left;
 
-        &:not(:last-child) {
-          border-color: $border;
-          border-style: solid;
-          border-width: 0 1px 0 0;
-          text-align: right;
+        &.hr {
+          border-top: 2px solid $border;
         }
 
-        .input-container {
-          align-items: center;
-          flex-direction: row;
-          margin: 0;
+        td {
+          border: 0;
+          text-align: left;
 
-          .label {
-            font-size: .875em;
-            margin: 0 ($margin * .5);
+          &:not(:last-child) {
+            border-color: $border;
+            border-style: solid;
+            border-width: 0 1px 0 0;
+            text-align: right;
+          }
+
+          .input-container {
+            align-items: center;
+            flex-direction: row;
+            margin: 0;
+
+            .label {
+              font-size: .875em;
+              margin: 0 ($margin * .5);
+            }
           }
         }
       }
+    }
+
+    p {
+      color: $muted;
+      font-size: $font-size * .7;
+      margin: ($margin * 1) 0 ($margin * 1.5);
+      text-align: right;
     }
   }
 
