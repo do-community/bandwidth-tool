@@ -149,6 +149,7 @@ limitations under the License.
                     `${i18n.templates.costs.disk} (${i18n.templates.droplets.droplet.memoryUnit})`,
                     `${i18n.templates.costs.transfer} (${i18n.common.consumptionUnit})`,
                     i18n.templates.costs.monthlyCost,
+                    i18n.templates.costs.quantity,
                     i18n.templates.costs.lifetimeHours,
                     `${i18n.templates.costs.lifetimeTransfer} (${i18n.common.consumptionUnit})`,
                     `${i18n.templates.costs.consumption} (${i18n.common.consumptionUnit})`,
@@ -170,6 +171,7 @@ limitations under the License.
                         ref.$props.droplet.disk,
                         ref.$props.droplet.transfer * 1000,
                         ref.$props.droplet.price_monthly,
+                        ref.$data.nodes,
                         ref.$data.hours,
                         ref.bandwidthAllowance(),
                         ref.$data.consumption,
@@ -179,22 +181,25 @@ limitations under the License.
                     // Monthly price is a price
                     row.getCell(6).numFmt = moneyFormat;
 
-                    // Lifetime can be changed
+                    // Quantity & lifetime can be changed
                     row.getCell(7).fill = inputFill;
+                    row.getCell(8).fill = inputFill;
 
                     // Bandwidth allowance is based on lifetime
-                    row.getCell(8).value = {
-                        formula: `E${row.number} * (MIN(${ref.maxHours()}, MAX(0, G${row.number})) / 672)`,
+                    // this.$props.droplet.transfer * 1000 * (this.cappedHours() / 672) * this.nodeMultiplier()
+                    row.getCell(9).value = {
+                        formula: `E${row.number} * (MIN(${ref.maxHours()}, MAX(0, H${row.number})) / 672) * MAX(G${row.number}, 1)`,
                         result: ref.bandwidthAllowance(),
                     };
 
                     // Bandwidth consumption can be changed
-                    row.getCell(9).fill = inputFill;
+                    row.getCell(10).fill = inputFill;
 
                     // Droplet cost is a price based on lifetime
-                    row.getCell(10).numFmt = moneyFormat;
-                    row.getCell(10).value = {
-                        formula: `F${row.number} * (MIN(${ref.maxHours()}, MAX(0, G${row.number})) / ${ref.maxHours()})`,
+                    // this.$props.droplet.price_monthly * (this.cappedHours() / this.maxHours()) * this.nodeMultiplier()
+                    row.getCell(11).numFmt = moneyFormat;
+                    row.getCell(11).value = {
+                        formula: `F${row.number} * (MIN(${ref.maxHours()}, MAX(0, H${row.number})) / ${ref.maxHours()}) * MAX(G${row.number}, 1)`,
                         result: ref.dropletCost(),
                     };
                 });
@@ -208,7 +213,7 @@ limitations under the License.
                     [
                         `${i18n.templates.costs.dropletBandwidthConsumption} (${i18n.common.consumptionUnit})`,
                         this.$props.bandwidthConsumption - this.$data.additionalBandwidthConsumption,
-                        `SUM(I2:I${spacer.number - 1})`,
+                        `SUM(J2:J${spacer.number - 1})`,
                     ],
                     [
                         `${i18n.templates.costs.additionalBandwidthConsumption} (${i18n.common.consumptionUnit})`,
@@ -220,22 +225,22 @@ limitations under the License.
                     [
                         i18n.templates.costs.estimatedDroplet,
                         this.$props.dropletCost,
-                        `SUM(J2:J${spacer.number - 1})`,
+                        `SUM(K2:K${spacer.number - 1})`,
                         moneyFormat,
                     ],
                     [
                         i18n.templates.costs.estimatedOverage,
                         this.$props.bandwidthOverage * 0.01,
-                        `MAX(SUM(I2:I${spacer.number - 1}) + J${spacer.number + 2} - SUM(H2:H${spacer.number - 1}), 0) * 0.01`,
+                        `MAX(SUM(J2:J${spacer.number - 1}) + K${spacer.number + 2} - SUM(I2:I${spacer.number - 1}), 0) * 0.01`,
                         moneyFormat,
                     ],
                     [
                         i18n.templates.costs.estimatedTotal,
                         this.$props.dropletCost + this.$props.bandwidthOverage * 0.01,
-                        `J${spacer.number + 3} + J${spacer.number + 4}`,
+                        `K${spacer.number + 3} + K${spacer.number + 4}`,
                         moneyFormat,
                     ],
-                ].forEach(rowData => {
+                ].forEach((rowData, i, arr) => {
                     const row = sheet.addRow([
                         ...padding,
                         rowData[0],
@@ -266,6 +271,12 @@ limitations under the License.
 
                     // Fill for input values
                     if (rowData[4]) row.getCell(row.cellCount).fill = rowData[4];
+
+                    // Last cell is bigger
+                    if (i === arr.length - 1) row.getCell(row.cellCount).font = {
+                        size: 12,
+                        bold: true,
+                    };
                 });
 
                 // Resize columns

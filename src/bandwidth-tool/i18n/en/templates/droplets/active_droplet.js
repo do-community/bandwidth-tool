@@ -1,7 +1,8 @@
 module.exports = {
     node: 'node',
 
-    nodesLabel: 'Pool will have',
+    nodesLabel: 'Quantity',
+    nodesPoolLabel: 'Pool will have',
     nodesUnit: 'nodes',
     nodesTooltip: 'By default, a Kubernetes cluster pool on DigitalOcean will consist of 3 nodes.',
 

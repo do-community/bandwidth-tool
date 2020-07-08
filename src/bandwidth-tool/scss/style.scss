@@ -298,6 +298,10 @@ $header: #0071fe;
         padding: 0 ($margin / 2);
         width: $height * 2.5;
 
+        &.slim {
+          width: $height * 1.5;
+        }
+
         &:focus {
           box-shadow: 0 0 2px rgba($primary, .5);
 
