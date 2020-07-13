@@ -16,7 +16,15 @@ limitations under the License.
 
 <template>
     <div class="pool">
-        <h2>{{ i18n.templates.pool.title }}</h2>
+        <h2>
+            {{ i18n.templates.pool.title }}
+            <small>
+                <i v-tippy
+                   :title="i18n.templates.pool.accrued"
+                   class="far fa-question-circle help"
+                ></i>
+            </small>
+        </h2>
 
         <div class="bars">
             <div class="bar-stack">
@@ -39,47 +47,33 @@ limitations under the License.
             </div>
         </div>
 
-        <div class="stats">
-            <div class="data">
+        <div class="stats columns">
+            <div class="data column">
                 <p class="allowance">
                     <span>{{ i18n.templates.pool.allowance }}</span>
                     <b>{{ bandwidthAllowance.toLocaleString() }} {{ i18n.templates.pool.allowanceUnit }}</b>
                 </p>
                 <p class="consumption">
                     <span>{{ i18n.templates.pool.consumption }}</span>
-                    <b>{{ bandwidthConsumption.toLocaleString() }} {{ i18n.templates.pool.consumptionUnit }}</b>
+                    <b>{{ bandwidthConsumption.toLocaleString() }} {{ i18n.common.consumptionUnit }}</b>
                 </p>
-
-                <br />
-                <p v-if="bandwidthOverage">
-                    {{ i18n.templates.pool.overageWarning }}
-                </p>
-                <p v-else>
-                    <small class="has-text-muted">
-                        {{ i18n.templates.pool.overageOkay }}
-                    </small>
-                </p>
-
-                <br />
                 <p>
                     <span>{{ i18n.templates.pool.overage }}</span>
                     <b>
                         ${{ (bandwidthOverage * 0.01).toLocaleString() }}
                     </b>
                     <small class="has-text-muted">
-                        ({{ bandwidthOverage.toLocaleString() }} GB
-                        @ $0.01 / GB)
+                        ({{ bandwidthOverage.toLocaleString() }} {{ i18n.common.consumptionUnit }}
+                        @ $0.01 / {{ i18n.common.consumptionUnit }})
                     </small>
                 </p>
             </div>
-            <div class="info">
-                <p>
-                    {{ i18n.templates.pool.accrued }}
+            <div class="info column">
+                <p v-if="bandwidthOverage">
+                    {{ i18n.templates.pool.overageWarning }}
                 </p>
-                <p>
-                    {{ i18n.templates.pool.findOutMore }}
-                    <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">
-                        {{ i18n.templates.pool.docs }}</a>.
+                <p v-else class="has-text-muted">
+                    {{ i18n.templates.pool.overageOkay }}
                 </p>
             </div>
         </div>

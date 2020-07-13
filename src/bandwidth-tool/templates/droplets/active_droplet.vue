@@ -23,7 +23,7 @@ limitations under the License.
                 <p>
                     <em>
                         <sup>$</sup>{{ droplet.price_monthly }}
-                        <sub> / {{ i18n.templates.droplets.droplet.month }}</sub>
+                        <sub> {{ i18n.common.perMonth }}</sub>
                         <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.activeDroplet.node }}</sub>
                     </em>
                 </p>
@@ -50,14 +50,27 @@ limitations under the License.
             </div>
         </div>
         <div class="right">
-            <div v-if="type === 'kubernetes'" class="input-container">
-                <span class="label">{{ i18n.templates.droplets.activeDroplet.nodesLabel }}</span>
+            <div class="input-container">
+                <span v-if="type === 'kubernetes'" class="label">
+                    {{ i18n.templates.droplets.activeDroplet.nodesPoolLabel }}
+                </span>
+                <span v-else class="label">
+                    {{ i18n.templates.droplets.activeDroplet.nodesLabel }}
+                </span>
                 <div class="control">
                     <div class="control">
-                        <input v-model.lazy.number="nodes" type="number" min="1" step="1" />
-                        <span class="suffix">{{ i18n.templates.droplets.activeDroplet.nodesUnit }}</span>
+                        <input v-model.lazy.number="nodes"
+                               type="number"
+                               min="1"
+                               step="1"
+                               :class="type === 'kubernetes' ? '' : 'slim'"
+                        />
+                        <span v-if="type === 'kubernetes'" class="suffix">
+                            {{ i18n.templates.droplets.activeDroplet.nodesUnit }}
+                        </span>
                     </div>
-                    <i v-tippy
+                    <i v-if="type === 'kubernetes'"
+                       v-tippy
                        :title="i18n.templates.droplets.activeDroplet.nodesTooltip"
                        class="far fa-question-circle help"
                     ></i>
@@ -90,7 +103,7 @@ limitations under the License.
                 <div class="control">
                     <div class="control">
                         <input v-model.lazy.number="consumption" type="number" min="0" step="100" />
-                        <span class="suffix">{{ i18n.templates.droplets.activeDroplet.consumptionUnit }}</span>
+                        <span class="suffix">{{ i18n.common.consumptionUnit }}</span>
                     </div>
                     <i v-tippy
                        :title="i18n.templates.droplets.activeDroplet.consumptionTooltip"
@@ -177,8 +190,7 @@ limitations under the License.
                 return Math.min(this.maxHours(), Math.max(0, this.$data.hours));
             },
             nodeMultiplier() {
-                if (this.$props.type === 'kubernetes') return Math.max(this.$data.nodes, 1);
-                return 1;
+                return Math.max(this.$data.nodes, 1);
             },
             bandwidthAllowance() {
                 return this.$props.droplet.transfer * 1000 * (this.cappedHours() / 672) * this.nodeMultiplier();

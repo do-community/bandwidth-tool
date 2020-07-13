@@ -20,7 +20,14 @@ limitations under the License.
             <div class="container">
                 <div class="panel bandwidth">
                     <h1>{{ i18n.templates.app.title }}</h1>
-                    <h3><small>{{ i18n.templates.app.description }}</small></h3>
+                    <h3>
+                        <small>
+                            {{ i18n.templates.app.description }}
+                            {{ i18n.templates.app.forMoreInfo }}
+                            <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">
+                                {{ i18n.templates.app.docs }}</a>.
+                        </small>
+                    </h3>
 
                     <Pool
                         :bandwidth-allowance="bandwidthAllowance"
@@ -36,9 +43,6 @@ limitations under the License.
                     <div class="droplets">
                         <h2>{{ i18n.templates.app.droplets }}</h2>
                         <div v-if="hasActiveDroplets">
-                            <!--<p class="has-text-muted">
-                                {{ i18n.templates.app.estimatedCost }} ${{ dropletCost.toLocaleString() }} / mo.
-                            </p>-->
                             <div class="panel-list panel-list-vertical">
                                 <ActiveDroplet
                                     v-for="(droplet, id) in activeDroplets"
@@ -62,6 +66,16 @@ limitations under the License.
                                 <SkeletonDroplet></SkeletonDroplet>
                             </div>
                         </div>
+
+                        <Costs
+                            ref="costs"
+                            :bandwidth-consumption="bandwidthConsumption"
+                            :droplet-cost="dropletCost"
+                            :bandwidth-overage="bandwidthOverage"
+                            :active-droplets="$refs.activeDroplets"
+                            :style="{ display: hasActiveDroplets ? undefined : 'none' }"
+                            @update="update"
+                        ></Costs>
                     </div>
 
                     <Picker :droplets="droplets" @picked="picked"></Picker>
@@ -87,6 +101,7 @@ limitations under the License.
     const Pool = require('./pool');
     const ActiveDroplet = require('./droplets/active_droplet');
     const SkeletonDroplet = require('./droplets/skeleton_droplet');
+    const Costs = require('./costs');
     const Picker = require('./picker');
     const FAQs = require('./faqs');
 
@@ -109,6 +124,7 @@ limitations under the License.
             Pool,
             ActiveDroplet,
             SkeletonDroplet,
+            Costs,
             Picker,
             FAQs,
         },
@@ -128,12 +144,15 @@ limitations under the License.
             };
         },
         methods: {
-            get() {
-                const parsed = queryString.parse(window.location.search);
+            /**
+             * URL loading logic
+             */
+
+            safeActive(raw) {
                 try {
-                    if (!parsed.active) return [];
-                    if (!parsed.active.length) return [];
-                    const data = JSON.parse(parsed.active);
+                    if (!raw) return [];
+                    if (!raw.length) return [];
+                    const data = JSON.parse(raw);
                     if (!data) return [];
                     if (!Array.isArray(data)) return [];
                     return data;
@@ -141,12 +160,27 @@ limitations under the License.
                     return [];
                 }
             },
+            safeAdditional(raw) {
+                try {
+                    if (!raw) return 0;
+                    const data = parseInt(raw, 10);
+                    if (isNaN(data)) return 0;
+                    if (data < 0) return 0;
+                    return data;
+                } catch (_) {
+                    return 0;
+                }
+            },
+            get() {
+                const parsed = queryString.parse(window.location.search);
+                return { active: this.safeActive(parsed.active), additional: this.safeAdditional(parsed.additional) };
+            },
             load() {
                 // Get the old data
                 const data = this.get();
 
                 // If no data, add a default demo Droplet
-                if (!data.length) data.push({
+                if (!data.active.length) data.active.push({
                     slug: 's-1vcpu-2gb',
                     type: 'droplet',
                     hours: 722,
@@ -155,7 +189,7 @@ limitations under the License.
                 });
 
                 // Work through the initial droplets and load them in the tool
-                for (const item of data) {
+                for (const item of data.active) {
                     // Insert as a new active droplet
                     const droplet = dropletData.filter(d => d.slug === item.slug);
                     if (!droplet) continue;
@@ -174,11 +208,19 @@ limitations under the License.
                     });
                 }
 
+                // Handle additional
+                this.$refs.costs.$data.additionalBandwidthConsumption = data.additional;
+
                 // Update a tick after the initial data is set in the refs
                 this.$nextTick(() => {
                     this.$nextTick(this.update);
                 });
             },
+
+            /**
+             * URL saving logic
+             */
+
             save() {
                 // Get the new data to save
                 if (!this.$refs.activeDroplets) return;
@@ -194,11 +236,12 @@ limitations under the License.
 
                 // Get the old data, check if changed droplets
                 const last = this.get();
-                const sameDroplets = compareArrays(data.map(x => x.slug), last.map(x => x.slug));
+                const sameDroplets = compareArrays(data.map(x => x.slug), last.active.map(x => x.slug));
 
                 // Create new query param
                 const parsed = queryString.parse(window.location.search);
                 parsed.active = JSON.stringify(data);
+                parsed.additional = this.$refs.costs.$data.additionalBandwidthConsumption;
 
                 // Save
                 if (sameDroplets) {
@@ -209,6 +252,11 @@ limitations under the License.
                     window.history.pushState({}, '', `?${queryString.stringify(parsed)}`);
                 }
             },
+
+            /**
+             * Calculation & update logic
+             */
+
             update() {
                 // Calculate the totals
                 this.$data.dropletCost = this.getDropletCost();
@@ -233,6 +281,10 @@ limitations under the License.
                         `${droplet.$data.consumption / barMaxWidth * 100}%`,
                     ]);
                 }
+                newBandwidthConsumptionData.push([
+                    'additional',
+                    `${this.$refs.costs.$data.additionalBandwidthConsumption / barMaxWidth * 100}%`,
+                ]);
 
                 // Filler bars
                 if (!newBandwidthAllowanceData.length || this.$data.bandwidthAllowance === 0)
@@ -265,11 +317,14 @@ limitations under the License.
                     return total + val.bandwidthAllowance();
                 }, 0);
             },
-            getBandwidthConsumption() {
+            getDropletBandwidthConsumption() {
                 if (!this.$refs.activeDroplets) return 0;
                 return this.$refs.activeDroplets.reduce((total, val) => {
                     return total + val.$data.consumption;
                 }, 0);
+            },
+            getBandwidthConsumption() {
+                return this.getDropletBandwidthConsumption() + this.$refs.costs.$data.additionalBandwidthConsumption;
             },
             getDropletCost() {
                 if (!this.$refs.activeDroplets) return 0;

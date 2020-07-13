@@ -1,7 +1,8 @@
 module.exports = {
     node: 'node',
 
-    nodesLabel: 'Pool will have',
+    nodesLabel: 'Quantity',
+    nodesPoolLabel: 'Pool will have',
     nodesUnit: 'nodes',
     nodesTooltip: 'By default, a Kubernetes cluster pool on DigitalOcean will consist of 3 nodes.',
 
@@ -14,7 +15,6 @@ module.exports = {
     monthly: '(monthly)',
 
     consumptionLabel: 'Outbound data consumption',
-    consumptionUnit: 'GB',
     consumptionTooltip: 'Use this to visualize the consumption of your account bandwidth pool by each Droplet.',
 
     monthlyCost: 'Monthly Droplet Cost',

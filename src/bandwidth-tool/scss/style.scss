@@ -100,25 +100,33 @@ $header: #0071fe;
       margin: 0;
     }
 
+    h3 {
+      small {
+        font-size: .8em;
+      }
+    }
+
     .pool {
       margin: 3rem 0;
 
+      h2 {
+        small {
+          font-size: .65em;
+
+          i {
+            color: inherit;
+          }
+        }
+      }
+
       .stats {
         align-items: center;
-        display: flex;
-        flex-direction: row;
-        margin-top: 1rem;
-
-        @media (max-width: $breakpoint) {
-          flex-direction: column;
-        }
+        margin: 1rem 0 0;
 
         .data {
-          flex-basis: 55%;
-          padding-right: 1.5rem;
+          padding: 0 1.5rem 0 0;
 
           @media (max-width: $breakpoint) {
-            flex-basis: 100%;
             padding: .5rem 0;
           }
 
@@ -146,11 +154,9 @@ $header: #0071fe;
         }
 
         .info {
-          flex-basis: 45%;
-          padding-left: 1.5rem;
+          padding: 0 0 0 1.5rem;
 
           @media (max-width: $breakpoint) {
-            flex-basis: 100%;
             padding: .5rem 0;
           }
 
@@ -267,68 +273,6 @@ $header: #0071fe;
             flex-direction: column;
             margin: 0;
           }
-
-          .input-container {
-            display: flex;
-            flex-direction: column;
-            margin: 0 .5rem;
-            width: auto;
-
-            @media (max-width: $breakpoint) {
-              margin: .5rem 0;
-            }
-
-            .control {
-              display: inline-block;
-              position: relative;
-
-              input {
-                height: $height * .6;
-                margin: 0;
-                padding: 0 ($margin / 2);
-                width: $height * 2.5;
-
-                &:focus {
-                  box-shadow: 0 0 2px rgba($primary, .5);
-
-                  ~ .suffix {
-                    color: $primary;
-                  }
-                }
-              }
-
-              .suffix {
-                color: $text-secondary;
-                line-height: 1;
-                pointer-events: none;
-                position: absolute;
-                right: $margin * 1.5;
-                top: ($height * .6 - $font-size) / 2;
-                transition: color $transition;
-                z-index: 10;
-              }
-
-              i {
-                position: initial;
-              }
-            }
-
-            .label {
-              @include sailec-regular;
-
-              color: $muted;
-              font-size: $font-size * .7;
-              line-height: 1;
-
-              &:not(:first-child) {
-                margin-top: .25rem;
-              }
-
-              &:not(:last-child) {
-                margin-bottom: .25rem;
-              }
-            }
-          }
         }
       }
     }
@@ -336,6 +280,72 @@ $header: #0071fe;
     .panel {
       @media (max-width: $breakpoint) {
         flex-basis: calc(50% - 1rem);
+      }
+    }
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 .5rem;
+    width: auto;
+
+    @media (max-width: $breakpoint) {
+      margin: .5rem 0;
+    }
+
+    .control {
+      display: inline-block;
+      position: relative;
+
+      input {
+        height: $height * .6;
+        margin: 0;
+        padding: 0 ($margin / 2);
+        width: $height * 2.5;
+
+        &.slim {
+          width: $height * 1.5;
+        }
+
+        &:focus {
+          box-shadow: 0 0 2px rgba($primary, .5);
+
+          ~ .suffix {
+            color: $primary;
+          }
+        }
+      }
+
+      .suffix {
+        color: $text-secondary;
+        line-height: 1;
+        pointer-events: none;
+        position: absolute;
+        right: $margin * 1.5;
+        top: ($height * .6 - $font-size) / 2;
+        transition: color $transition;
+        z-index: 10;
+      }
+
+      i {
+        position: initial;
+      }
+    }
+
+    .label {
+      @include sailec-regular;
+
+      color: $muted;
+      font-size: $font-size * .7;
+      line-height: 1;
+
+      &:not(:first-child) {
+        margin-top: .25rem;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: .25rem;
       }
     }
   }
@@ -393,6 +403,65 @@ $header: #0071fe;
 
         &.is-unfocused {
           opacity: .4;
+        }
+      }
+    }
+  }
+
+  .costs {
+    table {
+      border: 0;
+      margin: ($margin * .5) 0 ($margin * 1) auto;
+
+      tr {
+        border: 0;
+
+        &.hr {
+          border-top: 2px solid $border;
+        }
+
+        td {
+          border: 0;
+          text-align: left;
+
+          &:not(:last-child) {
+            border-color: $border;
+            border-style: solid;
+            border-width: 0 1px 0 0;
+            text-align: right;
+          }
+
+          .input-container {
+            align-items: center;
+            flex-direction: row;
+            margin: 0;
+
+            .label {
+              font-size: .875em;
+              margin: 0 ($margin * .5);
+            }
+          }
+        }
+      }
+    }
+
+    p {
+      color: $muted;
+      font-size: $font-size * .7;
+      margin: ($margin * .5) 0 ($margin * 1.5);
+      text-align: right;
+
+      &.collapse {
+        cursor: pointer;
+        font-size: $font-size * .85;
+        margin: ($margin * 1.5) 0 0;
+
+        i {
+          font-size: 1.5em;
+          margin: 0 0 0 .05rem;
+          text-align: center;
+          vertical-align: top;
+          width: 1rem;
         }
       }
     }
