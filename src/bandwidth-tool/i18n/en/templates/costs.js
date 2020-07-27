@@ -16,6 +16,7 @@ module.exports = {
     diskUnit: 'GB',
     transfer: 'Transfer',
     monthlyCost: 'Monthly Cost',
+    hourlyCost: 'Hourly Cost',
     quantity: 'Droplet Quantity',
     lifetimeHours: 'Lifetime (hours)',
     lifetimeTransfer: 'Lifetime Transfer',
