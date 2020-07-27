@@ -197,7 +197,7 @@ limitations under the License.
             },
             dropletCost() {
                 if (this.$data.hours >= this.maxHours())
-                  return this.$props.droplet.price_monthly * this.nodeMultiplier();
+                    return this.$props.droplet.price_monthly * this.nodeMultiplier();
                 return this.$props.droplet.price_hourly * this.cappedHours() * this.nodeMultiplier();
             },
         },
