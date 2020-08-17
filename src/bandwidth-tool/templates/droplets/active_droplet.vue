@@ -196,7 +196,9 @@ limitations under the License.
                 return this.$props.droplet.transfer * 1000 * (this.cappedHours() / 672) * this.nodeMultiplier();
             },
             dropletCost() {
-                return this.$props.droplet.price_monthly * (this.cappedHours() / this.maxHours()) * this.nodeMultiplier();
+                if (this.$data.hours >= this.maxHours())
+                    return this.$props.droplet.price_monthly * this.nodeMultiplier();
+                return this.$props.droplet.price_hourly * this.cappedHours() * this.nodeMultiplier();
             },
         },
         computed: {
