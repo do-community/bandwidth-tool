@@ -143,7 +143,7 @@ limitations under the License.
     const GeneralDropletIcon = require('../icons/general_droplet_icon');
     const KubernetesIcon = require('../icons/kubernetes_icon');
     const MemoryDropletIcon = require('../icons/memory_droplet_icon');
-    const StandardDropletIcon = require('../icons/standard_droplet_icon');
+    const BasicDropletIcon = require('../icons/basic_droplet_icon');
 
     module.exports = {
         name: 'ActiveDroplet',
@@ -157,7 +157,7 @@ limitations under the License.
             GeneralDropletIcon,
             KubernetesIcon,
             MemoryDropletIcon,
-            StandardDropletIcon,
+            BasicDropletIcon,
         },
         data() {
             return {
@@ -205,8 +205,8 @@ limitations under the License.
             iconType() {
                 if (this.$props.type === 'kubernetes') return 'KubernetesIcon';
                 switch (this.$props.droplet.type) {
-                case 'Standard':
-                    return 'StandardDropletIcon';
+                case 'Basic':
+                    return 'BasicDropletIcon';
 
                 case 'General Purpose':
                     return 'GeneralDropletIcon';
