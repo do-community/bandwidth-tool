@@ -33,6 +33,6 @@ limitations under the License.
 
 <script>
     module.exports = {
-        name: 'StandardDropletIcon',
+        name: 'BasicDropletIcon',
     };
 </script>

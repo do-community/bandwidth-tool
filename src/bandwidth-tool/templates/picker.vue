@@ -79,12 +79,12 @@ limitations under the License.
         data() {
             return {
                 i18n,
-                category: 'Standard',
+                category: 'Basic',
                 categories: dropletTypes,
                 subCategory: undefined,
                 subCategories: [],
                 type: 'droplet',
-                display: getDroplets(this.$props.droplets, 'Standard'),
+                display: getDroplets(this.$props.droplets, 'Basic'),
             };
         },
         methods: {
