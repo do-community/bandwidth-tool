@@ -14,11 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+const currentBasicSlugs = [
+    's-1vcpu-1gb',
+    's-1vcpu-2gb',
+    's-2vcpu-2gb',
+    's-2vcpu-4gb',
+    's-4vcpu-8gb',
+    's-8vcpu-16gb',
+];
+
 const dropletType = slug => {
     const type = slug.split('-')[0];
     switch (type) {
         case 's':
-            return 'Basic';
+            return currentBasicSlugs.includes(slug) ? 'Basic' : 'Legacy';
 
         case 'g':
         case 'gd':
@@ -33,11 +42,11 @@ const dropletType = slug => {
             return 'Memory-Optimized';
 
         default:
-            return undefined; // Should be 'Legacy'
+            return 'Legacy';
     }
 };
 
-const dropletTypes = ['Basic', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized']; // Missing 'Legacy'
+const dropletTypes = ['Basic', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized', 'Legacy'];
 
 const dropletSubType = slug => {
     const type = slug.split('-')[0];
