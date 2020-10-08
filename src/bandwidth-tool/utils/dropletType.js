@@ -33,11 +33,11 @@ const dropletType = slug => {
             return 'Memory-Optimized';
 
         default:
-            return undefined; // Should be 'Legacy'
+            return 'Legacy';
     }
 };
 
-const dropletTypes = ['Basic', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized']; // Missing 'Legacy'
+const dropletTypes = ['Basic', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized', 'Legacy'];
 
 const dropletSubType = slug => {
     const type = slug.split('-')[0];
