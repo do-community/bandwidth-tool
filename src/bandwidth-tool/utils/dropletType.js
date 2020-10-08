@@ -14,20 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const currentBasicSlugs = [
-    's-1vcpu-1gb',
-    's-1vcpu-2gb',
-    's-2vcpu-2gb',
-    's-2vcpu-4gb',
-    's-4vcpu-8gb',
-    's-8vcpu-16gb',
-];
-
 const dropletType = slug => {
     const type = slug.split('-')[0];
     switch (type) {
         case 's':
-            return currentBasicSlugs.includes(slug) ? 'Basic' : 'Legacy';
+            return 'Basic';
 
         case 'g':
         case 'gd':
