@@ -143,6 +143,7 @@ limitations under the License.
     const GeneralDropletIcon = require('../icons/general_droplet_icon');
     const KubernetesIcon = require('../icons/kubernetes_icon');
     const MemoryDropletIcon = require('../icons/memory_droplet_icon');
+    const StorageDropletIcon = require('../icons/storage_droplet_icon');
     const BasicDropletIcon = require('../icons/basic_droplet_icon');
 
     module.exports = {
@@ -157,6 +158,7 @@ limitations under the License.
             GeneralDropletIcon,
             KubernetesIcon,
             MemoryDropletIcon,
+            StorageDropletIcon,
             BasicDropletIcon,
         },
         data() {
@@ -216,6 +218,9 @@ limitations under the License.
 
                 case 'Memory-Optimized':
                     return 'MemoryDropletIcon';
+
+                case 'Storage-Optimized':
+                    return 'StorageDropletIcon';
 
                 default:
                     return 'DropletIcon';
