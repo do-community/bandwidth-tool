@@ -100,7 +100,8 @@ limitations under the License.
                 const droplets = this.getDroplets();
 
                 // Get the subcats
-                const subCats = [...new Set(droplets.map(d => d.subType))].filter(d => !!d).sort();
+                const subCats = [...new Set(droplets.map(d => d.subType))].filter(d => !!d)
+                    .sort((a, b) => parseFloat(a.slice(0, a.indexOf('x'))) - parseFloat(b.slice(0, b.indexOf('x'))));
 
                 // Set the default subcat
                 this.$data.subCategory = subCats.length ? subCats[0] : undefined;
