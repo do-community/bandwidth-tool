@@ -46,7 +46,7 @@ $header: #0071fe;
 
     &.inset {
       background: $input-disabled;
-      max-width: none;
+      max-width: none !important;
 
       @media (max-width: $breakpoint) {
         padding: $margin ($margin / 2);
