@@ -80,7 +80,7 @@ limitations under the License.
             return {
                 i18n,
                 category: 'Basic',
-                categories: Object.keys(this.$props.droplets),
+                categories: dropletTypes.filter(c => Object.keys(this.$props.droplets).includes(c)),
                 subCategory: undefined,
                 subCategories: [],
                 type: 'droplet',
