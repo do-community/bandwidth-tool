@@ -20,6 +20,8 @@ module.exports = {
     monthlyCost: 'Monthly Droplet Cost',
     poolMonthlyCost: 'Monthly Pool Cost',
 
+    overageTooltip: 'The monthly Droplet cost shown here does not include the estimated bandwidth pool overage cost, shown above.',
+
     remove: 'Remove this Droplet',
     poolRemove: 'Remove this Kubernetes Pool',
 };

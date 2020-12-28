@@ -51,6 +51,7 @@ limitations under the License.
                                     :droplet="droplet[0]"
                                     :type="droplet[1]"
                                     :class="focusedDropletClass(id)"
+                                    :overage="bandwidthOverage !== 0"
                                     @mouseenter.native="focusedDropletEnter(id)"
                                     @mouseleave.native="focusedDropletLeave(id)"
                                     @remove="removed(id)"

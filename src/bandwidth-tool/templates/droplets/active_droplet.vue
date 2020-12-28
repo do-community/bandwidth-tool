@@ -114,12 +114,20 @@ limitations under the License.
             </div>
 
             <div class="tertiary-info">
-                <p><em><sup>$</sup>{{ dropletCost().toLocaleString() }}</em></p>
+                <p>
+                    <em><sup>$</sup>{{ dropletCost().toLocaleString() }}</em>
+                </p>
                 <p>
                     <sub v-if="type === 'kubernetes'">{{ i18n.templates.droplets.activeDroplet.poolMonthlyCost }}</sub>
                     <sub v-else>{{ i18n.templates.droplets.activeDroplet.monthlyCost }}</sub>
                 </p>
             </div>
+
+            <i v-if="overage"
+               v-tippy
+               :title="i18n.templates.droplets.activeDroplet.overageTooltip"
+               class="fas fa-exclamation-triangle overage"
+            ></i>
 
             <a v-tippy
                class="button is-tiny"
@@ -151,6 +159,7 @@ limitations under the License.
         props: {
             droplet: Object,
             type: String,
+            overage: Boolean,
         },
         components: {
             CPUDropletIcon,
