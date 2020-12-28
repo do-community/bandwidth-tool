@@ -114,9 +114,7 @@ limitations under the License.
             </div>
 
             <div class="tertiary-info">
-                <p>
-                    <em><sup>$</sup>{{ dropletCost().toLocaleString() }}</em>
-                </p>
+                <p><em><sup>$</sup>{{ dropletCost().toLocaleString() }}</em></p>
                 <p>
                     <sub v-if="type === 'kubernetes'">{{ i18n.templates.droplets.activeDroplet.poolMonthlyCost }}</sub>
                     <sub v-else>{{ i18n.templates.droplets.activeDroplet.monthlyCost }}</sub>

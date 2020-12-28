@@ -276,15 +276,15 @@ $header: #0071fe;
           p {
             margin: 0;
           }
+        }
 
-          + .overage {
-            cursor: help;
-            font-size: 1.25rem;
-            margin: 0 2.5rem 0 -1.5rem;
+        .overage {
+          cursor: help;
+          font-size: 1.25rem;
+          margin: 0 2.5rem 0 -1.5rem;
 
-            @media (max-width: $breakpoint) {
-              margin: 0 0 1rem;
-            }
+          @media (max-width: $breakpoint) {
+            margin: 0 0 1rem;
           }
         }
 
