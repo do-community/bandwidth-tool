@@ -36,6 +36,16 @@ $header: #0071fe;
     padding: 0;
   }
 
+  // These aren't links, use the help cursor, not pointer
+  .fa,
+  .far,
+  .fas,
+  .fab {
+    &.help {
+      cursor: help;
+    }
+  }
+
   .container {
     padding: ($margin * 4) 0;
     width: 100%;
@@ -265,6 +275,16 @@ $header: #0071fe;
 
           p {
             margin: 0;
+          }
+        }
+
+        .overage {
+          cursor: help;
+          font-size: 1.25rem;
+          margin: 0 2.5rem 0 -1.5rem;
+
+          @media (max-width: $breakpoint) {
+            margin: 0 0 1rem;
           }
         }
 

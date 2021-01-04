@@ -121,6 +121,12 @@ limitations under the License.
                 </p>
             </div>
 
+            <i v-if="overage"
+               v-tippy
+               :title="i18n.templates.droplets.activeDroplet.overageTooltip"
+               class="fas fa-exclamation-triangle overage"
+            ></i>
+
             <a v-tippy
                class="button is-tiny"
                :title="i18n.templates.droplets.activeDroplet[type === 'kubernetes' ? 'poolRemove' : 'remove']"
@@ -151,6 +157,7 @@ limitations under the License.
         props: {
             droplet: Object,
             type: String,
+            overage: Boolean,
         },
         components: {
             CPUDropletIcon,
