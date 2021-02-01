@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2021 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ limitations under the License.
     <div class="picker">
         <div class="tabs">
             <ul>
-                <li v-for="cat in categories" :class="cat === category ? 'is-active' : ''">
-                    <a @click="setCategory(cat)">{{ cat }}</a>
+                <li v-for="type in dropletTypes" :class="type === dropletType ? 'is-active' : ''">
+                    <a @click="setDropletType(type)">{{ type }}</a>
                 </li>
             </ul>
         </div>
@@ -30,15 +30,15 @@ limitations under the License.
             <span>{{ i18n.templates.picker.kubernetes }}</span>
         </div>-->
 
-        <div v-if="subCategories.length" class="radio">
+        <div v-if="dropletVariants.length" class="radio">
             <PrettyRadio
-                v-for="subCat in subCategories"
-                :checked="subCat === subCategory"
+                v-for="variant in dropletVariants"
+                :checked="variant === dropletVariant"
                 class="p-default p-round"
-                name="subCategory"
-                @change="setSubCategory(subCat)"
+                name="variant"
+                @change="setDropletVariant(variant)"
             >
-                {{ subCat }}
+                {{ variant }}
             </PrettyRadio>
         </div>
 
@@ -79,57 +79,57 @@ limitations under the License.
         data() {
             return {
                 i18n,
-                category: 'Basic',
-                categories: dropletTypes.filter(c => Object.keys(this.$props.droplets).includes(c)),
-                subCategory: undefined,
-                subCategories: [],
+                dropletType: 'Basic',
+                dropletTypes: dropletTypes.filter(c => Object.keys(this.$props.droplets).includes(c)),
+                dropletVariant: null,
+                dropletVariants: [],
                 type: 'droplet',
                 display: getDroplets(this.$props.droplets, 'Basic'),
             };
         },
         methods: {
             getDroplets() {
-                let droplets = getDroplets(this.$props.droplets, this.$data.category);
+                let droplets = getDroplets(this.$props.droplets, this.$data.dropletType);
                 if (this.$data.type === 'kubernetes') droplets = droplets.filter(d => kubernetes.includes(d.slug));
                 return droplets;
             },
-            setCategory(cat) {
-                this.$data.category = cat;
+            setDropletType(type) {
+                this.$data.dropletType = type;
 
                 // Get droplets (kubernetes uses a limited subset)
                 const droplets = this.getDroplets();
 
-                // Get the subcats
-                const subCats = [...new Set(droplets.map(d => d.subType))].filter(d => !!d)
+                // Get the variants
+                const variants = [...new Set(droplets.map(d => d.variant))].filter(d => !!d)
                     .sort((a, b) => parseFloat(a.slice(0, a.indexOf('x'))) - parseFloat(b.slice(0, b.indexOf('x'))));
 
-                // Set the default subcat
-                this.$data.subCategory = subCats.length ? subCats[0] : undefined;
+                // Set the default variant
+                this.$data.dropletVariant = variants.length ? variants[0] : null;
 
-                // Set the subcats for picking (note: in k8s world, variants are't available and 1x is always used)
-                this.$data.subCategories = this.$data.type === 'kubernetes' ? [] : subCats;
+                // Set the variants for picking (note: in k8s world, variants aren't available and 1x is always used)
+                this.$data.dropletVariants = this.$data.type === 'kubernetes' ? [] : variants;
 
-                // Set the droplets to show, filtered by subcat
-                this.$data.display = droplets.filter(d => d.subType === this.$data.subCategory);
+                // Set the droplets to show, filtered by variant
+                this.$data.display = droplets.filter(d => d.variant === this.$data.dropletVariant);
             },
-            setSubCategory(subcat) {
-                this.$data.subCategory = subcat;
-                this.$data.display = this.getDroplets().filter(d => d.subType === this.$data.subCategory);
+            setDropletVariant(variant) {
+                this.$data.dropletVariant = variant;
+                this.$data.display = this.getDroplets().filter(d => d.variant === this.$data.dropletVariant);
             },
             toggleType() {
                 if (this.$data.type === 'droplet') this.$data.type = 'kubernetes';
                 else this.$data.type = 'droplet';
 
-                // Set the cats (use dropletTypes to preserve custom order)
+                // Set the types (use dropletTypes to preserve custom order)
                 let droplets = Object.values(this.$props.droplets).flat();
                 if (this.$data.type === 'kubernetes') droplets = droplets.filter(d => kubernetes.includes(d.slug));
-                const dropletCats = [...new Set(droplets.map(d => d.type))].filter(d => !!d);
-                const cats = dropletTypes.filter(c => dropletCats.includes(c));
-                this.$data.categories = cats;
-                this.$data.category = cats.includes(this.$data.category) ? this.$data.category : cats[0];
+                const activeDropletTypes = [...new Set(droplets.map(d => d.type))].filter(d => !!d);
+                const types = dropletTypes.filter(c => activeDropletTypes.includes(c));
+                this.$data.dropletTypes = types;
+                this.$data.dropletType = types.includes(this.$data.dropletType) ? this.$data.dropletType : types[0];
 
                 // Re-run category setting to deal with kubernetes not using all droplets
-                this.setCategory(this.$data.category);
+                this.setDropletType(this.$data.dropletType);
             },
             picked(slug) {
                 this.$emit('picked', slug, this.$data.type);

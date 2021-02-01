@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2021 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -95,7 +95,7 @@ limitations under the License.
 
     const i18n = require('../i18n');
     const compareArrays = require('../utils/compareArrays');
-    const { dropletType, dropletSubType } = require('../utils/dropletType');
+    const { dropletType, dropletVariant } = require('../utils/dropletType');
     const dropletData = require('../../build/droplets');
 
     const Footer = require('do-vue/src/templates/footer').default;
@@ -114,7 +114,7 @@ limitations under the License.
         if (!type) continue;
         if (!(type in droplets)) droplets[type] = [];
         droplet.type = type;
-        droplet.subType = dropletSubType(droplet.slug);
+        droplet.variant = dropletVariant(droplet.slug);
         droplets[type].push(droplet);
     }
 
