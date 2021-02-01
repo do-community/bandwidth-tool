@@ -30,6 +30,27 @@ const main = async () => {
         results.push(...data.sizes);
         nextPage = data.links.pages.next;
     }
+
+    // Stub in the new AMD/Intel basic variants
+    // TODO: Remove this for public release
+    const regularBasic = results.filter(x => x.slug.startsWith('s-'));
+    for (const droplet of regularBasic) {
+        results.push(
+            {
+                ...droplet,
+                slug: `${droplet.slug}-intel`,
+                price_hourly: droplet.price_hourly * 1.2,
+                price_monthly: Math.floor(droplet.price_monthly * 1.2),
+            },
+            {
+                ...droplet,
+                slug: `${droplet.slug}-amd`,
+                price_hourly: droplet.price_hourly * 1.2,
+                price_monthly: Math.floor(droplet.price_monthly * 1.2),
+            },
+        );
+    }
+
     await save(results);
 };
 

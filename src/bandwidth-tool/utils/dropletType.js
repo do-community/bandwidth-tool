@@ -16,9 +16,19 @@ limitations under the License.
 
 const dropletData = [
     {
-        regex: /^s-.*$/,
+        regex: /^s-\d+vcpu-\d+gb$/,
         type: 'Basic',
-        variant: null,
+        variant: 'Regular Intel',
+    },
+    {
+        regex: /^s-\d+vcpu-\d+gb-intel$/,
+        type: 'Basic',
+        variant: 'Premium Intel',
+    },
+    {
+        regex: /^s-\d+vcpu-\d+gb-amd$/,
+        type: 'Basic',
+        variant: 'Premium AMD',
     },
     {
         regex: /^g-.*$/,

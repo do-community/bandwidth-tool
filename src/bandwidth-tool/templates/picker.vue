@@ -79,13 +79,16 @@ limitations under the License.
         data() {
             return {
                 i18n,
-                dropletType: 'Basic',
+                dropletType: null,
                 dropletTypes: dropletTypes.filter(c => Object.keys(this.$props.droplets).includes(c)),
                 dropletVariant: null,
                 dropletVariants: [],
                 type: 'droplet',
-                display: getDroplets(this.$props.droplets, 'Basic'),
+                display: [],
             };
+        },
+        created() {
+            this.setDropletType(this.$data.dropletTypes[0]);
         },
         methods: {
             getDroplets() {
