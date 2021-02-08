@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-require('babel-polyfill');
+require('./scss/style');
+
 const Vue = require('vue').default;
 const App = require('./templates/app.vue');
 const i18n = require('./i18n');
