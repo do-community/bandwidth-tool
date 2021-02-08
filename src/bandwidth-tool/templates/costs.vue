@@ -104,10 +104,10 @@ limitations under the License.
 </template>
 
 <script>
-    const i18n = require('../i18n');
-    const Excel = require('exceljs');
+    import i18n from '../i18n';
+    import Excel from 'exceljs';
 
-    module.exports = {
+    export default {
         name: 'Costs',
         props: {
             bandwidthConsumption: Number,

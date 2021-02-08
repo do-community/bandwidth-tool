@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const dropletType = slug => {
+export const dropletType = slug => {
     const type = slug.split('-')[0];
     switch (type) {
         case 's':
@@ -42,9 +42,9 @@ const dropletType = slug => {
     }
 };
 
-const dropletTypes = ['Basic', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized', 'Storage-Optimized', 'Legacy'];
+export const dropletTypes = ['Basic', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized', 'Storage-Optimized', 'Legacy'];
 
-const dropletSubType = slug => {
+export const dropletSubType = slug => {
     const type = slug.split('-')[0];
     switch (type) {
         case 'g':
@@ -73,5 +73,3 @@ const dropletSubType = slug => {
             return undefined;
     }
 };
-
-module.exports = { dropletType, dropletTypes, dropletSubType };

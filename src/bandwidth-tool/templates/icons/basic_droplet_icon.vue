@@ -32,7 +32,7 @@ limitations under the License.
 </template>
 
 <script>
-    module.exports = {
+    export default {
         name: 'BasicDropletIcon',
     };
 </script>

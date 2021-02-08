@@ -91,20 +91,20 @@ limitations under the License.
 </template>
 
 <script>
-    const queryString = require('query-string');
+    import queryString from 'query-string';
 
-    const i18n = require('../i18n');
-    const compareArrays = require('../utils/compareArrays');
-    const { dropletType, dropletSubType } = require('../utils/dropletType');
-    const dropletData = require('../../build/droplets');
+    import i18n from '../i18n';
+    import compareArrays from '../utils/compareArrays';
+    import { dropletType, dropletSubType } from '../utils/dropletType';
+    import dropletData from '../../build/droplets';
 
-    const Footer = require('do-vue/src/templates/footer').default;
-    const Pool = require('./pool');
-    const ActiveDroplet = require('./droplets/active_droplet');
-    const SkeletonDroplet = require('./droplets/skeleton_droplet');
-    const Costs = require('./costs');
-    const Picker = require('./picker');
-    const FAQs = require('./faqs');
+    import Footer from 'do-vue/src/templates/footer';
+    import Pool from './pool';
+    import ActiveDroplet from './droplets/active_droplet';
+    import SkeletonDroplet from './droplets/skeleton_droplet';
+    import Costs from './costs';
+    import Picker from './picker';
+    import FAQs from './faqs';
 
     // Build the Droplet data
     const droplets = {};
@@ -118,7 +118,7 @@ limitations under the License.
         droplets[type].push(droplet);
     }
 
-    module.exports = {
+    export default {
         name: 'App',
         components: {
             Footer,

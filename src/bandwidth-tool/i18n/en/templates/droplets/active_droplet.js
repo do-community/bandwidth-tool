@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     node: 'node',
 
     nodesLabel: 'Quantity',

@@ -139,20 +139,20 @@ limitations under the License.
 </template>
 
 <script>
-    const i18n = require('../../i18n');
-    const Vue = require('vue').default;
-    const VueTippy = require('vue-tippy').default;
+    import i18n from '../../i18n';
+    import Vue from 'vue';
+    import VueTippy from 'vue-tippy';
     Vue.use(VueTippy);
 
-    const CPUDropletIcon = require('../icons/cpu_droplet_icon');
-    const DropletIcon = require('../icons/droplet_icon');
-    const GeneralDropletIcon = require('../icons/general_droplet_icon');
-    const KubernetesIcon = require('../icons/kubernetes_icon');
-    const MemoryDropletIcon = require('../icons/memory_droplet_icon');
-    const StorageDropletIcon = require('../icons/storage_droplet_icon');
-    const BasicDropletIcon = require('../icons/basic_droplet_icon');
+    import CPUDropletIcon from '../icons/cpu_droplet_icon';
+    import DropletIcon from '../icons/droplet_icon';
+    import GeneralDropletIcon from '../icons/general_droplet_icon';
+    import KubernetesIcon from '../icons/kubernetes_icon';
+    import MemoryDropletIcon from '../icons/memory_droplet_icon';
+    import StorageDropletIcon from '../icons/storage_droplet_icon';
+    import BasicDropletIcon from '../icons/basic_droplet_icon';
 
-    module.exports = {
+    export default {
         name: 'ActiveDroplet',
         props: {
             droplet: Object,

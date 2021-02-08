@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     title: 'Account Bandwidth Pool',
     allowance: 'Estimated allowance:',
     allowanceUnit: 'GB',

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     node: 'node',
     transferUnit: 'TB',
     transferUnitSmall: 'GB',

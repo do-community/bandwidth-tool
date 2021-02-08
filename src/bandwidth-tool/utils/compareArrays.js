@@ -1,4 +1,4 @@
-module.exports = (array1, array2) => {
+export default (array1, array2) => {
     const array1Sorted = array1.sort();
     const array2Sorted = array2.sort();
     return array1.length === array2.length &&

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     summary: 'Consumption & Estimated Costs Summary',
 
     dropletBandwidthConsumption: 'Droplet Bandwidth Consumption',

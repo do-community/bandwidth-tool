@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     perNode: 'per pool node',
 };

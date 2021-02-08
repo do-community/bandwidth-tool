@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     title: 'Bandwidth FAQs',
     forMoreInfo: 'For more information, please see our [bandwidth billing docs](https://www.digitalocean.com/docs/accounts/billing/bandwidth/).',
     items: [

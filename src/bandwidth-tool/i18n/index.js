@@ -1,6 +1,6 @@
-const en = require('./en');
+import en from './en';
 
 const lang = 'en';
 const packs = { en };
 
-module.exports = packs[lang];
+export default packs[lang];

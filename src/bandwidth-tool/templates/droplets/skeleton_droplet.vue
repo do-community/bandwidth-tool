@@ -48,9 +48,9 @@ limitations under the License.
 </template>
 
 <script>
-    const { getSkeletonStyle } = require('do-bulma/src/utils/skeletonStyle');
+    import { getSkeletonStyle } from 'do-bulma/src/utils/skeletonStyle';
 
-    module.exports = {
+    export default {
         name: 'SkeletonDroplet',
         methods: {
             getSkeletonStyle,

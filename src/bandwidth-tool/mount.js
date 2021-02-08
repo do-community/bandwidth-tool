@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-require('./scss/style');
+import './scss/style';
 
-const Vue = require('vue').default;
-const App = require('./templates/app.vue');
-const i18n = require('./i18n');
+import Vue from 'vue';
+import App from './templates/app';
+import i18n from './i18n';
 
 document.head.title = i18n.templates.app.title;
 
