@@ -34,7 +34,7 @@
   "homepage": "https://github.com/do-community/bandwidth-tool#readme",
   "dependencies": {
     "do-bulma": "git+https://github.com/do-community/do-bulma.git",
-    "do-vue": "git+https://github.com/do-community/do-vue.git#53868f235f660e0371bfcc03f631ae2b508d001e",
+    "do-vue": "git+https://github.com/do-community/do-vue.git#09d2aba62e594e2d17fabaa8a399fc4b2a1c6ee3",
     "exceljs": "^4.2.0",
     "markdown-it": "^12.0.3",
     "node-fetch": "^2.6.1",
