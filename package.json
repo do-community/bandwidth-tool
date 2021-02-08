@@ -45,8 +45,10 @@
     "vue-tippy": "^4.7.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/eslint-parser": "^7.12.13",
     "copyfiles": "^2.4.1",
-    "eslint": "^7.15.0",
+    "eslint": "^7.19.0",
     "eslint-plugin-vue": "^7.2.0",
     "posthtml": "^0.15.1",
     "posthtml-extend": "^0.6.0",
