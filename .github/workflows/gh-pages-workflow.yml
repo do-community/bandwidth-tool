@@ -65,12 +65,11 @@ jobs:
         cp build/droplets.json dist/droplets.json
         cp build/kubernetes.json dist/kubernetes.json
 
-    - name: Debug
+    - name: Debug output
       run: |
         ls dist
         cat dist/droplets.json
         cat dist/kubernetes.json
-        exit 1
 
     - name: Deploy master to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@3.7.1

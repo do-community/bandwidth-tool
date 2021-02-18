@@ -39,7 +39,7 @@ fi
 ################
 
 # Clone the last build and find the file
-git clone --single-branch --branch gh-pages "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPO.git" gh-pages
+git clone --quiet --depth 1 --single-branch --branch gh-pages "https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPO.git" gh-pages
 SUCCESS=$([ -f "gh-pages/$TYPE.json" ] && echo 'true' || echo 'false')
 
 # If successful, copy to build and exit
