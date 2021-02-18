@@ -14,17 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const fs = require('fs');
-const path = require('path');
 const get = require('./get');
-
-const save = async data => {
-    await fs.promises.writeFile(path.join(__dirname, 'kubernetes.json'), JSON.stringify(data));
-};
+const save = require('./save');
 
 const main = async () => {
-    const data = await get('https://api.digitalocean.com/v2/kubernetes/options');
-    await save(data.options.sizes);
+    const results = [];
+    let nextPage = 'https://api.digitalocean.com/v2/sizes?page=1';
+    while (nextPage) {
+        const data = await get(nextPage);
+        results.push(...data.sizes);
+        nextPage = data.links.pages.next;
+    }
+    await save(results, 'droplets.json');
 };
 
 main().catch(err => {

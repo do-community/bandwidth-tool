@@ -4,21 +4,22 @@
   "description": "A tool to help calculate and explain bandwidth allowances for Droplets on DigitalOcean.",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "npm run build:clean && npm run build:template && npm run build:droplets && npm run build:kubernetes && npm run build:static && npm run build:tool",
+    "build": "npm run build:clean && npm run build:template && npm run build:static && npm run build:tool",
     "build:clean": "do-vue clean",
     "build:template": "do-vue template",
-    "build:droplets": "node ./src/build/getDroplets.js",
-    "build:kubernetes": "node ./src/build/getKubernetes.js",
     "build:static": "copyfiles --up 2 ./src/static/{*,**/*} dist",
     "build:tool": "do-vue tool src/bandwidth-tool dist",
+    "build:data": "npm run build:data:droplets && npm run build:data:kubernetes",
+    "build:data:droplets": "node src/bandwidth-tool/build/getDroplets.js",
+    "build:data:kubernetes": "node src/bandwidth-tool/build/getKubernetes.js",
     "dev": "npm run dev:prep && parcel ./src/bandwidth-tool/index.html --out-dir ./dev --port 8000",
-    "deploy:spaces:comment": "do-vue comment bandwidth-tool",
-    "dev:prep": "npm run build:template && npm run build:droplets && npm run build:kubernetes && npm run dev:static",
+    "dev:prep": "npm run build:template && npm run build:data && npm run dev:static",
     "dev:static": "copyfiles --up 2 ./src/static/{*,**/*} dev",
     "test": "npm run test:eslint && npm run test:scss",
     "test:eslint": "eslint 'src/**/*.{js,vue}'",
     "test:eslint:fix": "npm run test:eslint -- --fix",
-    "test:scss": "sass-lint ./src/**/*.scss --verbose --no-exit --config .sasslintrc"
+    "test:scss": "sass-lint ./src/**/*.scss --verbose --no-exit --config .sasslintrc",
+    "deploy:spaces:comment": "do-vue comment bandwidth-tool"
   },
   "repository": {
     "type": "git",

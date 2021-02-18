@@ -6,8 +6,12 @@ on:
       - master
   workflow_dispatch:
     inputs:
-      pricing:
-        description: JSON pricing data
+      droplets_pricing:
+        description: Droplets JSON pricing data
+        required: false
+        default: ''
+      kubernetes_pricing:
+        description: Kubernetes JSON pricing data
         required: false
         default: ''
 
@@ -30,18 +34,26 @@ jobs:
       with:
         node-version: ${{ steps.nvm.outputs.NVMRC }}
 
-    - name: Get best pricing data
+    - name: Get pricing data for Droplets
       env:
-        DATA: ${{ github.event.inputs.pricing }}
-      run: ./ci/restore-pricing-data.sh
+        TYPE: droplets
+        DATA: ${{ github.event.inputs.droplets_pricing }}
+      run: ./ci/get-pricing-data.sh
+
+    - name: Get pricing data for Kubernetes
+      env:
+        TYPE: kubernetes
+        DATA: ${{ github.event.inputs.kubernetes_pricing }}
+      run: ./ci/get-pricing-data.sh
 
     - name: npm ci, test, and build
       run: |
-        cat build/data.json
+        cat build/droplets.json
+        cat build/kubernetes.json
+        npm ci
+        npm test
+        npm run build
         exit 1
-        # npm ci
-        # npm test
-        # npm run build
       env:
         DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
 

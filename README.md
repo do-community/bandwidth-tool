@@ -44,7 +44,7 @@ This directory contains the Vue templates that are used to render the tool on th
 Utility functions that are used by the tool, such as determining the type of a Droplet from its slug, live inside this
  directory.
 
-### [`src/build`](./src/build)
+### [`src/bandwidth-tool/build`](./src/bandwidth-tool/build)
 
 The build directory contains a special utility script that is used during the initial build of the tool both for
  deployments and in development. This script uses the provided DigitalOcean API key and fetches all Droplet sizes,

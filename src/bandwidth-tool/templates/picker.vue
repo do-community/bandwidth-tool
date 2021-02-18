@@ -59,7 +59,7 @@ limitations under the License.
     const PrettyRadio = require('pretty-checkbox-vue/radio');
     const i18n = require('../i18n');
     const { dropletTypes } = require('../utils/dropletType');
-    const kubernetesData = require('../../build/kubernetes');
+    const kubernetesData = require('../../../build/kubernetes');
     const kubernetes = kubernetesData.map(x => x.slug);
 
     const getDroplets = (droplets, category) => {
