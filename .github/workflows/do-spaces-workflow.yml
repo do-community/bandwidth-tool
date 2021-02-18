@@ -19,15 +19,42 @@ jobs:
     - name: Use Node.js (.nvmrc)
       uses: actions/setup-node@v1
       with:
-        node-version: "${{ steps.nvm.outputs.NVMRC }}"
+        node-version: ${{ steps.nvm.outputs.NVMRC }}
 
-    - name: npm ci, test, and build
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Get pricing data for Droplets
+      env:
+        TYPE: droplets
+        GITHUB_REPO: ${{ github.repository }}
+        GITHUB_TOKEN: ${{ github.token }}
+        DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+      run: ./ci/get-pricing-data.sh
+
+    - name: Get pricing data for Kubernetes
+      env:
+        TYPE: kubernetes
+        GITHUB_REPO: ${{ github.repository }}
+        GITHUB_TOKEN: ${{ github.token }}
+        DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+      run: ./ci/get-pricing-data.sh
+
+    - name: Test and build
       run: |
-        npm ci
         npm test
         npm run build
-      env:
-        DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+
+    - name: Include pricing data
+      run: |
+        cp build/droplets.json dist/droplets.json
+        cp build/kubernetes.json dist/kubernetes.json
+
+    - name: Debug output
+      run: |
+        ls dist
+        cat dist/droplets.json
+        cat dist/kubernetes.json
 
     - name: Deploy commit to DigitalOcean Spaces
       run: aws s3 sync ./dist s3://${{ secrets.SPACES_BUCKET }}/commits/bandwidth-tool/${{ github.sha }} --endpoint=https://${{ secrets.SPACES_REGION }}.digitaloceanspaces.com --acl public-read --content-encoding utf8
