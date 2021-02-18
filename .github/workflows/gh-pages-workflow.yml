@@ -41,23 +41,32 @@ jobs:
       env:
         TYPE: droplets
         DATA: ${{ github.event.inputs.droplets_pricing }}
+        DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       run: ./ci/get-pricing-data.sh
 
     - name: Get pricing data for Kubernetes
       env:
         TYPE: kubernetes
         DATA: ${{ github.event.inputs.kubernetes_pricing }}
+        DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       run: ./ci/get-pricing-data.sh
 
-    - name: npm ci, test, and build
+    - name: Test and build
       run: |
-        cat build/droplets.json
-        cat build/kubernetes.json
         npm test
         npm run build
+
+    - name: Include pricing data
+      run: |
+        cp build/droplets.json dist/droplets.json
+        cp build/kubernetes.json dist/kubernetes.json
+
+    - name: Debug
+      run: |
+        ls dist
+        cat dist/droplets.json
+        cat dist/kubernetes.json
         exit 1
-      env:
-        DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
 
     - name: Deploy master to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
