@@ -38,17 +38,20 @@ fi
 # 2. Attempt to recover pricing data from last build
 ################
 
-# TODO: Git checkout gh-pages
+# Clone the last build and find the file
+git clone --single-branch --branch gh-pages "https://github.com/$REPO" gh-pages
+SUCCESS=$([ -f "gh-pages/$TYPE.json" ] && echo 'true' || echo 'false')
 
-# TODO: Look for json file, set success if found
-SUCCESS=$(echo 'false')
-
-# If successful, copy to build/droplets.json and exit
+# If successful, copy to build and exit
 if $SUCCESS; then
   echo "Using previous pricing data for $TYPE"
   cp "gh-pages/$TYPE.json" "build/$TYPE.json"
+  rm -rf gh-pages
   exit 0
 fi
+
+# Cleanup
+rm -rf gh-pages
 
 ################
 # 3. Get the latest pricing data from the public API

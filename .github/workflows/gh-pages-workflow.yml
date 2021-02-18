@@ -41,6 +41,7 @@ jobs:
       env:
         TYPE: droplets
         DATA: ${{ github.event.inputs.droplets_pricing }}
+        REPO: ${{ github.repository }}
         DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       run: ./ci/get-pricing-data.sh
 
@@ -48,6 +49,7 @@ jobs:
       env:
         TYPE: kubernetes
         DATA: ${{ github.event.inputs.kubernetes_pricing }}
+        REPO: ${{ github.repository }}
         DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
       run: ./ci/get-pricing-data.sh
 
