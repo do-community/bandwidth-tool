@@ -4,8 +4,12 @@ on:
   push:
     branches:
       - master
-  schedule:
-    - cron: '0 15 * * *'
+  workflow_dispatch:
+    inputs:
+      pricing:
+        description: JSON pricing data
+        required: false
+        default: ''
 
 jobs:
   build:
@@ -24,13 +28,64 @@ jobs:
     - name: Use Node.js (.nvmrc)
       uses: actions/setup-node@v1
       with:
-        node-version: "${{ steps.nvm.outputs.NVMRC }}"
+        node-version: ${{ steps.nvm.outputs.NVMRC }}
+
+    - name: Validate input JSON pricing data
+      id: pricing-data-input
+      if: ${{ github.event.inputs.pricing }}
+      env:
+        DATA: ${{ github.event.inputs.pricing }}
+      run: |
+        # Check the type to ensure its a valid JSON array
+        TYPE=$(echo $DATA | jq type)
+        SUCCESS=$([ $TYPE = '"array"' ] && echo 'true' || echo 'false')
+
+        # If successful check, write to build/data.json
+        if $SUCCESS; then
+          mkdir build
+          echo $DATA > build/data.json
+        fi
+
+        # Set out success state
+        echo $SUCCESS
+        echo "##[set-output name=SUCCESS;]$SUCCESS"
+
+    - name: Get previous pricing data via git
+      id: pricing-data-git
+      if: ${{ !steps.pricing-data-input.outputs.SUCCESS }}
+      run: |
+        # TODO: Git checkout gh-pages
+
+        # TODO: Look for data.json file, set success if found
+        SUCCESS=$(echo 'false')
+
+        # If successful check, copy to build/data.json
+        if $SUCCESS; then
+          mkdir build
+          cp gh-pages/data.json build/data.json
+        fi
+
+        # Set out success state
+        echo $SUCCESS
+        echo "##[set-output name=SUCCESS;]$SUCCESS"
+
+    - name: Get pricing data from API
+      id: pricing-data-api
+      if: ${{ !steps.pricing-data-git.outputs.SUCCESS }}
+      run: |
+        # TODO: Run new Node.js script to get data.json
+        mkdir build
+        echo "[]" > build/data.json
+
+        # No need to set success state, this is a guaranteed way to get data, or the build should error
 
     - name: npm ci, test, and build
       run: |
-        npm ci
-        npm test
-        npm run build
+        cat build/data.json
+        exit 1
+        # npm ci
+        # npm test
+        # npm run build
       env:
         DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
 
