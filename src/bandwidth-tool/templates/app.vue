@@ -96,7 +96,7 @@ limitations under the License.
     const i18n = require('../i18n');
     const compareArrays = require('../utils/compareArrays');
     const { dropletType, dropletSubType } = require('../utils/dropletType');
-    const dropletData = require('../../build/droplets');
+    const dropletData = require('../../../build/droplets');
 
     const Footer = require('do-vue/src/templates/footer').default;
     const Pool = require('./pool');
