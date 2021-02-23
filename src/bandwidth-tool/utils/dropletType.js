@@ -1,5 +1,5 @@
 /*
-Copyright 2020 DigitalOcean
+Copyright 2021 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,64 +14,79 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const dropletType = slug => {
-    const type = slug.split('-')[0];
-    switch (type) {
-        case 's':
-            return 'Basic';
-
-        case 'g':
-        case 'gd':
-            return 'General Purpose';
-
-        case 'c':
-        case 'c2':
-            return 'CPU-Optimized';
-
-        case 'm':
-        case 'm3':
-        case 'm6':
-            return 'Memory-Optimized';
-
-        case 'so':
-        case 'so1_5':
-            return 'Storage-Optimized';
-
-        default:
-            return 'Legacy';
-    }
-};
+const dropletData = [
+    {
+        regex: /^s-\d+vcpu-\d+gb$/,
+        type: 'Basic',
+        variant: 'Regular Intel',
+    },
+    {
+        regex: /^s-\d+vcpu-\d+gb-intel$/,
+        type: 'Basic',
+        variant: 'Premium Intel',
+    },
+    {
+        regex: /^s-\d+vcpu-\d+gb-amd$/,
+        type: 'Basic',
+        variant: 'Premium AMD',
+    },
+    {
+        regex: /^g-.*$/,
+        type: 'General Purpose',
+        variant: '1x SSD',
+    },
+    {
+        regex: /^gd-.*$/,
+        type: 'General Purpose',
+        variant: '2x SSD',
+    },
+    {
+        regex: /^c-.*$/,
+        type: 'CPU-Optimized',
+        variant: '1x SSD',
+    },
+    {
+        regex: /^c2-.*$/,
+        type: 'CPU-Optimized',
+        variant: '2x SSD',
+    },
+    {
+        regex: /^m-.*$/,
+        type: 'Memory-Optimized',
+        variant: '1x SSD',
+    },
+    {
+        regex: /^m3-.*$/,
+        type: 'Memory-Optimized',
+        variant: '3x SSD',
+    },
+    {
+        regex: /^m6-.*$/,
+        type: 'Memory-Optimized',
+        variant: '6x SSD',
+    },
+    {
+        regex: /^so-.*$/,
+        type: 'Storage-Optimized',
+        variant: '1x SSD',
+    },
+    {
+        regex: /^so1_5-.*$/,
+        type: 'Storage-Optimized',
+        variant: '1.5x SSD',
+    },
+];
 
 const dropletTypes = ['Basic', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized', 'Storage-Optimized', 'Legacy'];
 
-const dropletSubType = slug => {
-    const type = slug.split('-')[0];
-    switch (type) {
-        case 'g':
-            return '1x SSD';
-        case 'gd':
-            return '2x SSD';
-
-        case 'c':
-            return '1x SSD';
-        case 'c2':
-            return '2x SSD';
-
-        case 'm':
-            return '1x SSD';
-        case 'm3':
-            return '3x SSD';
-        case 'm6':
-            return '6x SSD';
-
-        case 'so':
-            return '1x SSD';
-        case 'so1_5':
-            return '1.5x SSD';
-
-        default:
-            return undefined;
-    }
+const dropletType = slug => {
+    const match = dropletData.find(data => slug.match(data.regex));
+    return match && match.type || 'Legacy';
 };
 
-module.exports = { dropletType, dropletTypes, dropletSubType };
+const dropletVariant = slug => {
+    const match = dropletData.find(data => slug.match(data.regex));
+    return match && match.variant || null;
+};
+
+module.exports = { dropletTypes, dropletType, dropletVariant };
