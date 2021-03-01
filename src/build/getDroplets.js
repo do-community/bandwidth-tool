@@ -30,6 +30,7 @@ const main = async () => {
         results.push(...data.sizes);
         nextPage = data.links.pages.next;
     }
+
     await save(results);
 };
 

@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2021 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,8 +43,8 @@ limitations under the License.
                 </p>
                 <p>{{ (droplet.memory / 1024).toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
                 <p>{{ droplet.disk.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
-                <p v-if="droplet.subType">
-                    {{ droplet.subType }}
+                <p v-if="droplet.variant">
+                    {{ droplet.variant }}
                 </p>
                 <p><code>{{ droplet.slug }}</code></p>
             </div>

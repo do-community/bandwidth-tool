@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2021 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -95,7 +95,7 @@ limitations under the License.
 
     import i18n from '../i18n';
     import compareArrays from '../utils/compareArrays';
-    import { dropletType, dropletSubType } from '../utils/dropletType';
+    import { dropletType, dropletVariant } from '../utils/dropletType';
     import dropletData from '../../build/droplets';
 
     import Footer from 'do-vue/src/templates/footer';
@@ -114,7 +114,7 @@ limitations under the License.
         if (!type) continue;
         if (!(type in droplets)) droplets[type] = [];
         droplet.type = type;
-        droplet.subType = dropletSubType(droplet.slug);
+        droplet.variant = dropletVariant(droplet.slug);
         droplets[type].push(droplet);
     }
 
