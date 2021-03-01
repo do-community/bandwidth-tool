@@ -55,7 +55,7 @@ limitations under the License.
 
 <script>
     import PickerDroplet from './droplets/picker_droplet';
-    //import PrettyCheck from 'pretty-checkbox-vue/check';
+    // import PrettyCheck from 'pretty-checkbox-vue/check';
     import PrettyRadio from 'pretty-checkbox-vue/radio';
     import i18n from '../i18n';
     import { dropletTypes } from '../utils/dropletType';
@@ -70,7 +70,7 @@ limitations under the License.
         name: 'Picker',
         components: {
             PickerDroplet,
-            //PrettyCheck,
+            // PrettyCheck,
             PrettyRadio,
         },
         props: {
