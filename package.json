@@ -11,7 +11,7 @@
     "build:kubernetes": "node ./src/build/getKubernetes.js",
     "build:static": "copyfiles --up 2 ./src/static/{*,**/*} dist",
     "build:tool": "do-vue tool src/bandwidth-tool dist",
-    "dev": "npm run dev:prep && do-vue dev ./src/bandwidth-tool/index.html ./dev 8000",
+    "dev": "npm run dev:prep && do-vue dev ./src/bandwidth-tool ./dev 8000",
     "deploy:spaces:comment": "do-vue comment bandwidth-tool",
     "dev:prep": "npm run build:template && npm run build:droplets && npm run build:kubernetes && npm run dev:static",
     "dev:static": "copyfiles --up 2 ./src/static/{*,**/*} dev",
