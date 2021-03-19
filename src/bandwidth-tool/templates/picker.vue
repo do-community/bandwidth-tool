@@ -54,23 +54,23 @@ limitations under the License.
 </template>
 
 <script>
-    const PickerDroplet = require('./droplets/picker_droplet');
-    const PrettyCheck = require('pretty-checkbox-vue/check');
-    const PrettyRadio = require('pretty-checkbox-vue/radio');
-    const i18n = require('../i18n');
-    const { dropletTypes } = require('../utils/dropletType');
-    const kubernetesData = require('../../build/kubernetes');
+    import PickerDroplet from './droplets/picker_droplet';
+    // import PrettyCheck from 'pretty-checkbox-vue/check';
+    import PrettyRadio from 'pretty-checkbox-vue/radio';
+    import i18n from '../i18n';
+    import { dropletTypes } from '../utils/dropletType';
+    import kubernetesData from '../../build/kubernetes';
     const kubernetes = kubernetesData.map(x => x.slug);
 
     const getDroplets = (droplets, category) => {
         return droplets[category].sort((a, b) => a.price - b.price);
     };
 
-    module.exports = {
+    export default {
         name: 'Picker',
         components: {
             PickerDroplet,
-            PrettyCheck,
+            // PrettyCheck,
             PrettyRadio,
         },
         props: {

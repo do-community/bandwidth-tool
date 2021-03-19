@@ -1,9 +1,7 @@
-const app = require('./app');
-const explainer = require('./explainer');
-const faqs = require('./faqs');
-const picker = require('./picker');
-const pool = require('./pool');
-const droplets = require('./droplets');
-const costs = require('./costs');
-
-module.exports = { app, explainer, faqs, picker, pool, droplets, costs };
+export { default as app } from './app';
+export { default as explainer } from './explainer';
+export { default as faqs } from './faqs';
+export { default as picker } from './picker';
+export { default as pool } from './pool';
+export * as droplets from './droplets';
+export { default as costs } from './costs';

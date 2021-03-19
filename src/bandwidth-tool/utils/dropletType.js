@@ -77,16 +77,14 @@ const dropletData = [
     },
 ];
 
-const dropletTypes = ['Basic', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized', 'Storage-Optimized', 'Legacy'];
+export const dropletTypes = ['Basic', 'General Purpose', 'CPU-Optimized', 'Memory-Optimized', 'Storage-Optimized', 'Legacy'];
 
-const dropletType = slug => {
+export const dropletType = slug => {
     const match = dropletData.find(data => slug.match(data.regex));
     return match && match.type || 'Legacy';
 };
 
-const dropletVariant = slug => {
+export const dropletVariant = slug => {
     const match = dropletData.find(data => slug.match(data.regex));
     return match && match.variant || null;
 };
-
-module.exports = { dropletTypes, dropletType, dropletVariant };

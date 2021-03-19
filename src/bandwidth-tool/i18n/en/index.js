@@ -1,4 +1,4 @@
-const common = require('./common');
-const templates = require('./templates');
+import common from './common';
+import * as templates from './templates';
 
-module.exports = { common, templates };
+export default { common, templates };

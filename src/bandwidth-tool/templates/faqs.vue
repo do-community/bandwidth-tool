@@ -27,11 +27,11 @@ limitations under the License.
 </template>
 
 <script>
-    const i18n = require('../i18n');
+    import i18n from '../i18n';
     const md = require('markdown-it')();
     const render = text => md.renderInline(text);
 
-    module.exports = {
+    export default {
         name: 'FAQs',
         data() {
             return {

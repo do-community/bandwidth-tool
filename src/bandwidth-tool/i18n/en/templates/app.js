@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     title: 'Bandwidth Calculator',
     description: 'A tool to help calculate and explain bandwidth allowances for Droplets on DigitalOcean.',
     forMoreInfo: 'For more info, see our',

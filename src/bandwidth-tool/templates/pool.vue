@@ -81,9 +81,9 @@ limitations under the License.
 </template>
 
 <script>
-    const i18n = require('../i18n');
+    import i18n from '../i18n';
 
-    module.exports = {
+    export default {
         name: 'Pool',
         props: {
             bandwidthAllowance: Number,
