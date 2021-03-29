@@ -74,7 +74,7 @@ $header: #0071fe;
 
   .explainer {
     h2 {
-      @include sailec-bold;
+      @include font-bold;
 
       font-size: 36px;
       margin: $margin 0 ($margin * 4);
@@ -86,7 +86,7 @@ $header: #0071fe;
     }
 
     h3 {
-      @include sailec-bold;
+      @include font-bold;
 
       margin: $margin 0;
     }
@@ -354,7 +354,7 @@ $header: #0071fe;
     }
 
     .label {
-      @include sailec-regular;
+      @include font-regular;
 
       color: $muted;
       font-size: $font-size * .7;
@@ -563,7 +563,7 @@ $header: #0071fe;
                 }
 
                 label {
-                  @include sailec-regular;
+                  @include font-regular;
 
                   min-width: 2em;
                   text-indent: 0;
@@ -591,7 +591,7 @@ $header: #0071fe;
         margin: .5rem;
 
         label {
-          @include sailec-regular;
+          @include font-regular;
 
           color: $text;
           font-size: 1rem;
