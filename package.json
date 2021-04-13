@@ -34,7 +34,7 @@
   "homepage": "https://github.com/do-community/bandwidth-tool#readme",
   "dependencies": {
     "do-bulma": "git+https://github.com/do-community/do-bulma.git",
-    "do-vue": "git+https://github.com/do-community/do-vue.git",
+    "do-vue": "git+https://github.com/do-community/do-vue.git#MattIPv4/disable-prod-hot-reload",
     "exceljs": "^4.2.0",
     "node-fetch": "^2.6.1",
     "pretty-checkbox-vue": "^1.1.9",
