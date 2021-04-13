@@ -144,6 +144,9 @@ limitations under the License.
                 focusedDroplet: null,
             };
         },
+        mounted() {
+            this.load();
+        },
         methods: {
             /**
              * URL loading logic
@@ -346,9 +349,6 @@ limitations under the License.
                 if (id === this.$data.focusedDroplet) return 'is-focused';
                 return 'is-unfocused';
             },
-        },
-        mounted() {
-            this.load();
         },
     };
 </script>

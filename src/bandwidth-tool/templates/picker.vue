@@ -18,8 +18,8 @@ limitations under the License.
     <div class="picker">
         <div class="tabs">
             <ul>
-                <li v-for="type in dropletTypes" :class="type === dropletType ? 'is-active' : ''">
-                    <a @click="setDropletType(type)">{{ type }}</a>
+                <li v-for="typeOpt in dropletTypes" :class="typeOpt === dropletType ? 'is-active' : ''">
+                    <a @click="setDropletType(typeOpt)">{{ typeOpt }}</a>
                 </li>
             </ul>
         </div>

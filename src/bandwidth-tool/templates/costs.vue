@@ -96,7 +96,9 @@ limitations under the License.
             </tbody>
         </table>
 
-        <p v-if="generating">{{ i18n.templates.costs.generatingExport }}</p>
+        <p v-if="generating">
+            {{ i18n.templates.costs.generatingExport }}
+        </p>
         <p v-else>
             {{ i18n.templates.costs.exportAs }}
             <a @click="() => xlsx(false)">XLSX</a> / <a @click="() => xlsx(true)">CSV</a>
@@ -130,7 +132,7 @@ limitations under the License.
             },
             async xlsx (asCsv) {
                 // Don't process if already running
-                if (this.generating) return
+                if (this.generating) return;
 
                 // Set ourselves as running
                 this.generating = true;
