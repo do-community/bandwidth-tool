@@ -1,6 +1,6 @@
 export default {
     title: 'Bandwidth FAQs',
-    forMoreInfo: 'For more information, please see our [bandwidth billing docs](https://www.digitalocean.com/docs/accounts/billing/bandwidth/).',
+    forMoreInfo: 'For more information, please see our <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/">bandwidth billing docs</a>.',
     items: [
         {
             question: 'Do data transfers between my Droplets in the same datacenter count against my bandwidth usage?',
@@ -12,7 +12,7 @@ export default {
         },
         {
             question: 'Do data transfers using the Spaces service count against my bandwidth usage?',
-            answer: 'Spaces bandwidth usage is calculated and [billed differently](https://www.digitalocean.com/docs/accounts/billing/bandwidth/#spaces) than outbound transfers from your Droplets.',
+            answer: 'Spaces bandwidth usage is calculated and <a href="https://www.digitalocean.com/docs/accounts/billing/bandwidth/#spaces">billed differently</a> than outbound transfers from your Droplets.',
         },
         {
             question: 'Do data transfers from Droplets to Spaces count against my bandwidth?',

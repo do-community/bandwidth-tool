@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2021 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,19 +17,17 @@ limitations under the License.
 <template>
     <div class="container faqs">
         <h2>{{ i18n.templates.faqs.title }}</h2>
-        <p class="has-text-muted" v-html="render(i18n.templates.faqs.forMoreInfo)"></p>
+        <p class="has-text-muted" v-html="i18n.templates.faqs.forMoreInfo"></p>
 
         <template v-for="item in i18n.templates.faqs.items">
             <h4>{{ item.question }}</h4>
-            <p v-html="render(item.answer)"></p>
+            <p v-html="item.answer"></p>
         </template>
     </div>
 </template>
 
 <script>
     import i18n from '../i18n';
-    const md = require('markdown-it')();
-    const render = text => md.renderInline(text);
 
     export default {
         name: 'FAQs',
@@ -37,9 +35,6 @@ limitations under the License.
             return {
                 i18n,
             };
-        },
-        methods: {
-            render,
         },
     };
 </script>
