@@ -96,7 +96,7 @@ limitations under the License.
             </tbody>
         </table>
 
-        <p v-if="generating">Generating export...</p>
+        <p v-if="generating">{{ i18n.templates.costs.generatingExport }}</p>
         <p v-else>
             {{ i18n.templates.costs.exportAs }}
             <a @click="() => xlsx(false)">XLSX</a> / <a @click="() => xlsx(true)">CSV</a>
