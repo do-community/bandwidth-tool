@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2021 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -96,7 +96,8 @@ limitations under the License.
             </tbody>
         </table>
 
-        <p>
+        <p v-if="generating">Generating export...</p>
+        <p v-else>
             {{ i18n.templates.costs.exportAs }}
             <a @click="() => xlsx(false)">XLSX</a> / <a @click="() => xlsx(true)">CSV</a>
         </p>
@@ -105,7 +106,6 @@ limitations under the License.
 
 <script>
     import i18n from '../i18n';
-    import Excel from 'exceljs';
 
     export default {
         name: 'Costs',
@@ -120,6 +120,8 @@ limitations under the License.
                 i18n,
                 additionalBandwidthConsumption: 0,
                 summaryVisible: false,
+                generating: false,
+                exceljs: null,
             };
         },
         methods: {
@@ -127,8 +129,17 @@ limitations under the License.
                 this.$data.summaryVisible = !this.$data.summaryVisible;
             },
             async xlsx (asCsv) {
+                // Don't process if already running
+                if (this.generating) return
+
+                // Set ourselves as running
+                this.generating = true;
+
+                // Load the exceljs library async
+                if (!this.exceljs) this.exceljs = await import('exceljs');
+
                 // Create the basic sheet
-                const workbook = new Excel.Workbook();
+                const workbook = new this.exceljs.Workbook();
                 workbook.creator = i18n.templates.costs.digitalOcean;
                 workbook.created = new Date();
                 workbook.modified = new Date();
@@ -321,6 +332,9 @@ limitations under the License.
                 link.href = window.URL.createObjectURL(blob);
                 link.download = `bandwidth-calculator.${type}`;
                 link.click();
+
+                // Done
+                this.generating = false;
             },
         },
     };
