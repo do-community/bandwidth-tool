@@ -40,7 +40,6 @@
     "pretty-checkbox-vue": "^1.1.9",
     "query-string": "^7.0.0",
     "vue": "^2.6.12",
-    "vue-hot-reload-api": "^2.3.3",
     "vue-tippy": "^4.10.0"
   },
   "devDependencies": {
