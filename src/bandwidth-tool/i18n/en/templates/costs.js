@@ -7,6 +7,7 @@ export default {
     estimatedOverage: 'Estimated Bandwidth Overage Cost',
     estimatedTotal: 'Estimated Total Costs',
 
+    generatingExport: 'Generating export...',
     exportAs: 'Export as',
 
     digitalOcean: 'DigitalOcean',

@@ -154,11 +154,6 @@ limitations under the License.
 
     export default {
         name: 'ActiveDroplet',
-        props: {
-            droplet: Object,
-            type: String,
-            overage: Boolean,
-        },
         components: {
             CPUDropletIcon,
             DropletIcon,
@@ -168,6 +163,11 @@ limitations under the License.
             StorageDropletIcon,
             BasicDropletIcon,
         },
+        props: {
+            droplet: Object,
+            type: String,
+            overage: Boolean,
+        },
         data() {
             return {
                 i18n,
@@ -175,6 +175,30 @@ limitations under the License.
                 consumption: 0,
                 nodes: 1,
             };
+        },
+        computed: {
+            iconType() {
+                if (this.$props.type === 'kubernetes') return 'KubernetesIcon';
+                switch (this.$props.droplet.type) {
+                case 'Basic':
+                    return 'BasicDropletIcon';
+
+                case 'General Purpose':
+                    return 'GeneralDropletIcon';
+
+                case 'CPU-Optimized':
+                    return 'CPUDropletIcon';
+
+                case 'Memory-Optimized':
+                    return 'MemoryDropletIcon';
+
+                case 'Storage-Optimized':
+                    return 'StorageDropletIcon';
+
+                default:
+                    return 'DropletIcon';
+                }
+            },
         },
         watch: {
             hours() {
@@ -208,30 +232,6 @@ limitations under the License.
                 if (this.$data.hours >= this.maxHours())
                     return this.$props.droplet.price_monthly * this.nodeMultiplier();
                 return this.$props.droplet.price_hourly * this.cappedHours() * this.nodeMultiplier();
-            },
-        },
-        computed: {
-            iconType() {
-                if (this.$props.type === 'kubernetes') return 'KubernetesIcon';
-                switch (this.$props.droplet.type) {
-                case 'Basic':
-                    return 'BasicDropletIcon';
-
-                case 'General Purpose':
-                    return 'GeneralDropletIcon';
-
-                case 'CPU-Optimized':
-                    return 'CPUDropletIcon';
-
-                case 'Memory-Optimized':
-                    return 'MemoryDropletIcon';
-
-                case 'Storage-Optimized':
-                    return 'StorageDropletIcon';
-
-                default:
-                    return 'DropletIcon';
-                }
             },
         },
     };

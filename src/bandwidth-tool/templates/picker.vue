@@ -18,8 +18,8 @@ limitations under the License.
     <div class="picker">
         <div class="tabs">
             <ul>
-                <li v-for="type in dropletTypes" :class="type === dropletType ? 'is-active' : ''">
-                    <a @click="setDropletType(type)">{{ type }}</a>
+                <li v-for="typeOpt in dropletTypes" :class="typeOpt === dropletType ? 'is-active' : ''">
+                    <a @click="setDropletType(typeOpt)">{{ typeOpt }}</a>
                 </li>
             </ul>
         </div>
@@ -33,6 +33,7 @@ limitations under the License.
         <div v-if="dropletVariants.length" class="radio">
             <PrettyRadio
                 v-for="variant in dropletVariants"
+                :key="variant"
                 :checked="variant === dropletVariant"
                 class="p-default p-round"
                 name="variant"
@@ -45,6 +46,7 @@ limitations under the License.
         <div class="panel-list">
             <PickerDroplet
                 v-for="droplet in display"
+                :key="droplet.slug"
                 :droplet="droplet"
                 :type="type"
                 @click.native="picked(droplet.slug)"
