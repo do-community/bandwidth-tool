@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,29 +18,34 @@ limitations under the License.
     <div class="panel is-droplet">
         <div class="info">
             <div class="primary-info">
-                <span v-for="_ in 2" class="data-skeleton"
-                      :style="{ ...getSkeletonStyle(50, 100), margin: '0 .2rem .1rem 0' }"
+                <span
+                    v-for="_ in 2" class="data-skeleton"
+                    :style="{ ...getSkeletonStyle(50, 100), margin: '0 .2rem .1rem 0' }"
                 >
                 </span>
             </div>
             <div class="secondary-info">
-                <span v-for="_ in 3" class="data-skeleton"
-                      :style="{ ...getSkeletonStyle(50, 150), margin: '.1rem .2rem 0 0' }"
+                <span
+                    v-for="_ in 3" class="data-skeleton"
+                    :style="{ ...getSkeletonStyle(50, 150), margin: '.1rem .2rem 0 0' }"
                 >
                 </span>
             </div>
         </div>
         <div class="right">
-            <span v-for="_ in 2" class="data-skeleton"
-                  :style="{ ...getSkeletonStyle(100, 150), height: '1.75em', borderRadius: '.875em', margin: '0 .5rem' }"
+            <span
+                v-for="_ in 2" class="data-skeleton"
+                :style="{ ...getSkeletonStyle(100, 150), height: '1.75em', borderRadius: '.875em', margin: '0 .5rem' }"
             >
             </span>
-            <span class="data-skeleton"
-                  :style="{ ...getSkeletonStyle(100, 150), height: '1.75em', borderRadius: '.875em', margin: '0 3rem' }"
+            <span
+                class="data-skeleton"
+                :style="{ ...getSkeletonStyle(100, 150), height: '1.75em', borderRadius: '.875em', margin: '0 3rem' }"
             >
             </span>
-            <span class="data-skeleton"
-                  :style="{ ...getSkeletonStyle(30, 30), height: '1.25em', borderRadius: '.625em', margin: '0 .25rem' }"
+            <span
+                class="data-skeleton"
+                :style="{ ...getSkeletonStyle(30, 30), height: '1.25em', borderRadius: '.625em', margin: '0 .25rem' }"
             >
             </span>
         </div>

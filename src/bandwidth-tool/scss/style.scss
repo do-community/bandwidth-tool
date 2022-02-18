@@ -1,5 +1,5 @@
 /*
-Copyright 2020 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 $header: #0071fe;
+
 @import "~do-bulma/src/style";
 
 .helpfulness-cont {
@@ -22,8 +23,9 @@ $header: #0071fe;
 }
 
 .do-bulma {
-  $pretty--color-dark: $primary;
-  $pretty--color-default: $primary;
+  $pretty--color-dark: $primary; // stylelint-disable-line scss/dollar-variable-pattern
+  $pretty--color-default: $primary; // stylelint-disable-line scss/dollar-variable-pattern
+
   @import "~pretty-checkbox/src/pretty-checkbox";
 
   // Reset community info box styles

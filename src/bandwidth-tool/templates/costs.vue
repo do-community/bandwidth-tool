@@ -1,5 +1,5 @@
 <!--
-Copyright 2021 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -45,11 +45,12 @@ limitations under the License.
                         <div class="input-container">
                             <div class="control">
                                 <div class="control">
-                                    <input v-model.lazy.number="additionalBandwidthConsumption"
-                                           type="number"
-                                           min="0"
-                                           step="100"
-                                           @change="$emit('update')"
+                                    <input
+                                        v-model.lazy.number="additionalBandwidthConsumption"
+                                        type="number"
+                                        min="0"
+                                        step="100"
+                                        @change="$emit('update')"
                                     />
                                     <span class="suffix">{{ i18n.common.consumptionUnit }}</span>
                                 </div>

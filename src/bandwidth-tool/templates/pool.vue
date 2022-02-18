@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,30 +19,33 @@ limitations under the License.
         <h2>
             {{ i18n.templates.pool.title }}
             <small>
-                <i v-tippy
-                   :title="i18n.templates.pool.accrued"
-                   class="far fa-question-circle help"
+                <i
+                    v-tippy
+                    :title="i18n.templates.pool.accrued"
+                    class="far fa-question-circle help"
                 ></i>
             </small>
         </h2>
 
         <div class="bars">
             <div class="bar-stack">
-                <div v-for="(data, index) in bandwidthAllowanceData"
-                     :key="index"
-                     :class="`bar is-primary ${focusedDropletClass(data[0])}`"
-                     :style="{ width: data[1] }"
-                     @mouseenter="focusedDropletEnter(data[0])"
-                     @mouseleave="focusedDropletLeave(data[0])"
+                <div
+                    v-for="(data, index) in bandwidthAllowanceData"
+                    :key="index"
+                    :class="`bar is-primary ${focusedDropletClass(data[0])}`"
+                    :style="{ width: data[1] }"
+                    @mouseenter="focusedDropletEnter(data[0])"
+                    @mouseleave="focusedDropletLeave(data[0])"
                 ></div>
             </div>
             <div class="bar-stack">
-                <div v-for="(data, index) in bandwidthConsumptionData"
-                     :key="index"
-                     :class="`bar is-dark ${focusedDropletClass(data[0])}`"
-                     :style="{ width: data[1] }"
-                     @mouseenter="focusedDropletEnter(data[0])"
-                     @mouseleave="focusedDropletLeave(data[0])"
+                <div
+                    v-for="(data, index) in bandwidthConsumptionData"
+                    :key="index"
+                    :class="`bar is-dark ${focusedDropletClass(data[0])}`"
+                    :style="{ width: data[1] }"
+                    @mouseenter="focusedDropletEnter(data[0])"
+                    @mouseleave="focusedDropletLeave(data[0])"
                 ></div>
             </div>
         </div>
