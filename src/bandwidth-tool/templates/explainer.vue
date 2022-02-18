@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,8 +22,9 @@ limitations under the License.
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-hidden="true">
                     <g fill="none" fill-rule="evenodd">
                         <rect fill="#F2F7FF" width="40" height="40" rx="4"></rect>
-                        <path d="M17 16.25h8.25m-3-3l3 3-3 3m.75 4.5h-8.25m3 3l-3-3 3-3" stroke="#0069FF"
-                              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        <path
+                            d="M17 16.25h8.25m-3-3l3 3-3 3m.75 4.5h-8.25m3 3l-3-3 3-3" stroke="#0069FF"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                         ></path>
                         <path
                             d="M28.25 8.75h-16.5a3 3 0 0 0-3 3v16.5a3 3 0 0 0 3 3h16.5a3 3 0 0 0 3-3v-16.5a3 3 0 0 0-3-3z"

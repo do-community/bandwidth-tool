@@ -1,5 +1,5 @@
 <!--
-Copyright 2020 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,17 +25,20 @@ limitations under the License.
                 <path d="m1.32 26.31h35.69v2h-35.69z"></path>
                 <path d="m3.6 17.49h30.71v2h-30.71z"></path>
             </g>
-            <rect fill="#fff" height="7.13" rx=".05" transform="matrix(0 -1 1 0 -.5 54.12)" width="4.7" x="24.46"
-                  y="23.74"
+            <rect
+                fill="#fff" height="7.13" rx=".05" transform="matrix(0 -1 1 0 -.5 54.12)" width="4.7" x="24.46"
+                y="23.74"
             ></rect>
             <path d="m30.32 30.66h-8l-.05-1.05v-5.61h1.03 8l.08 1v5.6zm-6.07-2h5.13v-2.66h-5.13z" fill="#3681f7"></path>
             <path d="m3.05 35.13h31.91v2h-31.91z" fill="#3681f7"></path>
-            <rect fill="#fff" height="7.13" rx=".05" transform="matrix(0 -1 1 0 -3.31 33.67)" width="4.7" x="12.83"
-                  y="14.92"
+            <rect
+                fill="#fff" height="7.13" rx=".05" transform="matrix(0 -1 1 0 -3.31 33.67)" width="4.7" x="12.83"
+                y="14.92"
             ></rect>
             <path d="m18.7 21.84h-8l-.05-1.05v-5.6h1.05 8l.05 1.05v5.6zm-6.08-2h5.13v-2.7h-5.13z" fill="#3681f7"></path>
-            <rect fill="#fff" height="7.13" rx=".05" transform="matrix(0 -1 1 0 -20.95 51.31)" width="4.7" x="12.83"
-                  y="32.56"
+            <rect
+                fill="#fff" height="7.13" rx=".05" transform="matrix(0 -1 1 0 -20.95 51.31)" width="4.7" x="12.83"
+                y="32.56"
             ></rect>
             <path d="m18.7 39.48h-8l-.05-1v-5.6h1.05 8l.05 1v5.6zm-6.08-2h5.13v-2.7h-5.13z" fill="#3681f7"></path>
         </svg>

@@ -1,5 +1,5 @@
 <!--
-Copyright 2021 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -59,20 +59,22 @@ limitations under the License.
                 </span>
                 <div class="control">
                     <div class="control">
-                        <input v-model.lazy.number="nodes"
-                               type="number"
-                               min="1"
-                               step="1"
-                               :class="type === 'kubernetes' ? '' : 'slim'"
+                        <input
+                            v-model.lazy.number="nodes"
+                            type="number"
+                            min="1"
+                            step="1"
+                            :class="type === 'kubernetes' ? '' : 'slim'"
                         />
                         <span v-if="type === 'kubernetes'" class="suffix">
                             {{ i18n.templates.droplets.activeDroplet.nodesUnit }}
                         </span>
                     </div>
-                    <i v-if="type === 'kubernetes'"
-                       v-tippy
-                       :title="i18n.templates.droplets.activeDroplet.nodesTooltip"
-                       class="far fa-question-circle help"
+                    <i
+                        v-if="type === 'kubernetes'"
+                        v-tippy
+                        :title="i18n.templates.droplets.activeDroplet.nodesTooltip"
+                        class="far fa-question-circle help"
                     ></i>
                 </div>
                 <span class="label">&nbsp;</span>
@@ -90,9 +92,10 @@ limitations under the License.
                         <input v-model.lazy.number="hours" type="number" min="0" max="744" step="1" />
                         <span class="suffix">{{ i18n.templates.droplets.activeDroplet.hoursUnit }}</span>
                     </div>
-                    <i v-tippy
-                       :title="i18n.templates.droplets.activeDroplet[type === 'kubernetes' ? 'poolHoursTooltip' : 'hoursTooltip']"
-                       class="far fa-question-circle help"
+                    <i
+                        v-tippy
+                        :title="i18n.templates.droplets.activeDroplet[type === 'kubernetes' ? 'poolHoursTooltip' : 'hoursTooltip']"
+                        class="far fa-question-circle help"
                     ></i>
                 </div>
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.monthly }}</span>
@@ -105,9 +108,10 @@ limitations under the License.
                         <input v-model.lazy.number="consumption" type="number" min="0" step="100" />
                         <span class="suffix">{{ i18n.common.consumptionUnit }}</span>
                     </div>
-                    <i v-tippy
-                       :title="i18n.templates.droplets.activeDroplet.consumptionTooltip"
-                       class="far fa-question-circle help"
+                    <i
+                        v-tippy
+                        :title="i18n.templates.droplets.activeDroplet.consumptionTooltip"
+                        class="far fa-question-circle help"
                     ></i>
                 </div>
                 <span class="label">{{ i18n.templates.droplets.activeDroplet.monthly }}</span>
@@ -121,16 +125,18 @@ limitations under the License.
                 </p>
             </div>
 
-            <i v-if="overage"
-               v-tippy
-               :title="i18n.templates.droplets.activeDroplet.overageTooltip"
-               class="fas fa-exclamation-triangle overage"
+            <i
+                v-if="overage"
+                v-tippy
+                :title="i18n.templates.droplets.activeDroplet.overageTooltip"
+                class="fas fa-exclamation-triangle overage"
             ></i>
 
-            <a v-tippy
-               class="button is-tiny"
-               :title="i18n.templates.droplets.activeDroplet[type === 'kubernetes' ? 'poolRemove' : 'remove']"
-               @click="remove"
+            <a
+                v-tippy
+                class="button is-tiny"
+                :title="i18n.templates.droplets.activeDroplet[type === 'kubernetes' ? 'poolRemove' : 'remove']"
+                @click="remove"
             >
                 <i class="fas fa-times"></i>
             </a>
