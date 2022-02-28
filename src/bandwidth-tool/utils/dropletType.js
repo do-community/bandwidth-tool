@@ -18,7 +18,7 @@ const dropletData = [
     {
         regex: /^s-\d+vcpu-\d+gb$/,
         type: 'Basic',
-        variant: 'Regular Intel',
+        variant: 'Regular',
     },
     {
         regex: /^s-\d+vcpu-\d+gb-intel$/,
