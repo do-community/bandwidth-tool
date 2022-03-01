@@ -146,9 +146,7 @@ limitations under the License.
 
 <script>
     import i18n from '../../i18n';
-    import Vue from 'vue';
-    import VueTippy from 'vue-tippy';
-    Vue.use(VueTippy);
+    import { directive } from 'vue-tippy';
 
     import CPUDropletIcon from '../icons/cpu_droplet_icon';
     import DropletIcon from '../icons/droplet_icon';
@@ -168,6 +166,9 @@ limitations under the License.
             MemoryDropletIcon,
             StorageDropletIcon,
             BasicDropletIcon,
+        },
+        directives: {
+            tippy: directive,
         },
         props: {
             droplet: Object,

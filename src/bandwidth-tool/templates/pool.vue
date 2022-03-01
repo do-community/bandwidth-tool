@@ -85,9 +85,13 @@ limitations under the License.
 
 <script>
     import i18n from '../i18n';
+    import { directive } from 'vue-tippy';
 
     export default {
         name: 'Pool',
+        directives: {
+            tippy: directive,
+        },
         props: {
             bandwidthAllowance: Number,
             bandwidthAllowanceData: Array,

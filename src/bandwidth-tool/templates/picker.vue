@@ -1,5 +1,5 @@
 <!--
-Copyright 2021 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -56,12 +56,14 @@ limitations under the License.
 </template>
 
 <script>
-    import PickerDroplet from './droplets/picker_droplet';
-    // import PrettyCheck from 'pretty-checkbox-vue/check';
-    import PrettyRadio from 'pretty-checkbox-vue/radio';
     import i18n from '../i18n';
     import { dropletTypes } from '../utils/dropletType';
     import kubernetesData from '../../build/kubernetes';
+
+    // import PrettyCheck from 'do-vue/src/templates/pretty-checkbox-vue/pretty_check';
+    import PrettyRadio from 'do-vue/src/templates/pretty-checkbox-vue/pretty_radio';
+    import PickerDroplet from './droplets/picker_droplet';
+
     const kubernetes = kubernetesData.map(x => x.slug);
 
     const getDroplets = (droplets, category) => {
