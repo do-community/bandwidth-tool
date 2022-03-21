@@ -33,8 +33,8 @@
   },
   "homepage": "https://github.com/do-community/bandwidth-tool#readme",
   "dependencies": {
-    "do-bulma": "git+https://github.com/do-community/do-bulma.git#MattIPv4/vue-3",
-    "do-vue": "git+https://github.com/do-community/do-vue.git#MattIPv4/vue-3",
+    "do-bulma": "git+https://github.com/do-community/do-bulma.git",
+    "do-vue": "git+https://github.com/do-community/do-vue.git",
     "exceljs": "^4.3.0",
     "node-fetch": "^2.6.7",
     "pretty-checkbox-vue": "^1.1.9",
