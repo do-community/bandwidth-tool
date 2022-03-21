@@ -17,6 +17,7 @@ limitations under the License.
 $header: #0071fe;
 
 @import "~do-bulma/src/style";
+@import "~tippy.js/dist/tippy.css";
 
 .helpfulness-cont {
   margin: ($margin * 4) 0 0;

@@ -1,5 +1,5 @@
 <!--
-Copyright 2021 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -199,12 +199,12 @@ limitations under the License.
                     if (!droplet) continue;
                     const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                     const id = keys.length ? Math.max(...keys) + 1 : 0;
-                    this.$set(this.$data.activeDroplets, id, [droplet[0], item.type]);
+                    this.$data.activeDroplets[id] = [droplet[0], item.type];
                     this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
 
                     // Once rendered, set the data in the ref
                     this.$nextTick(() => {
-                        const ref = this.$refs.activeDroplets.filter(d => d.$vnode.key === id.toString());
+                        const ref = this.$refs.activeDroplets.filter(d => d.$.vnode.key === id.toString());
                         if (!ref) return;
                         ref[0].$data.hours = item.hours;
                         ref[0].$data.consumption = item.consumption;
@@ -277,11 +277,11 @@ limitations under the License.
                 const newBandwidthConsumptionData = [];
                 for (const droplet of (this.$refs.activeDroplets || [])) {
                     newBandwidthAllowanceData.push([
-                        droplet.$vnode.key,
+                        droplet.$.vnode.key,
                         `${droplet.bandwidthAllowance() / barMaxWidth * 100}%`,
                     ]);
                     newBandwidthConsumptionData.push([
-                        droplet.$vnode.key,
+                        droplet.$.vnode.key,
                         `${droplet.$data.consumption / barMaxWidth * 100}%`,
                     ]);
                 }
@@ -302,7 +302,7 @@ limitations under the License.
                 this.save();
             },
             removed(id) {
-                this.$delete(this.$data.activeDroplets, id);
+                delete this.$data.activeDroplets[id];
                 this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
                 if (this.$data.focusedDroplet === id) this.$data.focusedDroplet = null;
                 this.$nextTick(this.update);
@@ -311,7 +311,7 @@ limitations under the License.
                 const droplet = dropletData.filter(d => d.slug === slug)[0];
                 const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                 const id = keys.length ? Math.max(...keys) + 1 : 0;
-                this.$set(this.$data.activeDroplets, id, [droplet, type]);
+                this.$data.activeDroplets[id] = [droplet, type];
                 this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
                 this.$nextTick(this.update);
             },
