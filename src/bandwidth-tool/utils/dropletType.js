@@ -1,5 +1,5 @@
 /*
-Copyright 2021 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ limitations under the License.
 
 const dropletData = [
     {
-        regex: /^s-\d+vcpu-\d+gb$/,
+        regex: /^s-\d+vcpu-\d+(gb|mb)(-\d+gb)?$/,
         type: 'Basic',
         variant: 'Regular',
     },
