@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+@use "sass:math";
+
 $header: #0071fe;
 
 @import "~do-bulma/src/style";
@@ -62,7 +64,7 @@ $header: #0071fe;
       max-width: none !important;
 
       @media (max-width: $breakpoint) {
-        padding: $margin ($margin / 2);
+        padding: $margin ($margin * .5);
       }
 
       > .container {
@@ -324,7 +326,7 @@ $header: #0071fe;
       input {
         height: $height * .6;
         margin: 0;
-        padding: 0 ($margin / 2);
+        padding: 0 ($margin * .5);
         width: $height * 2.5;
 
         &.slim {
@@ -346,7 +348,7 @@ $header: #0071fe;
         pointer-events: none;
         position: absolute;
         right: $margin * 1.5;
-        top: ($height * .6 - $font-size) / 2;
+        top: ($height * .6 - $font-size) * .5;
         transition: color $transition;
         z-index: 10;
       }
@@ -394,7 +396,7 @@ $header: #0071fe;
             height: $margin * 1.5;
             line-height: $margin * 1.5;
             opacity: 0;
-            padding: 0 ($margin / 1.5);
+            padding: 0 math.div($margin, 1.5);
             pointer-events: none;
             transition: opacity $transition;
           }
@@ -607,12 +609,12 @@ $header: #0071fe;
     h4 {
       color: $dark-blue;
       font-size: .95rem;
-      margin: ($margin * 2) 0 ($margin / 2);
+      margin: ($margin * 2) 0 ($margin * .5);
       text-transform: none;
 
       + p {
         font-size: .9rem;
-        margin: 0 0 ($margin / 2);
+        margin: 0 0 ($margin * .5);
       }
     }
   }
