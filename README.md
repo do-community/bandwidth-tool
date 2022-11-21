@@ -9,13 +9,6 @@ A tool to help calculate and explain bandwidth allowances for Droplets on Digita
 To setup the build/develop environment, you will need to run `npm i` with Node 12+ installed. This will install the
  dependencies to allow you to build the project.
  
-To build or develop this tool, you will need to create a DigitalOcean API key. To do this, sign into the DigitalOcean
- control panel, click "API" in the sidebar and click "Generate New Token" on the screen which appears. Simply create a
- read-only token, copy `config.example.js` to a new file called `config.js` and insert your token in this file.
-
-The scripts that use this token also support an environment variable instead of the config file, set the environment
- variable `DIGITALOCEAN_TOKEN` to the token and remove the `config.js` file to use this method instead.
-
 To develop for this tool run `npm run dev`.
 This will start a development server that will automatically reload the codebase when changes occur.
 
@@ -47,8 +40,8 @@ Utility functions that are used by the tool, such as determining the type of a D
 ### [`src/build`](./src/build)
 
 The build directory contains a special utility script that is used during the initial build of the tool both for
- deployments and in development. This script uses the provided DigitalOcean API key and fetches all Droplet sizes,
- saving them to a local JSOn file that the tool then uses.
+ deployments and in development. This script fetches all Droplet sizes, saving them to a local JSON file that the tool
+ then uses.
 
 ## Contributing
 
