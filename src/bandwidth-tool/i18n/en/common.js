@@ -1,4 +1,4 @@
 export default {
-    consumptionUnit: 'GB',
+    consumptionUnit: 'GiB',
     perMonth: '/ mo',
 };

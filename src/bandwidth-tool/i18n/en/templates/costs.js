@@ -14,7 +14,7 @@ export default {
     dropletSlug: 'Droplet Slug',
     memory: 'RAM',
     disk: 'Disk',
-    diskUnit: 'GB',
+    diskUnit: 'GiB',
     transfer: 'Transfer',
     monthlyCost: 'Monthly Cost',
     hourlyCost: 'Hourly Cost',

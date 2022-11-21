@@ -1,7 +1,7 @@
 export default {
     title: 'Account Bandwidth Pool',
     allowance: 'Estimated allowance:',
-    allowanceUnit: 'GB',
+    allowanceUnit: 'GiB',
     consumption: 'Estimated consumption:',
     overage: 'Estimated overage:',
     overageWarning: 'Your estimated bandwidth consumption exceeds the estimated allowance in your pool. This will result in an overage charge!',
