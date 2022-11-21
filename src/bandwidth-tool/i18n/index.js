@@ -1,4 +1,4 @@
-import en from './en';
+import en from './en/index.js';
 
 const lang = 'en';
 const packs = { en };
