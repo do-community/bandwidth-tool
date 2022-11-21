@@ -1,5 +1,5 @@
 /*
-Copyright 2021 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,24 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const fs = require('fs');
-const path = require('path');
-const get = require('./get');
-
-const save = async data => {
-    await fs.promises.writeFile(path.join(__dirname, 'droplets.json'), JSON.stringify(data));
-};
+import { get, flatten, save } from './get.js';
 
 const main = async () => {
-    const results = [];
-    let nextPage = 'https://api.digitalocean.com/v2/sizes?page=1';
-    while (nextPage) {
-        const data = await get(nextPage);
-        results.push(...data.sizes);
-        nextPage = data.links.pages.next;
-    }
-
-    await save(results);
+    const data = await get('https://www.digitalocean.com/api/static-content/v1/products');
+    const results = flatten(data.droplets);
+    await save(results, 'droplets');
 };
 
 main().catch(err => {

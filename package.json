@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A tool to help calculate and explain bandwidth allowances for Droplets on DigitalOcean.",
   "license": "Apache-2.0",
+  "type": "module",
   "scripts": {
     "build": "npm run build:clean && npm run build:template && npm run build:droplets && npm run build:kubernetes && npm run build:static && npm run build:tool",
     "build:clean": "do-vue clean",
