@@ -1,5 +1,5 @@
 <!--
-Copyright 2021 DigitalOcean
+Copyright 2022 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ limitations under the License.
     <div class="panel is-selectable is-droplet">
         <p>
             <em>
-                <sup>$</sup>{{ droplet.price_monthly.toLocaleString() }}
+                <sup>$</sup>{{ droplet.price.monthly.toLocaleString() }}
                 <sub> {{ i18n.common.perMonth }}</sub>
                 <sub v-if="type === 'kubernetes'" class="sub-block">
                     {{ i18n.templates.droplets.pickerDroplet.perNode }}
@@ -28,7 +28,7 @@ limitations under the License.
         <p>
             <small>
                 <em>
-                    {{ (droplet.transfer * 1000).toLocaleString() }} {{ i18n.templates.droplets.droplet.transferUnitSmall }}
+                    {{ droplet.price.transferQuota.toLocaleString() }} {{ i18n.templates.droplets.droplet.transferUnitSmall }}
                     <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
                     <sub v-if="type === 'kubernetes'" class="sub-block">
                         {{ i18n.templates.droplets.pickerDroplet.perNode }}
@@ -40,11 +40,11 @@ limitations under the License.
         <a class="button is-primary is-tiny">Add</a>
 
         <p>
-            {{ droplet.vcpus.toLocaleString() }}
-            {{ i18n.templates.droplets.droplet[droplet.vcpus === 1 ? 'cpuSingular' : 'cpuPlural'] }}
+            {{ droplet.cpus.toLocaleString() }}
+            {{ i18n.templates.droplets.droplet[droplet.cpus === 1 ? 'cpuSingular' : 'cpuPlural'] }}
         </p>
-        <p>{{ (droplet.memory / 1024).toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
-        <p>{{ droplet.disk.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
+        <p>{{ droplet.memory.toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
+        <p>{{ droplet.ssd.size.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
         <p v-if="droplet.variant">
             {{ droplet.variant }}
         </p>

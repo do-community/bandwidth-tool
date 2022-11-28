@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import './scss/style';
-
+import './scss/style.scss';
 import { createApp } from 'vue';
-import App from './templates/app';
-import i18n from './i18n';
+import App from './templates/app.vue';
+import i18n from './i18n/index.js';
 
 document.head.title = i18n.templates.app.title;
 

@@ -14,20 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs/promises';
 
-const fetch = import('node-fetch');
+import fetch from 'node-fetch';
 
-let token = process.env.DIGITALOCEAN_TOKEN;
-if (fs.existsSync(path.join(__dirname, '..', '..', 'config.js'))) {
-    const config = require('../../config');
-    token = config.token;
-}
-
-module.exports = async url => {
-    const res = await fetch.then(({ default: run }) => run(url, {
-        headers: { Authorization: `Bearer ${token}` },
-    }));
+export const get = async url => {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status} ${res.statusText}`);
     return await res.json();
+};
+
+export const flatten = (data, type = null, variant = null) => {
+    if (Array.isArray(data)) return data.map(item => ({ ...item, type, variant }));
+
+    return Object.keys(data).reduce((acc, key) => {
+        return acc.concat(type
+            ? flatten(data[key], type, key)
+            : flatten(data[key], key),
+        );
+    }, []);
+};
+
+export const save = async (data, name) => {
+    await fs.writeFile(new URL(`${name}.json`, import.meta.url), JSON.stringify(data, null, 2));
 };

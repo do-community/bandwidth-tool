@@ -95,8 +95,8 @@ limitations under the License.
 
     import i18n from '../i18n';
     import compareArrays from '../utils/compareArrays';
-    import { dropletType, dropletVariant } from '../utils/dropletType';
-    import dropletData from '../../build/droplets';
+    import { camelToTitleCase } from '../utils/titleCase';
+    import dropletsData from '../../build/droplets';
 
     import Footer from 'do-vue/src/templates/footer';
     import Pool from './pool';
@@ -107,16 +107,21 @@ limitations under the License.
     import FAQs from './faqs';
 
     // Build the Droplet data
-    const droplets = {};
-    for (const droplet of dropletData) {
-        if (!droplet.available || !droplet.regions.length) continue;
-        const type = dropletType(droplet.slug);
-        if (!type) continue;
-        if (!(type in droplets)) droplets[type] = [];
-        droplet.type = type;
-        droplet.variant = dropletVariant(droplet.slug);
-        droplets[type].push(droplet);
-    }
+    const droplets = dropletsData.reduce((obj, droplet) => ({
+        ...obj,
+        [droplet.type]: (obj[droplet.type] || []).concat(({
+            ...droplet,
+            variant: (droplet.variant && camelToTitleCase(droplet.variant))
+                || (droplet.ssd.variant ? `${droplet.ssd.variant}x SSD` : null),
+        })),
+    }), {});
+    const dropletsBySlug = Object.keys(droplets).reduce((obj, type) => ({
+        ...obj,
+        ...droplets[type].reduce((obj2, droplet) => ({
+            ...obj2,
+            [droplet.slug]: droplet,
+        }), {}),
+    }), {});
 
     export default {
         name: 'App',
@@ -195,11 +200,11 @@ limitations under the License.
                 // Work through the initial droplets and load them in the tool
                 for (const item of data.active) {
                     // Insert as a new active droplet
-                    const droplet = dropletData.filter(d => d.slug === item.slug);
+                    const droplet = dropletsBySlug[item.slug];
                     if (!droplet) continue;
                     const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                     const id = keys.length ? Math.max(...keys) + 1 : 0;
-                    this.$data.activeDroplets[id] = [droplet[0], item.type];
+                    this.$data.activeDroplets[id] = [droplet, item.type];
                     this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
 
                     // Once rendered, set the data in the ref
@@ -308,7 +313,8 @@ limitations under the License.
                 this.$nextTick(this.update);
             },
             picked(slug, type) {
-                const droplet = dropletData.filter(d => d.slug === slug)[0];
+                const droplet = dropletsBySlug[slug];
+                if (!droplet) return;
                 const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                 const id = keys.length ? Math.max(...keys) + 1 : 0;
                 this.$data.activeDroplets[id] = [droplet, type];
