@@ -22,14 +22,14 @@ limitations under the License.
             <div class="primary-info">
                 <p>
                     <em>
-                        <sup>$</sup>{{ droplet.price_monthly }}
+                        <sup>$</sup>{{ droplet.price.monthly.toLocaleString() }}
                         <sub> {{ i18n.common.perMonth }}</sub>
                         <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.activeDroplet.node }}</sub>
                     </em>
                 </p>
                 <p>
                     <em>
-                        {{ (droplet.transfer * 1000).toLocaleString() }}
+                        {{ droplet.price.transferQuota.toLocaleString() }}
                         {{ i18n.templates.droplets.droplet.transferUnitSmall }}
                         <sub> {{ i18n.templates.droplets.droplet.transfer }}</sub>
                         <sub v-if="type === 'kubernetes'"> / {{ i18n.templates.droplets.activeDroplet.node }}</sub>
@@ -38,13 +38,13 @@ limitations under the License.
             </div>
             <div class="secondary-info">
                 <p>
-                    {{ droplet.vcpus.toLocaleString() }}
-                    {{ i18n.templates.droplets.droplet[droplet.vcpus === 1 ? 'cpuSingular' : 'cpuPlural'] }}
+                    {{ droplet.cpus.toLocaleString() }}
+                    {{ i18n.templates.droplets.droplet[droplet.cpus === 1 ? 'cpuSingular' : 'cpuPlural'] }}
                 </p>
-                <p>{{ (droplet.memory / 1024).toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
-                <p>{{ droplet.disk.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
-                <p v-if="droplet.variant">
-                    {{ droplet.variant }}
+                <p>{{ droplet.memory.toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
+                <p>{{ droplet.ssd.size.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
+                <p>
+                    {{ `${dropletTypes[droplet.type] || 'Legacy'}${droplet.variant && `: ${droplet.variant}`}` }}
                 </p>
                 <p><code>{{ droplet.slug }}</code></p>
             </div>
@@ -146,6 +146,7 @@ limitations under the License.
 
 <script>
     import i18n from '../../i18n';
+    import dropletTypes from '../../utils/dropletTypes';
     import { directive } from 'vue-tippy';
 
     import CPUDropletIcon from '../icons/cpu_droplet_icon';
@@ -178,6 +179,7 @@ limitations under the License.
         data() {
             return {
                 i18n,
+                dropletTypes,
                 hours: 744,
                 consumption: 0,
                 nodes: 1,
@@ -186,20 +188,21 @@ limitations under the License.
         computed: {
             iconType() {
                 if (this.$props.type === 'kubernetes') return 'KubernetesIcon';
+
                 switch (this.$props.droplet.type) {
-                case 'Basic':
+                case 'basic':
                     return 'BasicDropletIcon';
 
-                case 'General Purpose':
+                case 'generalPurpose':
                     return 'GeneralDropletIcon';
 
-                case 'CPU-Optimized':
+                case 'cpuOptimized':
                     return 'CPUDropletIcon';
 
-                case 'Memory-Optimized':
+                case 'memoryOptimized':
                     return 'MemoryDropletIcon';
 
-                case 'Storage-Optimized':
+                case 'storageOptimized':
                     return 'StorageDropletIcon';
 
                 default:
@@ -233,12 +236,12 @@ limitations under the License.
                 return Math.max(this.$data.nodes, 1);
             },
             bandwidthAllowance() {
-                return this.$props.droplet.transfer * 1000 * (this.cappedHours() / 672) * this.nodeMultiplier();
+                return this.$props.droplet.price.transferQuota * (this.cappedHours() / 672) * this.nodeMultiplier();
             },
             dropletCost() {
                 if (this.$data.hours >= this.maxHours())
-                    return this.$props.droplet.price_monthly * this.nodeMultiplier();
-                return this.$props.droplet.price_hourly * this.cappedHours() * this.nodeMultiplier();
+                    return this.$props.droplet.price.monthly * this.nodeMultiplier();
+                return this.$props.droplet.price.monthly * this.cappedHours() * this.nodeMultiplier();
             },
         },
     };

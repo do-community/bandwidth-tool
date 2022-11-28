@@ -53,18 +53,16 @@ limitations under the License.
         <div class="stats columns">
             <div class="data column">
                 <p class="allowance">
-                    <span>{{ i18n.templates.pool.allowance }}</span>
+                    <span>{{ i18n.templates.pool.allowance }}{{ ' ' }}</span>
                     <b>{{ bandwidthAllowance.toLocaleString() }} {{ i18n.templates.pool.allowanceUnit }}</b>
                 </p>
                 <p class="consumption">
-                    <span>{{ i18n.templates.pool.consumption }}</span>
+                    <span>{{ i18n.templates.pool.consumption }}{{ ' ' }}</span>
                     <b>{{ bandwidthConsumption.toLocaleString() }} {{ i18n.common.consumptionUnit }}</b>
                 </p>
                 <p>
-                    <span>{{ i18n.templates.pool.overage }}</span>
-                    <b>
-                        ${{ (bandwidthOverage * 0.01).toLocaleString() }}
-                    </b>
+                    <span>{{ i18n.templates.pool.overage }}{{ ' ' }}</span>
+                    <b>${{ (bandwidthOverage * 0.01).toLocaleString() }}</b>
                     <small class="has-text-muted">
                         ({{ bandwidthOverage.toLocaleString() }} {{ i18n.common.consumptionUnit }}
                         @ $0.01 / {{ i18n.common.consumptionUnit }})
