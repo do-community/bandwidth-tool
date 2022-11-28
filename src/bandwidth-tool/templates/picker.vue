@@ -121,7 +121,7 @@ limitations under the License.
                 this.$data.dropletVariant = variants.length ? variants[0] : null;
 
                 // Set the variants for picking (note: in k8s world, variants aren't available and 1x is always used)
-                this.$data.dropletVariants = this.$data.type === 'kubernetes' ? [] : variants;;
+                this.$data.dropletVariants = this.$data.type === 'kubernetes' ? [] : variants;
 
                 // Set the droplets to show, filtered by variant
                 this.$data.display = droplets.filter(d => d.variant === this.$data.dropletVariant);
