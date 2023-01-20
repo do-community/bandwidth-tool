@@ -241,7 +241,7 @@ limitations under the License.
             dropletCost() {
                 if (this.$data.hours >= this.maxHours())
                     return this.$props.droplet.price.monthly * this.nodeMultiplier();
-                return this.$props.droplet.price.monthly * this.cappedHours() * this.nodeMultiplier();
+                return this.$props.droplet.price.hourly * this.cappedHours() * this.nodeMultiplier();
             },
         },
     };
