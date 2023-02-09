@@ -193,18 +193,20 @@ limitations under the License.
                 this.$props.activeDroplets.forEach(ref => {
                     const row = sheet.addRow([
                         ref.$props.droplet.slug,
-                        ref.$props.droplet.vcpus,
-                        ref.$props.droplet.memory / 1024,
-                        ref.$props.droplet.disk,
-                        ref.$props.droplet.transfer * 1000,
-                        ref.$props.droplet.price_monthly,
-                        ref.$props.droplet.price_hourly,
+                        ref.$props.droplet.cpus,
+                        ref.$props.droplet.memory,
+                        ref.$props.droplet.ssd.size,
+                        ref.$props.droplet.price.transferQuota,
+                        ref.$props.droplet.price.monthly,
+                        ref.$props.droplet.price.hourly,
                         ref.$data.nodes,
                         ref.$data.hours,
                         ref.bandwidthAllowance(),
                         ref.$data.consumption,
                         ref.dropletCost(),
                     ]);
+                    if (row.values.some(v => v === null || v === undefined))
+                        throw new Error('Row contains invalid values');
 
                     // Monthly price is a price
                     row.getCell(6).numFmt = moneyFormat;
@@ -215,7 +217,7 @@ limitations under the License.
                     row.getCell(9).fill = inputFill;
 
                     // Bandwidth allowance is based on lifetime
-                    // this.$props.droplet.transfer * 1000 * (this.cappedHours() / 672) * this.nodeMultiplier()
+                    // return this.$props.droplet.price.transferQuota * (this.cappedHours() / 672) * this.nodeMultiplier();
                     row.getCell(10).value = {
                         formula: `E${row.number} * (MIN(${ref.maxHours()}, MAX(0, I${row.number})) / 672) * MAX(H${row.number}, 1)`,
                         result: ref.bandwidthAllowance(),
@@ -225,9 +227,9 @@ limitations under the License.
                     row.getCell(11).fill = inputFill;
 
                     // Droplet cost is a price based on lifetime
-                    // if (this.$data.hours > this.maxHours())
-                    //   return this.$props.droplet.price_monthly * this.nodeMultiplier();
-                    // return this.$props.droplet.price_hourly * this.cappedHours() * this.nodeMultiplier();
+                    // if (this.$data.hours >= this.maxHours())
+                    //   return this.$props.droplet.price.monthly * this.nodeMultiplier();
+                    // return this.$props.droplet.price.hourly * this.cappedHours() * this.nodeMultiplier();
                     row.getCell(12).numFmt = detailedMoneyFormat;
                     row.getCell(12).value = {
                         formula: `IF(I${row.number} >= ${ref.maxHours()}, F${row.number}, G${row.number} * MIN(${ref.maxHours()}, MAX(0, I${row.number}))) * MAX(H${row.number}, 1)`,
@@ -236,7 +238,7 @@ limitations under the License.
                 });
 
                 // Add a spacer row
-                const spacer = sheet.addRow();
+                const spacer = sheet.addRow([]);
 
                 // Add the assorted totals
                 const padding = new Array(headers.cellCount - 2).fill('');
@@ -319,10 +321,10 @@ limitations under the License.
                 sheet.eachRow(row => {
                     row.eachCell(cell => {
                         if (!['', null, undefined].includes(cell.value)) cell.border = {
-                            top: { style:'thin', color: { argb:'FF0069FF' } },
-                            left: { style:'thin', color: { argb:'FF0069FF' } },
-                            bottom: { style:'thin', color: { argb:'FF0069FF' } },
-                            right: { style:'thin', color: { argb:'FF0069FF' } },
+                            top: { style: 'thin', color: { argb: 'FF0069FF' } },
+                            left: { style: 'thin', color: { argb: 'FF0069FF' } },
+                            bottom: { style: 'thin', color: { argb: 'FF0069FF' } },
+                            right: { style: 'thin', color: { argb: 'FF0069FF' } },
                         };
                     });
                 });
