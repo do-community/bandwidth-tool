@@ -234,8 +234,7 @@ $header: #0071fe;
           .secondary-info {
             align-items: center;
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+            flex-flow: row wrap;
 
             p {
               margin: 0;

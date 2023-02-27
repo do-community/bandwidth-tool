@@ -45,7 +45,9 @@ limitations under the License.
         </p>
         <p>{{ droplet.memory.toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
         <p>{{ droplet.ssd.size.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
-        <p v-if="droplet.variant?.length">{{ droplet.variant.join(', ') }}</p>
+        <p v-if="droplet.variant?.length">
+            {{ droplet.variant.join(', ') }}
+        </p>
         <p><code>{{ droplet.slug }}</code></p>
     </div>
 </template>

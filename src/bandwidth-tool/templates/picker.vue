@@ -65,7 +65,7 @@ limitations under the License.
     import dropletTypes from '../utils/dropletTypes';
     import kubernetesData from '../../build/kubernetes';
 
-    import PrettyCheck from 'do-vue/src/templates/pretty-checkbox-vue/pretty_check';
+    // import PrettyCheck from 'do-vue/src/templates/pretty-checkbox-vue/pretty_check';
     import PrettyRadio from 'do-vue/src/templates/pretty-checkbox-vue/pretty_radio';
     import { camelToTitleCase } from '../utils/titleCase.js';
     import PickerDroplet from './droplets/picker_droplet';
@@ -130,6 +130,7 @@ limitations under the License.
     const getValidVariant = (all, selected) => {
         const result = [];
         const prev = [ ...selected ];
+        // eslint-disable-next-line no-constant-condition
         while (true) {
             const available = sortVariants(getAvailableVariants(all, result));
             if (!available.length) return result;
@@ -152,7 +153,7 @@ limitations under the License.
         name: 'Picker',
         components: {
             PickerDroplet,
-            PrettyCheck,
+            // PrettyCheck,
             PrettyRadio,
         },
         props: {
