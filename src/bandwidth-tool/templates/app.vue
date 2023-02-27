@@ -1,5 +1,5 @@
 <!--
-Copyright 2022 DigitalOcean
+Copyright 2023 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -95,7 +95,6 @@ limitations under the License.
 
     import i18n from '../i18n';
     import compareArrays from '../utils/compareArrays';
-    import { camelToTitleCase } from '../utils/titleCase';
     import dropletsData from '../../build/droplets';
 
     import Footer from 'do-vue/src/templates/footer';
@@ -109,11 +108,7 @@ limitations under the License.
     // Build the Droplet data
     const droplets = dropletsData.reduce((obj, droplet) => ({
         ...obj,
-        [droplet.type]: (obj[droplet.type] || []).concat(({
-            ...droplet,
-            variant: (droplet.variant && camelToTitleCase(droplet.variant))
-                || (droplet.ssd.variant ? `${droplet.ssd.variant}x SSD` : null),
-        })),
+        [droplet.type]: (obj[droplet.type] || []).concat(droplet),
     }), {});
     const dropletsBySlug = Object.keys(droplets).reduce((obj, type) => ({
         ...obj,
