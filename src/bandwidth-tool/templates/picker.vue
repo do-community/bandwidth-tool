@@ -189,7 +189,7 @@ limitations under the License.
                 // Inject the variants for each Droplet
                 return dropletsFiltered.map(droplet => ({
                     ...droplet,
-                    variant: droplet.variant.map(camelToTitleCase)
+                    variant: (droplet.variant || []).map(camelToTitleCase)
                         .concat(isK8s || !droplet.ssd.variant ? [] : `${droplet.ssd.variant}x SSD`),
                 }));
             },

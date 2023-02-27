@@ -1,5 +1,5 @@
 <!--
-Copyright 2022 DigitalOcean
+Copyright 2023 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,9 +43,7 @@ limitations under the License.
                 </p>
                 <p>{{ droplet.memory.toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
                 <p>{{ droplet.ssd.size.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
-                <p>
-                    {{ `${dropletTypes[droplet.type] || 'Legacy'}${droplet.variant && `: ${droplet.variant}`}` }}
-                </p>
+                <p>{{ `${dropletTypes[droplet.type] || 'Legacy'}${variant}` }}</p>
                 <p><code>{{ droplet.slug }}</code></p>
             </div>
         </div>
@@ -147,6 +145,7 @@ limitations under the License.
 <script>
     import i18n from '../../i18n';
     import dropletTypes from '../../utils/dropletTypes';
+    import { camelToTitleCase } from '../../utils/titleCase';
     import { directive } from 'vue-tippy';
 
     import CPUDropletIcon from '../icons/cpu_droplet_icon';
@@ -209,6 +208,12 @@ limitations under the License.
                     return 'DropletIcon';
                 }
             },
+            variant() {
+                const variants = (this.$props.droplet.variant || []).map(camelToTitleCase)
+                    .concat(this.$props.type === 'kubernetes' || !this.$props.droplet.ssd.variant
+                        ? [] : `${this.$props.droplet.ssd.variant}x SSD`);
+                return variants.length ? `: ${variants.join(', ')}` : '';
+            },
         },
         watch: {
             hours() {
@@ -222,6 +227,7 @@ limitations under the License.
             },
         },
         methods: {
+            camelToTitleCase,
             remove() {
                 this.$emit('remove');
             },

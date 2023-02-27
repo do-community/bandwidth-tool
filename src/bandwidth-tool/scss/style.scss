@@ -235,10 +235,7 @@ $header: #0071fe;
             align-items: center;
             display: flex;
             flex-direction: row;
-
-            @media (max-width: $breakpoint) {
-              flex-wrap: wrap;
-            }
+            flex-wrap: wrap;
 
             p {
               margin: 0;
@@ -294,6 +291,8 @@ $header: #0071fe;
         }
 
         .right {
+          flex-shrink: 0;
+
           @media (max-width: $breakpoint) {
             flex-direction: column;
             margin: 0;
