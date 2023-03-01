@@ -24,13 +24,13 @@ limitations under the License.
             </ul>
         </div>
 
-        <!--<div class="variants">
+        <div v-if="kubernetes" class="variants">
             <div class="switch">
                 <span>{{ i18n.templates.picker.droplets }}</span>
                 <PrettyCheck class="p-switch p-fill" :checked="type === 'kubernetes'" @change="toggleType"></PrettyCheck>
                 <span>{{ i18n.templates.picker.kubernetes }}</span>
             </div>
-        </div>-->
+        </div>
 
         <div class="variants">
             <div v-for="(selectedVariant, idx) in selectedVariants" class="radio">
@@ -65,7 +65,7 @@ limitations under the License.
     import dropletTypes from '../utils/dropletTypes';
     import kubernetesData from '../../build/kubernetes';
 
-    // import PrettyCheck from 'do-vue/src/templates/pretty-checkbox-vue/pretty_check';
+    import PrettyCheck from 'do-vue/src/templates/pretty-checkbox-vue/pretty_check';
     import PrettyRadio from 'do-vue/src/templates/pretty-checkbox-vue/pretty_radio';
     import { camelToTitleCase } from '../utils/titleCase.js';
     import PickerDroplet from './droplets/picker_droplet';
@@ -153,11 +153,15 @@ limitations under the License.
         name: 'Picker',
         components: {
             PickerDroplet,
-            // PrettyCheck,
+            PrettyCheck,
             PrettyRadio,
         },
         props: {
             droplets: Object,
+            kubernetes: {
+                type: Boolean,
+                default: false,
+            },
         },
         data() {
             return {
