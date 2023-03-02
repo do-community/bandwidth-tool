@@ -1,5 +1,5 @@
 <!--
-Copyright 2022 DigitalOcean
+Copyright 2023 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -79,7 +79,7 @@ limitations under the License.
                         ></Costs>
                     </div>
 
-                    <Picker :droplets="droplets" @picked="picked"></Picker>
+                    <Picker :droplets="droplets" :kubernetes="kubernetesEnabled" @picked="picked"></Picker>
                 </div>
             </div>
         </div>
@@ -95,7 +95,6 @@ limitations under the License.
 
     import i18n from '../i18n';
     import compareArrays from '../utils/compareArrays';
-    import { camelToTitleCase } from '../utils/titleCase';
     import dropletsData from '../../build/droplets';
 
     import Footer from 'do-vue/src/templates/footer';
@@ -109,11 +108,7 @@ limitations under the License.
     // Build the Droplet data
     const droplets = dropletsData.reduce((obj, droplet) => ({
         ...obj,
-        [droplet.type]: (obj[droplet.type] || []).concat(({
-            ...droplet,
-            variant: (droplet.variant && camelToTitleCase(droplet.variant))
-                || (droplet.ssd.variant ? `${droplet.ssd.variant}x SSD` : null),
-        })),
+        [droplet.type]: (obj[droplet.type] || []).concat(droplet),
     }), {});
     const dropletsBySlug = Object.keys(droplets).reduce((obj, type) => ({
         ...obj,
@@ -147,6 +142,7 @@ limitations under the License.
                 bandwidthOverage: 0,
                 dropletCost: 0,
                 focusedDroplet: null,
+                kubernetesEnabled: false,
             };
         },
         mounted() {
@@ -204,7 +200,8 @@ limitations under the License.
                     if (!droplet) continue;
                     const keys = Object.keys(this.$data.activeDroplets).map(x => parseInt(x));
                     const id = keys.length ? Math.max(...keys) + 1 : 0;
-                    this.$data.activeDroplets[id] = [droplet, item.type];
+                    const type = item.type === 'kubernetes' && this.$data.kubernetesEnabled ? 'kubernetes' : 'droplet';
+                    this.$data.activeDroplets[id] = [droplet, type];
                     this.$data.hasActiveDroplets = !!Object.keys(this.$data.activeDroplets).length;
 
                     // Once rendered, set the data in the ref

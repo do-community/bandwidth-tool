@@ -1,5 +1,5 @@
 /*
-Copyright 2022 DigitalOcean
+Copyright 2023 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,12 +24,12 @@ export const get = async url => {
     return await res.json();
 };
 
-export const flatten = (data, type = null, variant = null) => {
+export const flatten = (data, type = null, variant = []) => {
     if (Array.isArray(data)) return data.map(item => ({ ...item, type, variant }));
 
     return Object.keys(data).reduce((acc, key) => {
         return acc.concat(type
-            ? flatten(data[key], type, key)
+            ? flatten(data[key], type, [ ...variant, key ])
             : flatten(data[key], key),
         );
     }, []);
