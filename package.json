@@ -41,7 +41,7 @@
     "pretty-checkbox-vue": "^1.1.9",
     "query-string": "^7.1.1",
     "vue": "^3.2.45",
-    "vue-tippy": "^6.0.0-alpha.65"
+    "vue-tippy": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
