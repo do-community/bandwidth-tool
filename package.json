@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/do-community/bandwidth-tool#readme",
   "dependencies": {
-    "do-bulma": "github:do-community/do-bulma#MattIPv4/update-dependencies",
+    "do-bulma": "github:do-community/do-bulma",
     "do-vue": "github:do-community/do-vue",
     "exceljs": "^4.3.0",
     "node-fetch": "^3.3.2",
