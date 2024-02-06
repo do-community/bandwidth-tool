@@ -1,6 +1,10 @@
 ---
 name: Help ❓
 about: Encountered a problem with the tool?
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 <!-- Don't write inside the arrows as they will be hidden when you post your issue.
