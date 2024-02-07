@@ -1,6 +1,11 @@
 ---
-name: Report a bug 🐛
-about: Report a bug with the tool. Only use this if you're 100% sure there's something wrong, otherwise, try "Help".
+name: "Report a bug \U0001F41B"
+about: Report a bug with the tool. Only use this if you're 100% sure there's something
+  wrong, otherwise, try "Help".
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 <!-- Don't put anything inside this block, as it won't be included in the issue.
