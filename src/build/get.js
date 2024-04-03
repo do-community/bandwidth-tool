@@ -1,5 +1,5 @@
 /*
-Copyright 2023 DigitalOcean
+Copyright 2024 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 import fs from 'node:fs/promises';
-
-import fetch from 'node-fetch';
 
 export const get = async url => {
     const res = await fetch(url);
