@@ -1,5 +1,5 @@
 <!--
-Copyright 2022 DigitalOcean
+Copyright 2024 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -195,7 +195,7 @@ limitations under the License.
                         ref.$props.droplet.slug,
                         ref.$props.droplet.cpus,
                         ref.$props.droplet.memory,
-                        ref.$props.droplet.ssd.size,
+                        ref.$props.droplet.disk.boot,
                         ref.$props.droplet.price.transferQuota,
                         ref.$props.droplet.price.monthly,
                         ref.$props.droplet.price.hourly,

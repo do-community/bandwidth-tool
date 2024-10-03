@@ -1,5 +1,5 @@
 <!--
-Copyright 2023 DigitalOcean
+Copyright 2024 DigitalOcean
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ limitations under the License.
                     {{ i18n.templates.droplets.droplet[droplet.cpus === 1 ? 'cpuSingular' : 'cpuPlural'] }}
                 </p>
                 <p>{{ droplet.memory.toLocaleString() }} {{ i18n.templates.droplets.droplet.memoryUnit }}</p>
-                <p>{{ droplet.ssd.size.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
+                <p>{{ droplet.disk.boot.toLocaleString() }} {{ i18n.templates.droplets.droplet.diskSuffix }}</p>
                 <p>{{ `${dropletTypes[droplet.type] || 'Legacy'}${variant}` }}</p>
                 <p><code>{{ droplet.slug }}</code></p>
             </div>
@@ -210,8 +210,8 @@ limitations under the License.
             },
             variant() {
                 const variants = (this.$props.droplet.variant || []).map(camelToTitleCase)
-                    .concat(this.$props.type === 'kubernetes' || !this.$props.droplet.ssd.variant
-                        ? [] : `${this.$props.droplet.ssd.variant}x SSD`);
+                    .concat(this.$props.type === 'kubernetes' || !this.$props.droplet.disk.variant
+                        ? [] : `${this.$props.droplet.disk.variant}x SSD`);
                 return variants.length ? `: ${variants.join(', ')}` : '';
             },
         },
