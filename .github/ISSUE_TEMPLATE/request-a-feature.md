@@ -1,6 +1,10 @@
 ---
-name: Request a feature 🆕
+name: "Request a feature \U0001F195"
 about: Suggest a new feature that you would like in the tool!
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 <!-- Fill out the template. Don't write inside the arrows as they will be hidden
